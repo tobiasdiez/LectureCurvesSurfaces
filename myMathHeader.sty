@@ -1,0 +1,1208 @@
+%													\COMMENT ALIGN
+\makeatletter
+
+\thickmuskip=5mu plus 3mu minus 1mu		% Reduce the maximum stretch between relations from 10mu to 8mu
+\medmuskip=4mu plus 2mu minus 3mu		% Increase to maximum shrink around binary symbols from 0mu to 1mu
+
+% myglstext notices if it followed by sup/subscript (i.e. by ^sup_sub)
+% if this is the case, then the sup/subscript will be automatically redirected to glstext as an optional argument
+% thus we can write \pr_1 instead of the cumbersome \pr[_1]
+% the code is adopted from http://tex.stackexchange.com/a/118531/34554
+\newrobustcmd*{\myglstext}{\myprotecedglstext}
+\def\myprotecedglstext#1{\interalglstext{#1}}
+\def\interalglstext#1{
+	\def\interalglstext@{#1}
+	\def\interalglstext@@{}
+	\@ifnextchar^\@interalglstextsp
+	\@interalglstextnsp
+}
+\def\@interalglstextsp^#1{
+	\def\interalglstext@@{^{#1}}
+	\@ifnextchar_\@interalglstextspsb{\glstext{\interalglstext@}[\interalglstext@@]}
+}
+\def\@interalglstextspsb_#1{
+	\glstext{\interalglstext@}[\interalglstext@@_{#1}]
+}
+\def\@interalglstextnsp{
+	\@ifnextchar_{\@interalglstextsb}{\glstext{\interalglstext@}}
+}
+\def\@interalglstextsb_#1{
+	\def\interalglstext@@{_{#1}}
+	\@ifnextchar^\@interalglstextsbsp{\glstext{\interalglstext@}[\interalglstext@@]}
+}
+\def\@interalglstextsbsp^#1{
+	\glstext{\interalglstext@}[\interalglstext@@^{#1}]
+}
+
+\ExplSyntaxOn
+
+\bool_if_exist:NF \l_myclass_useMathGlossary_bool { \bool_new:N \l_myclass_useMathGlossary_bool }
+\bool_if:NTF \l_myclass_useMathGlossary_bool
+{ 
+	% We want to generate a glossary of all used symbols...so set this up
+
+	% Redefine glossary keys to automatically expand
+	\define@key{glossentry}{name}{\protected@edef\@glo@name{#1}}
+	\define@key{glossentry}{text}{\protected@edef\@glo@text{#1}}
+	\define@key{glossentry}{description}{\protected@edef\@glo@desc{#1}}
+	\define@key{glossentry}{sort}{\protected@edef\@glo@sort{#1}}
+
+	% Command for easily defining new math operators
+	% 	First argument:		command name for operator, e.g. "\sin"
+	%	Second argument:	further properties in key - value format
+	%		operator	text which should be set as an operator, e.g. "sin"
+	%		command	macro specifying how the operator is typeset, useful if not the whole expression should be interpreted as an operator like "\operatorname{T}^*" 
+	%		display		name as appearing in the glossary (optional, defaults to "operator" or "command")
+	%		description	string explaining the operator, e.g. "trigonometric function"
+	%		sort		string without any commands specifying a unique name which is then is used for sorting (optional, defaults to "operator"), e.g. "sin"
+	% Use as follows:
+	% \MyNewMathOperator{\myTangent}{operator={T}, sort={T}, description={Tangent bundle}}
+	% \MyNewMathOperator{\myCoTangent}{command={\operatorname{T}^*}, sort={Tstar}, description={Cotangent bundle}}
+	% \MyNewMathOperator{\myTangentSpace}{operator={T}, sort={T}, name={\myTangentBundle_m M}, description={Tangent space at \( m \in M )}}
+
+	\NewDocumentCommand{\MyNewMathOperator}{m m}
+	{
+		% Parse/format arguments
+		\def\myop@label {\cs_to_str:N #1}		% Save operator label, strip backslash (#1 = \sin -> label = sin)
+		\pgfkeys{								% Define keys for second argument
+			/myop/.cd,
+			command/.initial,
+			operator/.initial,
+			display/.initial,
+			sort/.initial,
+			description/.initial,
+			#2									% Parse second argument
+		}
+
+		% Create operator command depending whatever user used "operator" or "command" argument
+		\let\myop@opCmd\relax			% Reset operator command
+		\pgfkeysgetvalue{/myop/operator}{\myop@opCmd}	% Save passed argument in macro
+		\def\novalue{\pgfkeysnovalue}			% Save "not specified" in new macro (needed for ifdefequal)
+		\ifdefequal{\myop@opCmd}{\novalue}	% Check if user passed directly operator text
+			{
+				% no... so use "command" argument (in math mode)
+				\def\myop@opCmd {\protect\ensuremath{\pgfkeysvalueof{/myop/command}}}
+			}
+			{
+				% yes... so use it as an operator (in math mode)
+				\def\myop@opCmd {\protect\ensuremath{\operatorname{\pgfkeysvalueof{/myop/operator}}}}
+			}
+
+		% Create operator name depending whatever user passed it as argument
+		\let\myop@display\relax				% Reset operator name
+		\pgfkeysgetvalue{/myop/display}{\myop@display}	% Save passed argument in macro
+		\ifdefequal{\myop@display}{\novalue}		% Check if user passed directly operator name
+			{
+				% no... so use operator command
+				\def\myop@display {#1}
+			}
+			{
+				% yes... so use it as an operator name (hence we have nothing to do)
+			}
+		% Create operator sort key depending whatever user passed it as argument
+		\let\myop@sort\relax				% Reset sort
+		\pgfkeysgetvalue{/myop/sort}{\myop@sort}	% Save passed argument in macro
+		\ifdefequal{\myop@sort}{\novalue}		% Check if user passed directly sort
+			{
+				% no... use "label"
+				\def\myop@sort {\myop@label}
+			}
+			{
+				% yes... hence we have nothing to do
+			}
+		
+		% Define macro (e.g \sin) invoking the glossary
+		\edef#1{\myglstext{sym:\myop@label}}
+
+		% Define glossary entry (if not yet defined)
+		\expandafter\provideglossaryentry\expandafter{sym:\myop@label}{	% Take care of expanding \myop@label
+			name={\myop@display},					% Set command (as )
+			text={\myop@opCmd},
+			macro={\protect#1},						% Save macro text (for exampleMath)
+			description={\pgfkeysvalueof{/myop/description}},		% Set description
+			type=symbolslist,						% Use glossary list "symbolslist"
+			sort={\myop@sort}						% Set sort key
+		}
+	}
+}
+{
+	\keys_define:nn { mymathoperator }								% Define keys for \MyNewMathOperator command (see above)
+	{
+		command .tl_set:N = \l_mymathoperator_command_tl,			% macro specifying how the operator is typeset, useful if not the whole expression should be interpreted as an operator like "\operatorname{T}^*" 
+		operator .tl_set:N = \l_mymathoperator_operator_tl,			% text which should be set as an operator, e.g. "sin"
+		display .tl_set:N = \l_mymathoperator_display_tl,			% name as appearing in the glossary (optional, defaults to "operator" or "command") 
+		sort .tl_set:N = \l_mymathoperator_sort_tl,					% specifies a unique name which is then is used for sorting (optional, defaults to "operator"), e.g. "sin"
+		description .tl_set:N = \l_mymathoperator_description_tl,	% text explaining the operator, e.g. "trigonometric function" 
+	}
+
+	% No math glossary needed, so make this as simple as possible
+	\NewDocumentCommand{\MyNewMathOperator}{m m}
+	{
+		\group_begin:
+			\keys_set:nn { mymathoperator } { #2 }	% Parse second argument
+
+			\protected@xdef #1
+			{
+				\tl_if_empty:NF \l_mymathoperator_operator_tl 
+					{
+						\operatorname{ \tl_to_str:N \l_mymathoperator_operator_tl }
+					}
+				\tl_if_empty:NF \l_mymathoperator_command_tl 
+					{
+						\tl_use:N \l_mymathoperator_command_tl
+					}
+			}
+		\group_end:
+	}
+}
+
+\makeatother
+\ExplSyntaxOff
+
+
+% Fix a bug in thmtools/cleverref that leads to wrong sorting
+% https://tex.stackexchange.com/questions/598167/cleveref-sorting-doesnt-work-correctly-if-theorem-shares-subsection-counter
+% https://github.com/muzimuzhi/thmtools/issues/22
+% This is fixed in v.0.73 of thmtools, which requires texlive 2021
+\counterwithin{example}{section}
+
+\makeatletter 
+\ExplSyntaxOn							% Activate latex3 syntax
+
+% Begin proof in the next line
+% \renewenvironment{proof}[1][\proofname] {\par\pushQED{\qed}\normalfont\topsep0\p@\@plus0\p@\relax\trivlist\item[\hskip\labelsep\scshape#1\@addpunct{:} ]\ignorespaces ~\\}{\popQED\endtrivlist\@endpefalse} 
+
+\cs_if_exist:NT { \myclass@language }{		
+\str_case_e:nn { \myclass@language }
+{
+	{german}
+		{
+			\renewcommand{\proofname}{Beweis}% Proof environment with German heading
+		}
+}
+}
+
+\numberwithin{equation}{section}				% Number equations with section as prefix
+
+\cs_if_exist:NT \newlist {
+% Custom enumerate-environment with proper vertical alignment if it is placed directly as first item in theorem-environment
+\newlist{thmenumerateIntern}{enumerate}{2}
+\setlist[thmenumerateIntern,1]{label=(\roman*), ref=\EnumPrefix{}~(\roman*)} 
+\crefname{thmenumerateInterni}{}{}				% Don't append any text in front since the theorem name is already taken care of by using ref = \EnumPrefix above
+\Crefname{thmenumerateInterni}{}{}
+\NewDocumentEnvironment{thmenumerate}{s o}		% Star = vertical space correction, optional = description
+	{
+		\IfBooleanTF{#1}
+			{\leavevmode~\vspace*{0em}}
+			{} 
+		\IfNoValueTF{#2}
+			{\begin{thmenumerateIntern}}
+			{\begin{thmenumerateIntern}[#2]}
+	}
+	{\end{thmenumerateIntern}}
+% old version if theorem text begins in new line:
+% \NewDocumentEnvironment{thmenumerate}{s o}
+% 	{
+% 		\IfBooleanTF{#1}
+% 			{~\vspace*{-\baselineskip}}
+% 			{} 
+% 		\IfNoValueTF{#2}
+% 			{\begin{thmenumerateIntern}}
+% 			{\begin{thmenumerateIntern}[#2]}
+% 	}
+% 	{\end{thmenumerateIntern}}
+}
+\ExplSyntaxOff							% Disables latex3 syntax
+\makeatother
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%% Define operators and abbreviations %%%%%%%%%%%%%%%%%%%%%%%%%%%
+\makeatletter
+	% Triple bars
+	\def\@tvsp{\mathchoice{{}\mkern-2.5mu}{{}\mkern-2.5mu}{{}\mkern-0.5mu}{}}
+	\def\ltrivert{|\@tvsp|\@tvsp|}
+	\def\rtrivert{|\@tvsp|\@tvsp|}
+\makeatother
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}				% | A |
+\newcommand\absDot{\abs{\,\cdot\,}}					% | . |
+\DeclarePairedDelimiter\norm{\lVert}{\rVert}				% || A ||
+\DeclarePairedDelimiter\nnorm{\ltrivert}{\rtrivert}			% ||| A |||
+\newcommand\normDot{\norm{\,\cdot\,}}				% || . ||
+\DeclarePairedDelimiter\equivClass{[}{]}				% [ A ]
+\DeclarePairedDelimiter\bracket{\langle}{\rangle}			% < A >
+\DeclarePairedDelimiterX\scalarProd[2]{\langle}{\rangle}{#1,#2}	% < A , B >
+\newcommand\scalarProdDot{\scalarProd{\,\cdot\,}{\,\cdot\,}}	% < . , . >
+\DeclarePairedDelimiterX\scalarProdR[2]{(}{)}{#1,#2}		% ( A , B )
+\DeclarePairedDelimiterX\poisson[2]{\{}{\}}{#1,#2}	% { A , B }
+\newcommand\poissonDot{\poisson{\cdot}{\cdot}}		% { . , . }
+\DeclarePairedDelimiterX\commutator[2]{[}{]}{#1,#2}		% [ A , B ]
+\newcommand\commutatorDot{\commutator{\,\cdot\,}{\,\cdot\,}}	% [ . , . ]
+\DeclarePairedDelimiterX\antiCommutator[2]{\{}{\}}{#1,#2}		% { A , B }
+\DeclarePairedDelimiterX\LieBracket[2]{[}{]}{#1,#2}			% [ A , B ]
+\newcommand\LieBracketDot{\LieBracket{\,\cdot\,}{\,\cdot\,}}		% [ . , . ]
+\DeclarePairedDelimiterX\dualPair[2]{\langle}{\rangle}{#1,#2}	% < A , B >
+\newcommand\dualPairDot{\dualPair{\,\cdot\,}{\,\cdot\,}}	% < . , . >
+\DeclarePairedDelimiterX\dualPairR[2]{(}{)}{#1,#2}		% ( A , B )
+\newcommand\dualPairRDot{\dualPairR{\,\cdot\,}{\,\cdot\,}}	% ( . , . )
+\DeclarePairedDelimiterX\LTwoDualPair[2]{\langle}{\rangle_{\mathrm{L}^2}}{#1,#2}	% < A , B > L2
+\newcommand\LTwoDualPairDot{\LTwoDualPair{\,\cdot\,}{\,\cdot\,}}		% < . , . > L2
+\DeclarePairedDelimiter\LTwoNorm{\lVert}{\rVert_{\mathrm{L}^2}}			% || A || L2
+\DeclarePairedDelimiterX\wedgeLie[2]{[}{]}{#1 \wedge #2}		% [ A ^ B ]
+\newcommand\wedgeLieDot{\wedgeLie{\cdot}{\cdot}}									% < . ^ . >
+\DeclarePairedDelimiterX\wedgeDual[2]{\langle}{\rangle}{#1 \wedge #2}		% < A ^ B >
+\newcommand\wedgeDualDot{\wedgeDual{\cdot}{\cdot}}									% < . ^ . >
+\NewDocumentCommand \wedgeldot { } { 							% ^ with dot below
+	\mathbin{\ooalign{$\wedge$\crcr\hidewidth.\hidewidth}}
+}
+
+\NewDocumentCommand{\field}{m}{\mathbb{#1}}			% Font for fields
+\NewDocumentCommand{\R}{}{\field{R}}				% Real numbers
+\DeclareDocumentCommand{\C}{}{\field{C}}			% Complex numbers (overwriting old definition  = combining double grave accent, see http://tex.stackexchange.com/questions/2967/what-is-c-with-xelatex-and-beamer)
+\NewDocumentCommand{\N}{}{\field{N}}				% Natural numbers
+\NewDocumentCommand{\Z}{}{\field{Z}}				% Integers
+\NewDocumentCommand{\Q}{}{\field{Q}}				% Rational numbers
+\NewDocumentCommand{\K}{}{\field{K}}				% Arbitrary field
+
+												% COMMAND INDENT
+\MyNewMathOperator{\Hom}			{operator={Hom}, display={$\Hom(G, H)$}, description={Space of homomorphisms from $G$ to $H$}}
+\MyNewMathOperator{\Der}			{operator={Der}, display={$\Der(A, M)$}, description={Space of derivations from the algebra $A$ to the $A$-module $M$}}
+% \MyNewMathOperator{\Aut}	{operator={Aut}, description={Automorphisms}}
+\MyNewMathOperator{\End}			{operator={End}, display={$\End(V)$}, description={Endomorphisms of the vector space $V$}}
+\MyNewMathOperator{\Tor}			{operator={Tor}, display={$\Tor_R(G, H)$}, description={The $\Tor$ functor, which assigns an abelian group to the right $R$-module $G$ and to the left $R$-module $H$}}
+\MyNewMathOperator{\TorAb}			{command={\Tor_{\textnormal{Ab}}}, display={$\TorAb(G, H)$}, description={The $\Tor$ functor, which assigns an abelian group to the two abelian groups $G$ and $H$. This corresponds to $\Tor_\Z$}}
+\MyNewMathOperator{\Ext}			{operator={Ext}, display={$\Ext_R(G, H)$}, description={The $\Ext$ functor, which assigns an abelian group to the left $R$-modules $G$ and $H$}}
+\MyNewMathOperator{\ExtAb}			{command={\Ext_{\textnormal{Ab}}}, display={$\ExtAb(G, H)$}, description={The $\Ext$ functor, which assigns an abelian group to the two abelian groups $G$ and $H$. This corresponds to $\Ext_\Z$}}
+
+\MyNewMathOperator{\sgn}			{operator={sgn}, description={Signum}}
+\MyNewMathOperator{\pr}							{command={\smash[b]{\mathrm{pr}}}, display={$\pr$}, sort={pr}, description={Projection, for example the natural projection $\pr[_M]: M \times N \to M$}}
+\MyNewMathOperator{\inc}						{command={\iota}, sort={iota}, description={Inclusion, for example the natural inclusion $\inc: S \to X$ of a subset $S \subseteq X$}}
+\MyNewMathOperator{\tr}			{operator={Tr}, display={$\tr A$}, description={Trace of the matrix $A$}}
+\MyNewMathOperator{\Sym}			{operator={Sym}, display={$\Sym f$}, description={Symmetrization of the map $f$}}
+\MyNewMathOperator{\jet}			{command={\mathrm{j}}, display={$\jet^r_m \sigma$}, description={$r$-th jet of the map $\sigma$ at the point $m$}}
+\MyNewMathOperator{\divergence}	{operator={div}, description={Divergence}}
+\MyNewMathOperator{\Hel}	{operator={Hel}, description={Helicity}}
+\MyNewMathOperator{\ind}		{operator={ind}, display={$\ind T$}, description={Index of the Fredholm operator $T$}}	% Don't rename to \index as this causes problems with files called "index.tex"
+\MyNewMathOperator{\const}			{operator={const}, display={$\const$}, description={Constant value}}
+\MyNewMathOperator{\principalSymbol}			{command={\sigma}, sort={sigma}, display={$\sigma_P$}, description={Principal symbol of the differential operator $P$}}
+
+\let\ker\relax
+\MyNewMathOperator{\ker}			{operator={Ker}, display={$\ker T$}, description={Kernel of the linear map $T$}}
+\MyNewMathOperator{\coker}			{operator={Coker}, display={$\coker T$}, description={Cokernel of the linear map $T$}}
+\MyNewMathOperator{\img}			{operator={Im}, display={$\img f$}, description={Image of the map $f$}}
+\MyNewMathOperator{\coimg}			{operator={Coim}, display={$\coimg T$}, description={Coimage of the linear map $T$}}
+\MyNewMathOperator{\supp}			{operator={supp}, display={$\supp f$}, description={Support of the map $f$}}
+\MyNewMathOperator{\rank}			{operator={rk}, display={$\rank T$}, description={Rank of the linear map $T$}}
+\MyNewMathOperator{\vspan}			{operator={span}, display={$\vspan \{v_1, \dotsc, v_n\}$}, description={Linear span of the vectors $v_i$}}
+\MyNewMathOperator{\id}			{command={\mathrm{id}}, display={$\id[_X]$}, description={Identity map on the space $X$}}
+\NewDocumentCommand{\one} {  } { \mathbbm{1} }
+\MyNewMathOperator{\ev}			{command={\mathrm{ev}}, display={$\ev[_m] \phi$}, description={Evaluation of the map $\phi$ at the point $m$}}
+% \MyNewMathOperator{\Ev}	{operator={Ev}, description={Evaluation map}}
+\MyNewMathOperator{\pb}			{command={\mathrm{pb}}, display={$\pb[_\alpha] \phi$}, description={Pullback of the differential form (or some other geometry object) $\alpha$ by the map $\phi$}}
+\MyNewMathOperator{\pf}			{command={\mathrm{pf}}, display={$\pf_X \phi$}, description={Pushforward of the vector field (or some other geometry object) $X$ by the map $\phi$}}
+\MyNewMathOperator{\vol}			{operator={vol}, display={$\vol[_g]$}, description={Volume element induced by the Riemannian metric $g$}}
+\let\Re\relax
+\MyNewMathOperator{\Re}			{operator={Re}, display={$\Re z$}, description={Real part of $z$}}
+\let\Im\relax
+\MyNewMathOperator{\Im}			{operator={Im}, display={$\Im z$}, description={Imaginary part of $z$}}
+\MyNewMathOperator{\diag}			{command={\mathrm{diag}}, display={$\diag_X$}, description={Diagonal of $X$ in $X \times X$}}
+
+\MyNewMathOperator{\inv}			{operator={inv}, display={$\inv g$}, description={The inverse of the operation or group element $g$ }}
+\MyNewMathOperator{\mult}			{operator={mult}, description={Multiplication operation}}
+%\MyNewMathOperator{\comp}		{operator={comp}, description={Composition map}}
+
+\MyNewMathOperator{\flux}			{operator={Flux}, description={Flux homomorphism}}
+
+\MyNewMathOperator{\fixPointSet}	{operator={Fix}, display={$\fixPointSet \phi$}, description={The set of fixed points under the diffeomorphism $\phi$}}
+
+\MyNewMathOperator{\secondFundForm}				{command={\Pi}, display={$\secondFundForm^\iota$}, description={The second fundamental form of a submanifold $\iota: S \to M$}}
+
+\MyNewMathOperator{\fourierTransform}	{command={\mathrm{F}}, display={$\fourierTransform \phi$}, description={Fourier transformation of the section $\phi$}}
+
+\NewDocumentCommand{\LieA}{m}{\mathfrak{#1}}	% Lie algebra
+\MyNewMathOperator{\LieAEx}						{operator={Lie}, display={$\LieAEx(G)$}, description={Lie algebra of Lie group $G$}}
+\MyNewMathOperator{\aCentralizer}				{command={\LieA{c}}, sort={c}, display={$\aCentralizer[_{\LieA{g}}](\LieA{h})$}, description={Centralizer of subalgebra $\LieA{h}$ in $\LieA{g}$}}
+\MyNewMathOperator{\aCenter}					{command={\LieA{z}}, sort={z}, display={$\aCenter(\LieA{g})$}, description={Center of the Lie algebra $\LieA{g}$}}
+
+\MyNewMathOperator{\LeftTrans}		{operator={L}, display={$\LeftTrans[_g]$}, description={Left translation by a group element $g \in G$}}
+\MyNewMathOperator{\RightTrans}		{operator={R}, display={$\RightTrans[_g]$}, description={Right translation by a group element $g \in G$}}
+\MyNewMathOperator{\centralizer}	{operator={C}, display={$\centralizer_G(A)$}, description={Centralizer of the subset $A$ of $G$}}
+\MyNewMathOperator{\AdAction}		{operator={Ad}, display={$\AdAction[_g]$}, description={Adjoint action of $g \in G$ on the Lie algebra $\LieA{g}$ of $G$}}
+\MyNewMathOperator{\CoAdAction}		{command={\operatorname{Ad}^*}, display={$\CoAdAction[_g]$}, description={Coadjoint action of $g \in G$ on the dual $\LieA{g}^*$ of the Lie algebra $\LieA{g}$ of $G$ defined by $\dualPair{\CoAdAction_g \mu}{\xi} = \dualPair{\mu}{\AdAction_{g^{-1}} \xi}$}}
+\NewDocumentCommand \unaryminus { } { \scalebox{0.75}[1.0]{\( \scriptstyle - \)} }
+\MyNewMathOperator{\CoAdMAction}	{command={\operatorname{Ad}^{\unaryminus*}}, display={$\CoAdMAction[_g]$}, description={Coadjoint action, as a left action, of a group element $g \in G$ on the dual of the Lie algebra $\LieA{g}$}}
+\MyNewMathOperator{\CoAdOrbit}		{command={\mathcal{O}}, display={$\CoAdOrbit_\mu$}, description={Coadjoint orbit through $\mu \in \LieA{g}^*$}}
+\MyNewMathOperator{\adAction}		{operator={ad}, display={$\adAction[_A]$}, description={Adjoint action of $A \in \LieA{g}$ on the Lie algebra $\LieA{g}$}}
+\MyNewMathOperator{\CoadAction}		{command={\operatorname{ad}^*}, display={$\CoadAction[_A]$}, description={Coadjoint action of $A \in \LieA{g}$ on the dual $\LieA{g}^*$ of $\LieA{g}$}}
+\MyNewMathOperator{\CoadMAction}	{command={\operatorname{ad}^{\unaryminus*}}, display={$\CoadMAction[_\xi]$}, description={Coadjoint action, as a left action, of a Lie algebra element $\xi \in \LieA{g}$ on the dual of the Lie algebra $\LieA{g}$}}
+\MyNewMathOperator{\conjAction}		{operator={conj}, display={$\conjAction[_g]$}, description={Conjugation action of $g \in G$ on $G$}}
+
+\NewDocumentCommand{\contrInternal}{}{\mathbin{\rule[.1ex]{.4em}{.04em}\rule[.1ex]{.04em}{.4em}}\,}
+\MyNewMathOperator{\contr}			{command={\protect\contrInternal}, sort={contr}, display={$X \contr \alpha$}, description={Interior product of the vector field $X$ with the differential form $\alpha$}}
+\MyNewMathOperator{\hatProduct}		{command={\mathbin{\hat{\ast}}}, sort={hatProduct}, display={$\alpha \hatProduct \beta$}, description={The hat product of the differential forms $\alpha$ and $\beta$}}
+% TODO: Check + evt extend flow
+\MyNewMathOperator{\flow}			{operator={FL}, display={$\flow^X$}, description={Flow of the vector field $X$}}
+\MyNewMathOperator{\tensorProd}		{command={\otimes}, sort={tensor}, display={$A \tensorProd B$}, description={The tensor product of $A$ and $B$}}
+%\NewDocumentCommand{\externalTensorInternal}{}{\raisebox{0.3pt}{\scalebox{0.9}{$\medmuskip\boxtimes\medmuskip$}}}
+\NewDocumentCommand{\externalTensorInternal}{}{\boxtimes}
+\MyNewMathOperator{\externalTensor}	{command={\protect\externalTensorInternal}, sort={tensor ext}, display={$A \externalTensor B$}, description={The external tensor product of $A$ and $B$}}
+
+% TODO: Not operator, but mathrm!!
+\MyNewMathOperator{\SequenceSpace}	{command={\ell}, display={$\SequenceSpace^p$}, description={Space of sequences $(x_n)$ satisfying $\sum_n \abs{x_n}^p < \infty$}}
+
+\MyNewMathOperator{\TBundle}		{command={\mathrm{T}}, display={$\TBundle M$}, description={Tangent bundle of the manifold $M$}}
+\MyNewMathOperator{\CotBundle}		{command={\mathrm{T}^*}, sort={T star}, display={$\CotBundle M$}, description={Cotangent bundle of the manifold $M$}}
+\MyNewMathOperator{\CotBundleProj}	{command={\protect\accentset{\star}{\tau}}, sort={tau star}, display={$\CotBundleProj$}, description={The canonical projection $\CotBundleProj: \CotBundle M \to M$ of the cotangent bundle}}
+\MyNewMathOperator{\ExtBundle}		{command={\Lambda}, sort={Lambda}, display={$\ExtBundle[^k] M$}, description={$k$-th exterior power of the cotangent bundle of the manifold $M$}}
+\MyNewMathOperator{\EndBundle}		{command={\mathrm{End}}, display={$\EndBundle(E)$}, description={Bundle whose sections are vector bundle morphisms from $E$ to $E$}}
+\MyNewMathOperator{\SymBundle}		{operator={S}, display={$\SymBundle^k M$}, description={$k$-th symmetric tensor power bundle of the cotangent bundle of the manifold $M$}}
+\MyNewMathOperator{\DensityBundle}		{command={\abs{\operatorname{\Lambda}}}, display={$\DensityBundle[^r] M$}, sort={Lambda abs}, description={Bundle of $r$-densities (on the tangent bundle) of the manifold $M$}}
+\MyNewMathOperator{\oneDensityBundle}	{command={\DensityBundle^1}, display={$\oneDensityBundle M$}, sort={Lambda abs one}, description={Bundle of densities (on the tangent bundle) of the manifold $M$}}
+\MyNewMathOperator{\halfDensityBundle}	{command={\DensityBundle[^{\sfrac{1}{2}}]}, display={$\halfDensityBundle M$}, sort={Lambda abs half}, description={Bundle of half-densities (on the tangent bundle) of the manifold $M$}}
+\MyNewMathOperator{\VBundle}		{command={\mathrm{V}}, display={$\VBundle E$}, description={Vertical bundle of the fiber bundle $E$}}
+\MyNewMathOperator{\VDensityBundle}	{command={\abs{\operatorname{V \Lambda}}}, display={$\VDensityBundle^r E$}, sort={Lambda abs v}, description={Bundle of $r$-densities on the vertical bundle $\VBundle E$}}
+\MyNewMathOperator{\HBundle}		{command={\mathrm{H}}, display={$\HBundle E$}, description={Horizontal bundle of the fiber bundle $E$ induced by a connection in $E$}}
+\MyNewMathOperator{\NBundle}		{command={\mathrm{N}}, display={$\NBundle[^\iota] S$}, description={Normal bundle of the immersion $\iota:S \to N$}}
+\MyNewMathOperator{\AdBundle}		{command={\mathrm{Ad}}, display={$\AdBundle P$}, description={Adjoint bundle $\AdBundle P = P \times_G \LieA{g}$ associated to the principal $G$-bundle $P$}}
+\MyNewMathOperator{\FrameBundle}		{command={\mathrm{L}}, display={$\FrameBundle M$}, description={Frame bundle of the manifold $M$}}
+\MyNewMathOperator{\SpinBundle}		{command={\mathrm{Spin}}, display={$\SpinBundle M$}, description={Spin bundle of the manifold $M$}}
+\MyNewMathOperator{\SpinCBundle}		{command={\mathrm{Spin}^\C}, display={$\SpinCBundle M$}, description={Spin$\C$ bundle of the manifold $M$}}
+\MyNewMathOperator{\SpinorBundle}		{command={\Delta}, display={$\SpinorBundle M$}, description={Spinor bundle of the manifold $M$}}
+\MyNewMathOperator{\CoSpinorBundle}		{command={\Delta^*}, display={$\CoSpinorBundle M$}, description={Dual spinor bundle of the manifold $M$}}
+\MyNewMathOperator{\SpBundle}		{command={\mathrm{Sp}}, display={$\SpBundle M$}, description={Symplectic frame bundle of the symplectic manifold $(M, \omega)$}}
+\MyNewMathOperator{\CoAdBundle}		{command={\mathrm{Ad}^*}, sort={Ad star}, display={$\CoAdBundle P$}, description={Coadjoint bundle $\CoAdBundle = P \times_G \LieA{g}^*$ associated to the principal $G$-bundle $P$}}
+\MyNewMathOperator{\ConjBundle}		{operator={Conj}, display={$\ConjBundle P$}, description={The bundle associated to the principal bundle $P$ by the conjugation action of $G$ on itself}}
+\MyNewMathOperator{\AtBundle}		{operator={At}, display={$\AtBundle P$}, description={Atiyah bundle associated to the principal bundle $P$}}
+\MyNewMathOperator{\JetBundle}		{command={\mathrm{J}}, display={$\JetBundle^r E$}, description={$r$-th jet bundle of the fiber bundle $E$}}
+\MyNewMathOperator{\JetSpace}		{operator={J}, display={$\JetSpace^r M$}, description={$r$-th jet space of the manifold $M$}}
+\MyNewMathOperator{\pJetBundle}		{command={\mathrm{W}}, display={$\pJetBundle^r P$}, description={$r$-th principal jet prolongation of the principal bundle $P$}}
+\MyNewMathOperator{\HomBundle}		{command={\mathrm{Hom}}, display={$\HomBundle(E, F)$}, description={Homomorphism bundle of the vector bundles $E$ and $F$}}
+\MyNewMathOperator{\ConnBundle}		{command={\mathrm{C}}, display={$\ConnBundle P$}, description={Bundle of connections on the principal bundle $P$}}
+% \MyNewMathOperator{\UniEBundle}	{operator={E}, description={Total space of universal bundle}}
+% \MyNewMathOperator{\UniBBundle}	{operator={B}, description={Base space of universal bundle}}
+\MyNewMathOperator{\KBundle}		{command={\mathrm{K}}, display={$\KBundle M$}, description={The canonical line bundle of the complex manifold $M$}}
+\MyNewMathOperator{\OrientationBundle}	{command={\mathrm{Or} \mkern 1mu}, display={$\OrientationBundle M$}, description={The orientation bundle of $M$}}
+\MyNewMathOperator{\LinMapBundle}		{command={\mathrm{L}}, display={$\LinMapBundle(X,Y)$}, description={Space of (continuous) linear bundle maps between (topological) vector bundles $X$ and $Y$}}
+
+\MyNewMathOperator{\LinMapSpace}		{operator={L}, display={$\LinMapSpace(X,Y)$}, description={Space of (continuous) linear maps between (topological) vector spaces $X$ and $Y$}}
+\MyNewMathOperator{\GLinMapSpace}	{operator={GL}, display={$\GLinMapSpace(X,Y)$}, description={Space of (continuous) linear bijections between (topological) vector spaces $X$ and $Y$}}
+\MyNewMathOperator{\FlagSpace}	{operator={Flag}, display={$\FlagSpace(V)$}, description={Space of flags in the vector spaces $V$}}
+\MyNewMathOperator{\LagSpace}	{operator={Lag}, display={$\LagSpace(V, \omega)$}, description={Space of Lagrangian subspaces in the symplectic vector spaces $(V, \omega)$}}
+\MyNewMathOperator{\FunctionSpace}	{command={\operatorname{C}}, display={$\FunctionSpace(M)$}, sort={C}, description={Space of functions on the manifold $M$}}
+\MyNewMathOperator{\sFunctionSpace}	{command={\operatorname{C}^\infty}, display={$\sFunctionSpace(M)$}, sort={C infinity}, description={Space of smooth functions on the manifold $M$}}
+\MyNewMathOperator{\cFunctionSpace}	{command={\operatorname{C}^0}, display={$\cFunctionSpace(X)$}, sort={C 0}, description={Space of continuous functions on the topological space $X$}}
+\MyNewMathOperator{\scFunctionSpace}	{command={\operatorname{C}^\infty_{\textnormal{c}}}, display={$\scFunctionSpace(M)$}, sort={C infinity c}, description={Space of smooth, compactly supported functions on the manifold $M$}}
+\MyNewMathOperator{\LFunctionSpace}	{command={\mathrm{L}}, display={$\LFunctionSpace^p(X)$}, sort={L}, description={Space of functions on the measure space $X$ for which the $p$-th power of the absolute value is Lebesgue integrable}}
+\MyNewMathOperator{\LTwoFunctionSpace}	{command={\LFunctionSpace^2}, display={$\LTwoFunctionSpace(X)$}, sort={L 2}, description={Space of square-integrable functions on the measure space $X$}}
+\MyNewMathOperator{\HFunctionSpace}				{command={\mathrm{H}}, display={$\HFunctionSpace^s(X)$}, sort={H}, description={Sobolev space}}
+\MyNewMathOperator{\SectionSpace}				{command={\Gamma}, sort={Gamma}, display={$\SectionSpace(E)$}, description={Space of sections of fiber bundle $E$}}
+\MyNewMathOperator{\sSectionSpace}				{command={\SectionSpace^\infty}, display={$\sSectionSpace(E)$}, sort={Gamma infinity}, description={Space of smooth sections of the fiber bundle $E$}}
+\MyNewMathOperator{\scSectionSpace}				{command={\SectionSpace^\infty_{\textnormal{c}}}, display={$\scSectionSpace(E)$}, sort={Gamma infinity c}, description={Space of smooth, compactly supported sections of fiber bundle $E$}}
+\MyNewMathOperator{\cSectionSpace}				{command={\SectionSpace^{\textnormal{c}}}, display={$\cSectionSpace(E)$}, sort={Gamma c}, description={Space of continuous sections of fiber bundle $E$}}
+\MyNewMathOperator{\psSectionSpace}				{command={\SectionSpace^\propto}, display={$\psSectionSpace(E)$}, sort={Gamma ps}, description={Space of piecewise smooth sections of fiber bundle $E$}}
+\MyNewMathOperator{\holSectionSpace}			{command={\mathrm{H}}, display={$\holSectionSpace(E)$}, sort={H}, description={Space of holomorphic sections of the complex fiber bundle $E$}}
+\NewDocumentCommand{\SectionSpaceAbb}{m}{\mathcal{#1}}		% Section space (abbreviated = only calligraphic)
+% %TODO exampleMath
+\NewDocumentCommand{\SectionMapAbb}{m}{\mathcal{#1}}		% Maps between section spaces (abbreviated)
+%\NewDocumentCommand{\FibreBundleModel}{m}{\vec{#1}}		% The model space of the fiber of a bundle
+\NewDocumentCommand{\FibreBundleModel}{m}{\underline{#1}}		% The model space of the fiber of a bundle
+\MyNewMathOperator{\DiffOpSpace}		{command={\mathcal{Do}}, display={$\DiffOpSpace^r(E,F)$}, sort={Do}, description={Space of differential operators of degree $r$ between fiber bundles $E$ and $F$}}
+\MyNewMathOperator{\PseudoDiffOpSpace}	{operator={\Psi}, sort={Psi}, description={Space of pseudo-differential operators}}
+\NewDocumentCommand\TestFunctionSpace{}{ \scFunctionSpace }
+\NewDocumentCommand\TestSectionSpace{}{ \scSectionSpace }
+\MyNewMathOperator{\DistributionSpace}		{command={\mathcal{D}}, display={$\DistributionSpace(E), \DistributionSpace(M)$}, sort={D}, description={Space of distributions on $E$ (or on $M$)}}
+\MyNewMathOperator{\cDistributionSpace}		{command={\DistributionSpace_{\textnormal{c}}}, display={$\cDistributionSpace(E)$}, sort={D c}, description={Space of compactly supported distributions on $E$}}
+% \MyNewMathOperator{\TestFunctionSpace}	{command={\mathcal{D}}, display={$\TestFunctionSpace(E), \TestFunctionSpace(M)$}, sort={D}, description={Space of test sections of $E$ (or functions on $M$)}}
+% \MyNewMathOperator{\DistributionSpace}	{command={\TestFunctionSpace'}, display={$\DistributionSpace(E), \DistributionSpace(M)$}, sort={D'}, description={Space of distributions on $E$ (or on $M$)}}
+\MyNewMathOperator{\CoNormalDistributionSpace}{operator={I}, display={$\CoNormalDistributionSpace^r(E; S)$}, description={Space of distributions of degree $r$ on $E$ conormal to the submanifold $S$}}
+\MyNewMathOperator{\SchwartzSectionSpace}	{command={\mathcal{S}}, display={$\SchwartzSectionSpace(E)$}, sort={S}, description={Space of Schwartz $r$-densities of $E$}}
+\MyNewMathOperator{\halfSchwartzSectionSpace}	{command={\SchwartzSectionSpace^{\sfrac{1}{2}}}, display={$\halfSchwartzSectionSpace(E)$}, sort={S half}, description={Space of Schwartz half-densities of $E$}}
+\MyNewMathOperator{\temperedDistributionSpace}{command={\SchwartzSectionSpace'}, display={$\temperedDistributionSpace(E)$}, sort={S'}, description={Space of tempered distributions on $E$}}
+\MyNewMathOperator{\locIntSectionSpace}		{command={\operatorname{\mathcal{L}}_{\textnormal{loc}}}, display={$\locIntSectionSpace(E), \locIntSectionSpace(M)$}, sort={L loc}, description={Space of locally integrable sections of $E$ (or functions on $M$)}}
+\MyNewMathOperator{\BesovSectionSpace}	{command={\mathcal{H}}, sort={H}, display={$\SchwartzSectionSpace(E)$}, description={Besov space}}
+\MyNewMathOperator{\locBesovSectionSpace}	{command={\BesovSectionSpace_{\textnormal{loc}}}, display={$\locBesovSectionSpace(E)$}, sort={H loc}, description={local Besov space}}
+\MyNewMathOperator{\SymbolSpace}		{operator={Symb}, display={$\SymbolSpace$}, description={Space of symbols}}
+\MyNewMathOperator{\DiffFormSpace}		{command={\Omega}, sort={Omega}, display={$\DiffFormSpace[^k](M;E)$}, description={Space of differential $k$-forms on the manifold $M$ with values in the vector bundle $E \to M$}}
+\MyNewMathOperator{\clDiffFormSpace}	{command={\operatorname{\Omega}_{\textnormal{cl}}}, sort={Omegacl}, display={$\clDiffFormSpace[^k](M;\R)$}, description={Space of closed real-valued differential $k$-forms on the manifold $M$}}
+\MyNewMathOperator{\clZDiffFormSpace}	{command={\operatorname{\Omega}_{\textnormal{cl}, \Z}}, sort={OmegaclZ}, display={$\clZDiffFormSpace[^k](M;\R)$}, description={Space of closed real-valued differential $k$-forms on the manifold $M$ whose periods are integral}}
+\MyNewMathOperator{\VectorFieldSpace}			{command={\mathfrak{X}}, sort={X}, display={$\VectorFieldSpace(M)$}, description={Space of vector fields on the manifold $M$}}
+\MyNewMathOperator{\TensorFieldSpace}			{command={\mathcal{T}}, sort={T}, display={$\TensorFieldSpace^{q, r}(M)$}, description={Space of tensor fields on the manifold $M$}}
+\MyNewMathOperator{\SymTensorFieldSpace}		{command={\mathcal{Sym}}, sort={Sym}, display={$\SymTensorFieldSpace^{q, r}(M)$}, description={Space of symmetric tensor fields on the manifold $M$}}
+\MyNewMathOperator{\DensitySpace}		{command={\abs{\operatorname{\Omega}}}, sort={Omega abs}, display={$\DensitySpace[^r](M)$}, description={Space of $r$-densities on the manifold $M$}}
+\MyNewMathOperator{\cDensitySpace}	{command={\DensitySpace[_{\textnormal{c}}]}, sort={Omega c abs}, display={$\cDensitySpace[^r](M)$}, description={Space of compactly-supported $r$-densities on the manifold $M$}}
+\MyNewMathOperator{\MetricSpace}				{command={\mathcal{Metr}}, sort={Metr}, display={$\MetricSpace(M)$}, description={Space of Riemannian metrics on the manifold $M$}}
+\MyNewMathOperator{\VolSpace}					{command={\mathcal{Vol}}, sort={Vol}, display={$\VolSpace(M)$}, description={Space of volume forms on the manifold $M$}}
+\MyNewMathOperator{\EmbeddingSpace}				{command={\mathcal{Emb}}, sort={Emb}, display={$\EmbeddingSpace(S, M)$}, description={Space of embeddings of the manifold $S$ in the manifold $M$}}
+\MyNewMathOperator{\ImmersionSpace}				{command={\mathcal{Imm}}, sort={Imm}, display={$\ImmersionSpace(S, M)$}, description={Space of immersions of the manifold $S$ in the manifold $M$}}
+\MyNewMathOperator{\AutGroup}					{command={\mathcal{Aut}}, sort={Aut}, display={$\AutGroup(P)$}, description={Group of bundle automorphism of the principal bundle $P$}}
+\MyNewMathOperator{\AutAlgebra}					{command={\mathfrak{aut}}, sort={aut}, display={$\AutAlgebra(P)$}, description={Lie algebra of infinitesimal bundle automorphism of the principal bundle $P$}}
+\MyNewMathOperator{\GauGroup}					{command={\mathcal{Gau}}, sort={Gau}, display={$\GauGroup(P)$}, description={Group of gauge transformation of the principal bundle $P$}}
+\MyNewMathOperator{\GauAlgebra}					{command={\mathfrak{gau}}, sort={gau}, display={$\GauAlgebra(P)$}, description={Lie algebra of infinitesimal gauge transformation of the principal bundle $P$}}
+\MyNewMathOperator{\CoGauAlgebra}				{command={\mathfrak{gau}^*}, sort={gauStar}, display={$\CoGauAlgebra(P)$}, description={Sections of the coadjoint bundle associated to the principal bundle $P$}}
+\MyNewMathOperator{\DiffGroup}					{command={\mathcal{Diff}}, sort={Diff}, display={$\DiffGroup(M)$}, description={Group of diffeomorphisms of the manifold $M$}}
+\MyNewMathOperator{\HamDiffGroup}				{command={\mathcal{Ham}}, sort={Ham}, display={$\HamDiffGroup(M, \omega)$}, description={Group of Hamiltonian diffeomorphisms of the symplectic manifold $(M, \omega)$}}
+\MyNewMathOperator{\HamVectorFields}			{command={\mathfrak{ham}}, sort={ham}, display={$\HamVectorFields(M, \omega)$}, description={Lie algebra of Hamiltonian vector fields of the symplectic manifold $(M, \omega)$}}
+\MyNewMathOperator{\ConnSpace}					{command={\mathcal{C}}, sort={C}, display={$\ConnSpace(P)$}, description={Space of connections of the principal bundle $P$}}
+\MyNewMathOperator{\cenConnSpace}	{command={\operatorname{\mathcal{Conn}}_{\aCenter}}, sort={Conn z}, display={$\cenConnSpace(P)$}, description={Space of central connections of the principal bundle $P$}}
+\MyNewMathOperator{\cenYMConnSpace}	{command={\operatorname{\mathcal{Conn}}_{\aCenter \textnormal{YM}}}, sort={Conn z YM}, display={$\cenYMConnSpace(P)$}, description={Space of central Yang--Mills connections of the principal bundle $P$}}
+\MyNewMathOperator{\PathSpace}		{command={\operatorname{\mathcal{P}}}, sort={P}, display={$\PathSpace[_{\star \rightarrow \ast}] (M)$}, description={Space of all paths in $M$ starting at $\star \in M$ and ending at $\ast \in M$}}
+\MyNewMathOperator{\sPathSpace}		{command={\operatorname{\mathcal{P}}^\infty}, sort={P infinity}, display={$\sPathSpace[_{\star \rightarrow \ast}] (M)$}, description={Space of all smooth paths in $M$ starting at $\star \in M$ and ending at $\ast \in M$}}
+\MyNewMathOperator{\psPathSpace}		{command={\operatorname{\mathcal{P}}^\propto}, sort={P ps}, display={$\psPathSpace[_{\star \rightarrow \ast}] (M)$}, description={Space of all piecewise-smooth paths in $M$ starting at $\star \in M$ and ending at $\ast \in M$}}
+\MyNewMathOperator{\cPathSpace}		{command={\operatorname{\mathcal{P}}^{\textnormal{c}}}, sort={P c}, display={$\cPathSpace[_{\star \rightarrow \ast}] (M)$}, description={Space of all continuous paths in $M$ starting at $\star \in M$ and ending at $\ast \in M$}}
+\MyNewMathOperator{\LoopSpace}		{command={\operatorname{\mathcal{L}}}, sort={L}, display={$\LoopSpace[_\star](M)$}, description={Space of all closed paths in $M$ starting and ending at $\star \in M$}}
+\MyNewMathOperator{\sLoopSpace}		{command={\operatorname{\mathcal{L}}^\infty}, sort={L infinity}, display={$\sLoopSpace[_\star](M)$}, description={Space of all closed, smooth paths in $M$ starting and ending at $\star \in M$}}
+\MyNewMathOperator{\psLoopSpace}		{command={\operatorname{\mathcal{L}}^\propto}, sort={L ps}, display={$\psLoopSpace[_\star](M)$}, description={Space of all closed, piecewise smooth paths in $M$ starting and ending at $\star \in M$}}
+\MyNewMathOperator{\cLoopSpace}		{command={\operatorname{\mathcal{L}}^{\textnormal{c}}}, sort={L c}, display={$\cLoopSpace[_\star](M)$}, description={Space of all closed, continuous paths in $M$ starting and ending at $\star \in M$}}
+\MyNewMathOperator{\RepSpace}		{operator={Rep}, display={$\RepSpace(G)$}, description={Space of representations of the group $G$}}
+\MyNewMathOperator{\posSSymSpace}	{command={\mathrm{SSym}^+}, display={$\posSSymSpace(n)$}, description={The space of symmetric positive definite $n \times n$ matrices with determinant $1$}}
+\MyNewMathOperator{\MatrixSpace}		{command={\mathrm{M}}, display={$\MatrixSpace(k \times l, \R)$}, description={The space of real $k \times l$ matrices}}
+\MyNewMathOperator{\SiegelSpace}		{command={\field{SH}}, display={$\SiegelSpace^n$}, description={The Siegel upper half space of degree $n$}}
+\let\H\relax					% delete previous meaning: print a long Hungarian umlaut
+\MyNewMathOperator{\H}			{command={\field{H}}, display={$\H^n$}, description={The upper half plane in dimension $n$}}
+
+\MyNewMathOperator{\hor}			{operator={hor}, display={$\hor[^{\check{\star}}_A](\gamma)$}, description={Lift of a path $\gamma$ starting at $\star$ to a horizontal path in the bundle (with respect to the connection $A$) starting at $\check{\star}$}}
+\MyNewMathOperator{\Hol}			{operator={Hol}, display={$\Hol[^{\star}_A](\gamma)$}, description={Holonomy of a closed path $\gamma$ with respect to the connection $A$ and the point $\star$ in the bundle}}
+
+\MyNewMathOperator{\UGroup}			{operator={U}, display={$\UGroup(n)$}, description={Unitary group of degree $n$}}
+\MyNewMathOperator{\UAlgebra}		{command={\operatorname{\LieA{u}}}, display={$\UAlgebra(n)$}, description={Unitary Lie algebra of degree $n$}}
+\MyNewMathOperator{\SUGroup}		{operator={SU}, display={$\SUGroup(n)$}, description={Special unitary group of degree $n$}}
+\MyNewMathOperator{\SUAlgebra}		{command={\operatorname{\LieA{su}}}, display={$\SUAlgebra(n)$}, description={Special unitary Lie algebra of degree $n$}}
+\MyNewMathOperator{\PUGroup}		{operator={PU}, display={$\PUGroup(n)$}, description={Projective unitary group of degree $n$}}
+\MyNewMathOperator{\OGroup}		{operator={O}, display={$\OGroup(n)$}, description={Orthogonal group of degree $n$}}
+\MyNewMathOperator{\OAlgebra}		{command={\operatorname{\LieA{o}}}, display={$\OAlgebra(n)$}, description={Orthogonal Lie algebra of degree $n$}}
+\MyNewMathOperator{\SOGroup}		{operator={SO}, display={$\SOGroup(n)$}, description={Special orthogonal group of degree $n$}}
+\MyNewMathOperator{\SOAlgebra}		{command={\operatorname{\LieA{so}}}, display={$\SOAlgebra(n)$}, description={Special orthogonal Lie algebra of degree $n$}}
+\MyNewMathOperator{\SpinGroup}		{operator={Spin}, display={$\SpinGroup(n)$}, description={Spin group in degree $n$}}
+\MyNewMathOperator{\SpinCGroup}		{command={\SpinGroup^\C}, display={$\SpinCGroup(n)$}, description={Spin-$\C$ group in degree $n$}}
+\MyNewMathOperator{\SpinRep}		{command={\Delta}, display={$\SpinRep_n$}, description={Complex representation space for the spin group.}}
+\MyNewMathOperator{\cl}				{command={\operatorname{cl}}, display={$\cl$}, description={Clifford multiplication $\cl: \R^n \times \SpinRep_n \to \SpinRep_n$.}}
+\MyNewMathOperator{\SLGroup}		{operator={SL}, display={$\SLGroup(n)$}, description={Special linear group of degree $n$}}
+\MyNewMathOperator{\GLGroup}		{operator={GL}, display={$\GLGroup(n)$}, description={General linear group of degree $n$}}
+\MyNewMathOperator{\GLAlgebra}		{command={\operatorname{\LieA{gl}}}, display={$\GLAlgebra(n)$}, description={General linear Lie algebra of degree $n$}}
+\MyNewMathOperator{\SLAlgebra}		{command={\operatorname{\LieA{sl}}}, display={$\SLAlgebra(n)$}, description={Special linear Lie algebra of degree $n$}}
+\MyNewMathOperator{\SpGroup}		{operator={Sp}, display={$\SpGroup(n)$}, description={Symplectic group of degree $n$}}
+\MyNewMathOperator{\SpAlgebra}		{command={\operatorname{\LieA{sp}}}, display={$\SpAlgebra(n)$}, description={Symplectic Lie algebra of degree $n$}}
+\MyNewMathOperator{\USpGroup}		{operator={USp}, display={$\USpGroup(n)$}, description={Compact symplectic group of degree $n$}}
+\MyNewMathOperator{\UTGroup}		{operator={UT}, display={$\UTGroup(n, F)$}, description={Group of upper triangular matrices}}
+\MyNewMathOperator{\MpGroup}		{operator={Mp}, display={$\MpGroup(n)$}, description={Metaplectic group of degree $n$}}
+
+\MyNewMathOperator{\HolGroup}		{operator={Hol}, display={$\HolGroup[^{\star}](A)$}, description={Holonomy group of the connection $A$ relative to the point $\star$ in the bundle}}
+\MyNewMathOperator{\HolAlgebra}		{command={\operatorname{\LieA{hol}}}, display={$\HolAlgebra[^{\check{\star}}](A)$}, description={The holonomy algebra with respect to the connection $A$ and a chosen point $\check{\star}$ in the bundle}}
+\MyNewMathOperator{\pJetGroup}		{command={\mathrm{W}},, display={$\pJetGroup^r G$}, description={$r$-th principal jet prolongation of the Lie group $G$}}
+\MyNewMathOperator{\pJetAlgebra}	{command={\mathrm{W}},, display={$\pJetAlgebra^r \LieA{g}$}, description={$r$-th principal jet prolongation of the Lie algebra $\LieA{g}$}}
+
+% TODO description chernClass
+\MyNewMathOperator{\chernClass}		{operator={ch}, display={$\chernClass[_k](E)$}, description={The $k$-th Chern class of the vector bundle $E \to M$}}
+\MyNewMathOperator{\stiefelWhitneyClass}	{operator={w}, display={$\stiefelWhitneyClass[_k](E)$}, description={The $k$-th Stiefel-Whitney class of the vector bundle $E \to M$}}
+\MyNewMathOperator{\pontryaginClass}		{operator={p}, display={$\pontryaginClass[_k](E)$}, description={$k$-th Pontryagin class of the vector bundle $E \to M$}}
+\MyNewMathOperator{\JacTorus}		{operator={Jac}, display={$\JacTorus[^k](M)$}, description={The Jacobian torus of degree $k$ of the manifold $M$}}
+
+\MyNewMathOperator{\fundamentalGroup}	{command={\mathrm{\pi}}, display={$\fundamentalGroup_k(M, m)$}, description={$k$-th fundamental group of the manifold $M$ based at the point $m \in M$}}
+\MyNewMathOperator{\sChain}			{operator={C}, display={$\sChain[_k](M, A)$}, description={$k$-th singular homology group of the manifold $M$ with values in the abelian group $A$}}
+\MyNewMathOperator{\sCycles}		{operator={Z}, display={$\sCycles[_k](M, A)$}, description={$k$-th singular cycles in the manifold $M$ with values in the abelian group $A$}}
+\MyNewMathOperator{\sBoundaries}	{operator={B}, display={$\sBoundaries[_k](M, A)$}, description={$k$-th singular boundaries in the manifold $M$ with values in the abelian group $A$}}
+\MyNewMathOperator{\sHomology}		{operator={H}, display={$\sHomology[_k](M, R)$}, description={$k$-th singular homology group of the manifold $M$ with values in the ring $R$}}
+\MyNewMathOperator{\sCochain}		{operator={C}, display={$\sCochain[^k](M, R)$}, description={$k$-th singular cochain group of the manifold $M$ with values in the ring $R$}}
+\MyNewMathOperator{\sCocycles}		{operator={Z}, display={$\sCocycles[^k](M, R)$}, description={$k$-th singular cocycles in the manifold $M$ with values in the ring $R$}}
+\MyNewMathOperator{\sCoboundaries}	{operator={B}, display={$\sCoboundaries[^k](M, R)$}, description={$k$-th singular coboundaries in the manifold $M$ with values in the ring $R$}}
+\MyNewMathOperator{\sCohomology}	{operator={H}, display={$\sCohomology[^k](M, R)$}, description={$k$-th singular cohomology group of the manifold $M$ with values in the ring $R$}}
+\MyNewMathOperator{\csCohomology}	{command={\hat{\mathrm{H}}}, display={$\csCohomology[^k](M, \UGroup(1))$}, description={$k$-th Cheeger--Simons differential cohomology group of the manifold $M$}}
+\MyNewMathOperator{\csAlgebra}		{command={\hat{\mathfrak{h}}}, display={$\csAlgebra[^k](M, \UGroup(1))$}, description={Lie algebra of the $k$-th Cheeger--Simons differential cohomology group of the manifold $M$}}
+\MyNewMathOperator{\deRCohomology}	{operator={H}, display={$\deRCohomology[^k](M, R)$}, description={$k$-th de Rham cohomology group of the manifold $M$ with values in $R$}}
+\MyNewMathOperator{\cechCohomology}	{command={\hat{\mathrm{H}}}, display={$\csCohomology^k(M, A)$}, description={$k$-th Čech cohomology of the manifold $M$ with values in the group $A$}}
+\MyNewMathOperator{\gCochain}		{operator={C}, display={$\gCochain[^k](G, R)$}, description={$k$-th cochains of $G$ with values in the ring $R$}}
+\MyNewMathOperator{\gCocycles}		{operator={Z}, display={$\gCocycles[^k](G, R)$}, description={$k$-th group/algebra cocycles with values in the ring $R$}}
+\MyNewMathOperator{\gCoboundaries}	{operator={B}, display={$\gCoboundaries[^k](G, R)$}, description={$k$-th group/algebra coboundaries with values in the ring $R$}}
+\MyNewMathOperator{\gCohomology}	{operator={H}, display={$\gCohomology[^k](G, R)$}, description={$k$-th group/algebra cohomology with values in the ring $R$}}
+\NewDocumentCommand\simplex{}{ \vartriangle }		% triangle
+\DeclareDocumentCommand\boundary{}{ \partial }		% partial
+\NewDocumentCommand\coboundary{}{ \updelta }		% delta
+
+\MyNewMathOperator{\per}			{operator={per}, display={$\per_\alpha$}, description={Period homomorphism of $\alpha \in \DiffFormSpace^1(M, \LieA{g})$}}
+\MyNewMathOperator{\curv}			{operator={curv}, display={$\curv A$}, description={Curvature form of the connection $A$}}
+
+% Integrals
+% TODO Document
+
+% Provide \intbar command if not defined by font
+\makeatletter
+\newcommand*{\Xint}[1]{
+	\@ifnextchar_{
+		\Xintsub{#1}
+	}{
+		\XXint{#1}{}
+	}
+}
+\def\Xintsub#1_#2{
+	\XXint{#1}{#2}
+}
+\makeatother
+\ExplSyntaxOn
+
+\tl_if_exist:NF \l_myclass_font_tl {
+	\tl_const:Nn \l_myclass_font_tl {latinmodern}
+}
+
+\str_case_e:nn { \l_myclass_font_tl } 
+{
+	{ libertine } {
+		\NewDocumentCommand\XXint{m m}{
+			\mathchoice
+				{\XXXint\displaystyle\textstyle{#1}{#2}}
+				{\XXXint\textstyle\scriptstyle{#1}{#2}\!}
+				{\XXXint\scriptstyle\scriptscriptstyle{#1}{#2}\!}
+				{\XXXint\scriptscriptstyle\scriptscriptstyle{#1}{#2}}
+			\!
+			\tl_if_blank:nTF{#2}{\int}{\int\c_math_subscript_token{#2}}
+		}
+	}
+	{ kepler } {
+		\NewDocumentCommand\XXint{m m}{
+			\mathchoice
+				{\XXXint\displaystyle\textstyle{#1}{#2}}
+				{\XXXint\textstyle\scriptstyle{#1}{#2}\!}
+				{\XXXint\scriptstyle\scriptscriptstyle{#1}{#2}\!}
+				{\XXXint\scriptscriptstyle\scriptscriptstyle{#1}{#2}}
+			\!
+			\tl_if_blank:nTF{#2}{\int}{\int\c_math_subscript_token{#2}}
+		}
+	}
+	{ palatino } {
+		\NewDocumentCommand\XXint{m m}{
+			\mathchoice
+				{\XXXint\displaystyle\textstyle{#1}{#2}}
+				{\XXXint\textstyle\scriptstyle{#1}{#2}\tl_if_blank:nTF{#2}{\!}{\mkern 1.5mu}}
+				{\XXXint\scriptstyle\scriptscriptstyle{#1}{#2}\!}
+				{\XXXint\scriptscriptstyle\scriptscriptstyle{#1}{#2}}
+			\!
+			\tl_if_blank:nTF{#2}{\int}{\int\c_math_subscript_token{#2}}
+		}
+	}
+	{ latinmodern } {
+		\NewDocumentCommand\XXint{m m}{
+			\mathchoice
+				{\XXXint\displaystyle\textstyle{#1}{#2}}
+				{\XXXint\textstyle\scriptstyle{#1}{#2}\!}
+				{\XXXint\scriptstyle\scriptscriptstyle{#1}{#2}\!}
+				{\XXXint\scriptscriptstyle\scriptscriptstyle{#1}{#2}}
+			\!
+			\tl_if_blank:nTF{#2}{\int}{\int\c_math_subscript_token{#2}}
+		}
+	}
+	{ minion } {
+		\NewDocumentCommand\XXint{m m}{
+			\mathchoice
+				{\XXXint\displaystyle\textstyle{#1}{#2}}
+				{\XXXint\textstyle\scriptstyle{#1}{#2}\!}
+				{\XXXint\scriptstyle\scriptscriptstyle{#1}{#2}\!}
+				{\XXXint\scriptscriptstyle\scriptscriptstyle{#1}{#2}}
+			\!
+			\tl_if_blank:nTF{#2}{\int}{\int\c_math_subscript_token{#2}}
+		}
+	}
+}
+\ExplSyntaxOff
+
+\NewDocumentCommand\XXXint{m m m m}{
+	{{\setbox0=\hbox{$#1{#2#3}{\int_{#4}}$}\vcenter{\hbox{$#2#3$}}\kern-.5\wd0}}
+}
+\NewDocumentCommand\ddashint{}{\Xint{=}}
+\ProvideDocumentCommand\intbar{}{\Xint{-}}
+
+\NewDocumentCommand\intFibre{}{\intbar}				% Stroked integral 
+
+% Slashed symbols
+%\NewDocumentCommand\slashed{m} { #1 \kern-0.5em \raise0.22ex \hbox{/} } % Raise needed for some fonts -> which?
+\NewDocumentCommand\slashed{m} { #1 \kern-0.6em \hbox{\large \textcolor{darkgray}{/}} }
+
+% Differentials
+\NewDocumentCommand\laplace{}{ \mathop{}\!\mathbin\bigtriangleup}
+\NewDocumentCommand\dAlambert{}{ \mathop{}\!\mathbin\Box}
+
+\NewDocumentCommand\dif{}{ \mathop{}\!\mathrm{d} }		% d
+\NewDocumentCommand\Dif{}{ \mathop{}\!\mathrm{D} }		% D
+\NewDocumentCommand\difp{}{ \mathop{}\!\mathrm{\partial} }	% partial
+\NewDocumentCommand\difpBar{}{ \mathop{}\!\bar{\mathrm{\partial}} }	% partial with bar
+\NewDocumentCommand\diF{}{ \mathop{}\!\mathrm{\updelta} }	% delta
+\NewDocumentCommand\difLog{}{ \mathop{}\!\mathrm{\updelta} }% delta
+\NewDocumentCommand\difDirac{}{ \mathop{}\!\mathrm{\slashed{\partial}} }% slashed partial 
+\MyNewMathOperator{\difLie}			{command={\mathop{}\!\mathrm{\mathfrak{L}}}, sort={L}, display={$\difLie \alpha$}, description={Lie derivative of the tensor field $\alpha$}}
+\MyNewMathOperator{\difFibre}		{command={\mathop{}\!\mathrm{V}}, sort={V}, display={$\difFibre f$}, description={Vertical derivative of the bundle map $f$}}
+
+% Differential fractions (uses command of cool package)
+% eg \difpFrac[2]{f}{x^i,x^j}
+\makeatletter
+\NewDocumentCommand\difFrac{O{1} m m}{\COOL@derivative{#1}{#2}{#3}{\dif}}
+\NewDocumentCommand\DifFrac{O{1} m m}{\COOL@derivative{#1}{#2}{#3}{\Dif}}
+\NewDocumentCommand\difpFrac{O{1} m m}{\COOL@derivative{#1}{#2}{#3}{\difp}}
+\NewDocumentCommand\diFFrac{O{1} m m}{\COOL@derivative{#1}{#2}{#3}{\diF}}
+\makeatother		                                                             
+\NewDocumentCommand\difFracAt{O{1} m m m}{
+	\difFrac[#1]{#2}{#3}						% #1th derivative of #2 wrt #3
+	\mathchoice							% evaluated at #4
+		{\raisebox{0.42ex}{\scalebox{0.77}{\Bigg|}}_{\raisebox{0.1ex}{{$\scriptstyle #4$}}}}   
+		% The above is for Palatino. Alternatives for different fonts: (for which?)
+		%{\raisebox{0.5ex}{\scalebox{0.73}{\Bigg|}}_{\raisebox{0.55ex}{{$\scriptstyle #4$}}}}   
+		%{\scalebox{0.9}{\Bigg|}_{\raisebox{2pt}{{$\scriptstyle #4$}}}}   
+		{\scalebox{0.9}{\Big|}_{\raisebox{1.5pt}{{$\scriptscriptstyle #4$}}}}
+		{UNDEFINED-C}
+		{UNDEFINED-D}
+	}		                                                             
+\NewDocumentCommand\difpFracAt{O{1} m m m}{
+	\difpFrac[#1]{#2}{#3}					% #1th partial derivative of #2 wrt #3
+	\mathchoice							% evaluated at #4
+		{\scalebox{0.9}{\Bigg|}_{\raisebox{2pt}{{$\scriptstyle #4$}}}}   
+		{\scalebox{0.9}{\Big|}_{\raisebox{1.5pt}{{$\scriptscriptstyle #4$}}}}
+		{UNDEFINED-C}
+		{UNDEFINED-D}
+	}
+
+
+% Interchange meaning of : with \colon (hence f:X \to Y works instead of f\colon X \to Y)
+% https://tex.stackexchange.com/questions/528480/how-do-i-change-the-way-the-colon-is-typeset
+%\patchcmd{\colon}{:}{\relcolon}{}{}					% Remove ':' from the definition of \colon 
+\newcommand\myratio{\mathrel{\char"02236}}			% Define how the colon should look like as a ratio 
+%\newcommand\myratio{\mathrel{\char"003A}}			% Use for wider space
+\makeatletter
+\def\relcolon{\mathchar"303A}
+\def\colon{%
+  \noexpand\nobreak
+  \mskip 2mu
+  \mathpunct{}
+  \nonscript\mkern -\thinmuskip
+  {\relcolon}%
+  \mskip 6muplus1mu
+  \relax
+}
+\AtBeginDocument{
+	\@ifpackageloaded{inputenc}
+	{
+		%\mathchardef\relcolon=\mathcode`:
+			%{\mathrel{\the\mathcode`:}}
+	}
+	{
+		%\edef\relcolon						% Define \recolon with current ':'
+		%	{\mathrel{\Umathcharnum\the\Umathcodenum`:}}
+	}
+	\begingroup\lccode`~=`:					% Make ':' math-active and redefine it to be \colon
+	\lowercase{\endgroup\let~}\colon
+	\mathcode`:="8000
+	\let\tikzcolon\colon						% Define colon command for tikz-environment (has problems with active colon)
+	\let\colon\myratio						% Redefine \colon with \myratio   
+	%\protected\def\tikz@nonactivecolon{A}                   
+}
+\makeatother
+\NewDocumentCommand{\defeq}{}{					% := (from http://tex.stackexchange.com/a/4881, better than \coloneqq from e.g. mathtools)
+	\mathrel{ \vcenter{ 
+		\baselineskip0.5ex \lineskiplimit0pt 
+		\hbox{\small.}
+		\hbox{\small.}
+	}}
+	=
+}							
+
+% TODO: Remove setc from cwl, add given + setSymbol
+\ProvideDocumentCommand{\given}{}{}
+\NewDocumentCommand{\setSymbol}{o}{
+	\nonscript \, : 
+	\allowbreak
+	\nonscript \,
+	\mathopen{ }
+}
+\DeclarePairedDelimiterX\set[1]{\{}{\}}{				% Set { A } = \set{A} or with condition { A : B } = \set{A \given B}
+	\RenewDocumentCommand{\given}{}{\setSymbol[\delimsize]}
+	#1
+}
+\NewDocumentCommand{ \restr }{ m m }				% Restriction of function #1 to subset #2
+	{#1_{\smash{\restriction} #2}}
+\NewDocumentCommand{ \toInject }{ }					% Injective map arrow
+	{\hookrightarrow}
+\NewDocumentCommand{ \toSurject }{ }				% Surjective map arrow
+	{\twoheadrightarrow}
+\NewDocumentCommand{ \ttoInternal }{ m m }
+	{
+		\IfNoValueTF{#1}{
+			\IfNoValueTF{#2}{
+				\rightrightarrows
+			}{
+				\underset{#2}{\rightrightarrows}
+			}
+		}{
+			\IfNoValueTF{#2}{
+				\overset{#1}{\rightrightarrows}
+			}{
+				\overset{#1}{\underset{#2}{\rightrightarrows}}
+			}
+		}
+	}
+\NewDocumentCommand{ \tto }{ e{^_} }				% Double arrows for groupoids. Usage: \tto^up_down
+	{ \ttoInternal #1 }
+
+% Environment 'equationcd' combines equation-environment with tikzcd
+\ExplSyntaxOn
+\keys_define:nn { myclass / equationcd }
+	{
+		label .tl_set:N = \l_label_tl,
+		tikz .tl_set:N = \l_tikz_tl
+	}
+
+\NewDocumentEnvironment{equationcd}{o}
+	{
+		\IfNoValueTF{#1}{}{
+			\keys_set:nn { myclass / equationcd } { #1 }
+		}
+		\begin{equation}%
+			% Set label
+			\tl_if_empty:NF \l_label_tl { 
+				\label { \l_label_tl }
+			}
+
+			% Start tikzcd environment with custom style appended
+			\tl_if_empty:NTF \l_tikz_tl
+			{ 
+				\begin{tikzcd}
+			}
+			{
+				\cs_set:Npn \beginTikzcd:n ##1 { \begin{tikzcd}[ ##1 ] }
+				\cs_generate_variant:Nn \beginTikzcd:n { V }
+				\beginTikzcd:V \l_tikz_tl
+			}
+
+			% Redefine arrow macros to result in the expected output
+			\gdef\to{\arrow}
+			\gdef\mapsto{\arrow[mapsto]}
+			\gdef\toInject{\arrow[hookrightarrow]}
+			\gdef\toSurject{\arrow[twoheadrightarrow]}
+	}
+	{%
+		% Redefine \to macros to their old, saved result (saving happens in preamble after loading fonts)
+		\gdef\to{\oldto}
+		\gdef\mapsto{\oldmapsto}
+		\gdef\toInject{\oldtoInject}
+		\gdef\toSurject{\oldtoSurject}
+		\end{tikzcd}\end{equation}\ignorespacesafterend%
+	}%
+\ExplSyntaxOff
+
+\tikzset{adjoint diagram/.style = {
+	commutative diagrams/row sep=scriptsize,	% Smaller row separation
+	column 1/.append style={anchor=base east}, 	% Right align first column
+	column 2/.append style={anchor=base west}	% Left align second column
+}}
+
+\tikzset{two column aligned/.style = {
+	column 1/.append style={anchor=base east}, 	% Right align first column
+	column 2/.append style={anchor=base west}	% Left align second column
+}}
+
+\tikzset{
+	symbol/.style={
+		draw=none,
+		every to/.append style={
+			edge node={node [sloped, allow upside down, auto=false]{$#1$}}
+		}
+	}
+}
+%TODO document "symbol = \subseteq" as arrow, e.g. \ar[dr, symbol=\subseteq]
+
+\AtBeginDocument{				
+	% Save values of arrows for later use (redefined by equationcd), put these commands here after the fonts are loaded
+	\global\let\oldto\to
+	\global\let\oldmapsto\mapsto
+	\global\let\oldtoInject\toInject
+	\global\let\oldtoSurject\toSurject
+}
+%%%TODO document
+\NewDocumentCommand{\transversal}{}{\pitchfork}		% Transversal intersection
+
+
+\NewDocumentCommand{\polar}{}{\circ}		% Polar
+\NewDocumentCommand{\bipolar}{}{{\polar \polar}}		% Bipolar
+\NewDocumentCommand{\biperp}{}{{\perp \perp}}		% Double perpendicular
+
+\NewDocumentCommand{\weakTop}{m m}{\weakTopSymbol(#1, #2)}	% weak topology
+\NewDocumentCommand{\weakTopSymbol}{}{\sigma}			% weak topology (symbol)
+\NewDocumentCommand{\mackeyTop}{m m}{\tau(#1, #2)}		% Mackey topology
+\NewDocumentCommand{\strongTop}{m m}{\beta(#1, #2)}		% strong topology
+
+\ExplSyntaxOn
+\makeatletter
+\NewDocumentCommand{\emphDef}{m}						% Emphasize for definition (italics)
+{{
+	\str_if_eq:eeTF { \f@shape } { it }
+ 	{
+ 		\normalfont
+ 	}
+ 	{
+ 		\itshape
+ 	}
+ 	#1
+}}
+\makeatother
+\ExplSyntaxOff
+
+\NewDocumentCommand{\directSum}{}{\oplus}		% Direct sum plus
+
+\NewDocumentCommand{\sheave}{m}{\underline{#1}}		%  
+
+\newcommand{\Op}{Op} % operator/quantization map in pseudo-diffs (assigns to every symbol a distribution)
+
+%TODO:
+%\newcommand{\transf}{\secmap{transf}}
+%\newcommand{\AdForm}{\diffForm^1(M; \AdBundle P)}
+\NewDocumentCommand{\AdDiffFormSpace}{o}{
+	\IfNoValueTF{#1}
+		{
+			\DiffFormSpace[^1](M; \AdBundle P)
+		}{
+			\DiffFormSpace[^#1](M; \AdBundle P)
+		}
+}
+%\NewDocumentCommand{\closureSet}{m}{\overline{#1}}
+\NewDocumentCommand{\closureSet}{m}{\mkern 1.5mu\overline{\mkern-1.5mu#1\mkern-1.5mu}\mkern 1.5mu} % sligtly shorter overline
+\NewDocumentCommand{\interior}{m}{{#1}^\circ}
+%\NewDocumentCommand{\closureSet}{m O{3}}{{}\mkern#2mu\overline{\mkern-#2mu#1}}
+%
+\NewDocumentCommand{\stratification}{m}{\mathcal{#1}}
+%\NewDocumentCommand{\chernClass}{}{c}		% Chern class c(P)
+
+%\DeclareMathOperator{\co}{co}                   %Convex hull
+%\newcommand{\cco}{\overline \co\,}                          %Closed convex hull                   
+%\newcommand{\liminv}{\varprojlim} 
+%\DeclareMathOperator{\difLie}{\mathpzc{Lie}}                              % Lie-Ableitung
+%\DeclareMathOperator{\normalizer}{N}                              % normalizer of subgroup
+%
+%\newcommand{\one}{\mathbbm{1}}											% Doppelt gestrichene 1
+%
+%\newcommand{\corresponds}{\mathrel{\widehat{=}}}						% Entspricht-Zeichen
+\newcommand{\isomorph}{\simeq}							% Isomorph
+\let\T\relax											% Delete previous meaning: ?
+\newcommand{\T}{\mathsf{T}}								% Transpose of matrix
+\newcommand{\cT}{\dagger}								% Conjugate transpose of complex matrix
+\newcommand{\tangent}{\mathrm{T}}						% Tangent map
+\newcommand{\cotangent}{\mathrm{T}^*}					% Cotangent map
+\newcommand{\vtangent}{\mathrm{V}}						% Vertical tangent map
+\newcommand{\tangentLeft}{\tangent^{\mathrm{L}}}			% Left tangent map
+\newcommand{\pJetProlongation}{\mathrm{W}}				% Principal jet prolongation
+\newcommand{\Hessian}{\mathrm{Hess}}					% Hessian
+\newcommand{\hodgeStar}{\operatorname{\text{\textasteriskcentered}}}							% Hodge star operator
+\newcommand{\symplMatrix}{\Omega}						% Symplectic matrix
+
+
+\newcommand{\lSemiProduct}{\ltimes}								% Left semidirect product
+\newcommand{\rSemiProduct}{\rtimes}								% Right semidirect product
+
+\newcommand{\intersect}{\cap}
+\newcommand{\bigIntersection}{\bigcap}
+\newcommand{\union}{\cup}
+\newcommand{\disjUnion}{\sqcup}
+\newcommand{\bigUnion}{\bigcup}
+\newcommand{\bigDisjUnion}{\bigsqcup}
+\newcommand{\normalSubgroupEq}{\trianglelefteq}
+
+\newcommand{\normalizer}{N}
+\newcommand{\type}{\tau}
+
+\newcommand{\RP}{\field{R\!P}}				% Real projective space R P^n (TODO: \ProjectiveSpace^n(\R) = \RP^n)
+\newcommand{\CP}{\field{CP}}				% Complex projective space C P^n
+
+\newcommand{\OpenBall}{B}					% \OpenBall_r (x) = open ball at x with radius r
+\newcommand{\ClosedBall}{B}					% \ClosedBall_r (x) = closed ball at x with radius r
+
+\DeclareDocumentCommand \I { } { 			% Imaginary unit
+	\mathrm{i}
+}
+%\newcommand{\imaginary}{\mathrm{i}}		% Imaginary unit
+\DeclareDocumentCommand \E { } { 			% Euler number
+	\mathrm{e}
+}
+\DeclareDocumentCommand \LeviCivita { } { 	% Levi-Civita symbol
+	\mathrm{\varepsilon}
+}
+\DeclareDocumentCommand \Kronecker { } { 	% Kronecker delta symbol
+	\mathrm{\delta}
+}
+
+\newcommand{\seam}[1]{#1}
+%\NewDocumentCommand{\seam}{m e{^_}}{
+%	#1^{#2}_{#3}
+	%\setstackgap{L}{1ex}
+	%\raisebox{0.18ex}{\Vectorstack{{\scriptstyle #2} {\raisebox{0.2ex}{\tiny$\curlyvee$}} {\scriptstyle #3}}}
+%}
+
+% Workaround to use accented symbols in diff-frac-commands
+\robustify{\dot}
+\robustify{\bar}
+\robustify{\vec}
+
+%
+%
+%\let\Oldmapsto\mapsto
+%\renewcommand{\mapsto}{\Oldmapsto}										% Pfeil bei x -> f(x)
+%
+
+%
+%
+%% Mathe-Abkürzungen
+%
+%\newcommand{\tangfHam}[1]{\mathfrak{X}_H(#1)}
+%\newcommand{\cotangf}[1]{\mathfrak{X}^*(#1)}
+%\newcommand{\diffform}[2]{\Omega^#1(#2)}
+
+%\NewDocumentCommand\diffform{m g g}{ \Omega^{#1} \IfNoValueTF{#3}{\IfNoValueTF{#2}{}{(#2)}}{(#2, #3)} }
+%\NewDocumentCommand\diffformBi{m m g g}{ \Omega^{#1, #2} \IfNoValueTF{#4}{\IfNoValueTF{#3}{}{(#3)}}{(#3, #4)} }
+%\newcommand{\diffform}[3]{\Omega^{#1}(#2, #3)}
+%\newcommand{\diffformBi}[4]{\Omega^{#1, #2}(#3, #4)}
+%\newcommand{\tensf}[3]{\mathfrak{T}^#1_#2(#3)}
+%\NewDocumentCommand\sections{m g}{ \IfNoValueTF{#2}{\Gamma^\infty(#1)}{\Gamma^\infty(#1, #2)} }
+%
+%\newcommand{\liegroup}[1]{\mathcal{#1}}
+%
+%\newcommand{\observ}[1]{\mathcal{O}(#1)}
+%\newcommand{\hilbert}[1]{\mathcal{#1}}
+%
+%\NewDocumentCommand\atlas{g}{ \IfNoValueTF{#1}{\mathcal{A}}{\mathcal{A}_#1} }
+%\NewDocumentCommand\chart{s}{ \IfBooleanTF #1{\mathlarger{\mathlarger{\varrho}}}{\mathlarger{\mathlarger{\varkappa}}} } 
+%\NewDocumentCommand\chartY{s}{ \IfBooleanTF #1{\mathlarger{\mathlarger{\zeta}}}{\mathlarger{\mathlarger{\upsilon}}} } 
+%
+%
+%
+%%\makeatletter
+%%  \newcommand\atlas{\@ifnextchar\bgroup{\atlasoptarg}{\mathcal{A}}}
+%%  \newcommand\atlasoptarg[1]{\mathcal{A}_#1}
+%%\makeatother
+%
+%% Wie cases-Umgebung nur Klammer rechts
+%\newenvironment{rcases}{%
+%   \left.\renewcommand*\lbrace.%
+%   \begin{cases}}%
+% {\end{cases}\right\rbrace}
+%
+%
+%% Styles für tixz
+%\tikzset{nodeDescription/.style={fill=white,inner sep=2pt}}
+%\tikzset{commutativMatrix/.style={matrix of math nodes, row sep=3em,
+%column sep=2.5em, text height=1.5ex, text depth=0.25ex}}
+%\tikzset{commutativPath/.style={->,font=\scriptsize}}
+%
+%% Chain-Anpassung...
+%\tikzset{>=stealth',every on chain/.append style={join}, every join/.style={->}}
+%\makeatletter
+%\tikzset{join/.code=\tikzset{after node path={%
+%\ifx\tikzchainprevious\pgfutil@empty\else(\tikzchainprevious)%
+%edge[every join]#1(\tikzchaincurrent)\fi}}}
+%\makeatother
+
+\NewDocumentCommand{\oversetSmall}{m m}{				% Use in aligned equations to put something over the equal sign without disrupting alignment (e.g. \oversetSmall{\eqref{...}}{=})
+	\overset{\mathclap{#1}}{#2}
+}
+
+\newcommand{\Ric}{\mathrm{Ric}}	% Ricci-curvature form
+\newcommand{\RicScalar}{\mathrm{R}}	% Ricci scalar
+
+\NewDocumentCommand{\Matrix}{m}{
+	\ensuremath{\begin{pmatrix}#1\end{pmatrix}}
+}
+\NewDocumentCommand{\smallMatrix}{m}{
+	\ensuremath{\left(\begin{smallmatrix}#1\end{smallmatrix}\right)}
+}
+% Redefine \Vector command from pict2e
+\DeclareDocumentCommand{\Vector}{m}{
+	\Matrix{#1}
+}
+
+
+%%% Nabla-Kalkül
+
+%\DeclareMathOperator{\Rot}{rot}
+\DeclareMathOperator{\grad}{grad}
+%\DeclareMathOperator{\Div}{div}
+%\DeclareMathOperator{\Det}{det}
+%
+%
+%%%% QM Zustände
+%
+%% |a>
+%\newcommand*{\ket}[1]{\left|#1\right\rangle}
+%\newcommand*{\Ket}[2][\relax]{#1| #2 #1\rangle}
+%% <a|
+%\newcommand*{\bra}[1]{\left\langle #1 \right|}
+%\newcommand*{\Bra}[2][\relax]{#1\langle #2 #1|}
+%% <a|b>
+%\newcommand*{\braket}[2]{\left\langle#1\vphantom{#2}\right|\mspace{-4mu}\left.\vphantom{#1}#2\right\rangle}
+%\newcommand*{\Braket}[3][\relax]{#1\langle #2 #1| #3 #1\rangle}
+%\DeclarePairedDelimiterX\braket[3]{\langle}{\rangle}{#1\,\delimsize\vert\,#2\,\delimsize\vert\,#3}
+%% <a|O|b>
+%\newcommand*{\braKet}[3]{\bra{\vphantom{#2#3}#1}#2\ket{\vphantom{#1#2}#3}}
+%\newcommand*{\BraKet}[4][\relax]{\Bra[#1]{#2} #3 \Ket[#1]{#4}}
+%% |a><b|
+%\newcommand*{\ketbra}[2]{\ket{\vphantom{#2}#1}\mspace{-4mu}\bra{\vphantom{#1}#2}}
+%\newcommand*{\KetBra}[3][\relax]{\Ket[#1]{#2} \mspace{-4mu} \Bra[#1]{#3}}
+%
+%
+%% [A,B]
+%\newcommand*{\comm}[2]{\left[#1,#2\right]}
+%\newcommand*{\Comm}[3][\relax]{#1[#2,#3#1]}
+%
+%
+%%%% Diverses
+%
+%\newcommand{\jdl}{\ensuremath{\jmath}}
+%\DeclareMathOperator{\Spur}{Sp}
+%\newcommand{\dd}{\operatorname{d}{}\!}
+%\newcommand{\dD}[2]{\dd^{#1}\mspace{-2mu}#2}
+%
+%
+%%%% Differentialoperatoren
+%
+%% d^n/dx^n
+%\newcommand*{\Dd}[2][\relax]{
+%  \ifx#1\relax%
+%    \frac{\dd}{\dd#2}
+%  \else
+%    \frac{\dd^#1}{\dd #2^#1}
+%  \fi
+%}
+%% d^n f/dx^n
+%\newcommand*{\DD}[3][\relax]{
+%  \ifx#1\relax%
+%    \frac{\dd #2}{\dd#3}
+%  \else
+%    \frac{\dd^#1 #2}{\dd #3^#1}
+%  \fi
+%}
+%% 6^n/6x^n
+%\newcommand*{\Pd}[2][\relax]{
+%  \ifx#1\relax%
+%    \frac{\partial}{\partial#2}
+%  \else
+%    \frac{\partial^{#1}}{\partial #2^{#1}}
+%  \fi
+%}
+%% 6^n f/6x^n
+%\newcommand*{\PD}[3][\relax]{
+%  \ifx#1\relax%
+%    \frac{\partial #2}{\partial#3}
+%  \else
+%    \frac{\partial^{#1} #2}{\partial #3^{#1}}
+%  \fi
+%}
+
+%  \newcommand{\erf}{\operatorname{erf}}
+%\newcommand{\bd}{\begin{displaymath}}
+%\newcommand{\ed}{\end{displaymath}}
+%\newcommand{\be}{\begin{equation}}
+%\newcommand{\ee}{\end{equation}}
+%\newcommand{\intl}{\int \limits}
+%\newcommand{\suml}{\sum \limits}
+%\newcommand{\x}{{\bar{x}}}
+%\newcommand{\dg}{^{\dagger}}
+%\newcommand{\tauh}{\hat{\tau}}
+
+\newcommand{\singularPart}{\textnormal{sing}}
+\newcommand{\ext}{\textnormal{ext}}
+\newcommand{\tube}{\textnormal{T}}
+\newcommand*{\IFT}{\sideRemark[0ex]{\textcolor{orange4}{Inverse function theorem}}\@\xspace}
+
+%\newcommand{\sunderline}[2][4]{\underline{#2\mkern-#1mu}\mkern#1mu } % Shorter underline 
+
+% \newcommand\bcdot{\ensuremath{%
+%   \mathchoice%
+%    {\mskip\thinmuskip\lower0.1ex\hbox{\scalebox{0.8}{$\bullet$}}\mskip\thinmuskip}%
+%    {\mskip\thinmuskip\lower0.1ex\hbox{\scalebox{0.8}{$\bullet$}}\mskip\thinmuskip}%        
+%    {\lower-0.1ex\hbox{\scalebox{0.6}{$\bullet$}}}%  
+%    {\lower0.2ex\hbox{\scalebox{0.6}{$\bullet$}}}%
+% }}
+
+\newcommand{\ldot}{\mathbin{.}}
+
+% Inverse hyperbolic trigonometric functions
+%\DeclareMathOperator{\sech}{sech}
+%\DeclareMathOperator{\csch}{csch}
+\DeclareMathOperator{\arcsec}{arcsec}
+\DeclareMathOperator{\arccot}{arcCot}
+\DeclareMathOperator{\arccsc}{arcCsc}
+\DeclareMathOperator{\arccosh}{arcCosh}
+\DeclareMathOperator{\arcsinh}{arcsinh}
+\DeclareMathOperator{\arctanh}{arctanh}
+\DeclareMathOperator{\arcsech}{arcsech}
+\DeclareMathOperator{\arccsch}{arcCsch}
+\DeclareMathOperator{\arccoth}{arcCoth}
+
+% \newcommand{\verteq}{\rotatebox{90}{$\,=$}}
+
+% Widebar from http://tex.stackexchange.com/questions/16337/can-i-get-a-widebar-without-using-the-mathabx-package
+\makeatletter
+\let\save@mathaccent\mathaccent
+\newcommand*\if@single[3]{%
+  \setbox0\hbox{${\mathaccent"0362{#1}}^H$}%
+  \setbox2\hbox{${\mathaccent"0362{\kern0pt#1}}^H$}%
+  \ifdim\ht0=\ht2 #3\else #2\fi
+  }
+%The bar will be moved to the right by a half of \macc@kerna, which is computed by amsmath:
+\newcommand*\rel@kern[1]{\kern#1\dimexpr\macc@kerna}
+%If there's a superscript following the bar, then no negative kern may follow the bar;
+%an additional {} makes sure that the superscript is high enough in this case:
+\newcommand*\widebar[1]{\@ifnextchar^{{\wide@bar{#1}{0}}}{\wide@bar{#1}{1}}}
+%Use a separate algorithm for single symbols:
+\newcommand*\wide@bar[2]{\if@single{#1}{\wide@bar@{#1}{#2}{1}}{\wide@bar@{#1}{#2}{2}}}
+\newcommand*\wide@bar@[3]{%
+  \begingroup
+  \def\mathaccent##1##2{%
+%Enable nesting of accents:
+    \let\mathaccent\save@mathaccent
+%If there's more than a single symbol, use the first character instead (see below):
+    \if#32 \let\macc@nucleus\first@char \fi
+%Determine the italic correction:
+    \setbox\z@\hbox{$\macc@style{\macc@nucleus}_{}$}%
+    \setbox\tw@\hbox{$\macc@style{\macc@nucleus}{}_{}$}%
+    \dimen@\wd\tw@
+    \advance\dimen@-\wd\z@
+%Now \dimen@ is the italic correction of the symbol.
+    \divide\dimen@ 3
+    \@tempdima\wd\tw@
+    \advance\@tempdima-\scriptspace
+%Now \@tempdima is the width of the symbol.
+    \divide\@tempdima 10
+    \advance\dimen@-\@tempdima
+%Now \dimen@ = (italic correction / 3) - (Breite / 10)
+    \ifdim\dimen@>\z@ \dimen@0pt\fi
+%The bar will be shortened in the case \dimen@<0 !
+    \rel@kern{0.6}\kern-\dimen@
+    \if#31
+      \overline{\rel@kern{-0.6}\kern\dimen@\macc@nucleus\rel@kern{0.4}\kern\dimen@}%
+      \advance\dimen@0.4\dimexpr\macc@kerna
+%Place the combined final kern (-\dimen@) if it is >0 or if a superscript follows:
+      \let\final@kern#2%
+      \ifdim\dimen@<\z@ \let\final@kern1\fi
+      \if\final@kern1 \kern-\dimen@\fi
+    \else
+      \overline{\rel@kern{-0.6}\kern\dimen@#1}%
+    \fi
+  }%
+  \macc@depth\@ne
+  \let\math@bgroup\@empty \let\math@egroup\macc@set@skewchar
+  \mathsurround\z@ \frozen@everymath{\mathgroup\macc@group\relax}%
+  \macc@set@skewchar\relax
+  \let\mathaccentV\macc@nested@a
+%The following initialises \macc@kerna and calls \mathaccent:
+  \if#31
+    \macc@nested@a\relax111{#1}%
+  \else
+%If the argument consists of more than one symbol, and if the first token is
+%a letter, use that letter for the computations:
+    \def\gobble@till@marker##1\endmarker{}%
+    \futurelet\first@char\gobble@till@marker#1\endmarker
+    \ifcat\noexpand\first@char A\else
+      \def\first@char{}%
+    \fi
+    \macc@nested@a\relax111{\first@char}%
+  \fi
+  \endgroup
+}
+\makeatother
+
+\AtBeginDocument{
+	% No idea which packages overwrites these at document start...but we want to take priority
+	\renewcommand{\Im}{\operatorname{Im}}
+	\renewcommand{\Re}{\operatorname{Re}}
+}
