@@ -20,7 +20,7 @@
     
     \maketitle
 
-    \section{Introduction}
+    \section*{Introduction}
 
     Curves and surfaces are fundamental objects in geometry and have been studied for thousands of years. 
     You have encountered them in various contexts, perhaps often without explicitly recognizing them as interesting mathematical entities: when you bind your shoes you entangle and bend curves; when you look at the shape of a leaf or a flower, you observe a beautiful surface in three-dimensional space; when you navigate using a map, you work with a flat representation of the curved surface of the Earth.
@@ -44,52 +44,129 @@
 
     \newpage
     \part{Curves}\label{Part:Curves}
+
         \section{Parameterized curves}
-            \begin{definition}[Parameterized curve]
-                A parameterized curve is a smooth map $c: I\rightarrow\mathbb{R}^n(n = 2, 3)$, where $I$ is the interval, usually $[a,b]$ or $(0,1)$.
-            \end{definition}
+
+            There are two ways to view a curve.
+            Imagine you register for a mountain bike race.
+            The race track, as marked by the organizers, exists independently of you and is described by a certain set of points in space.
+            This one-dimensional object is what we call a \emph{curve}.
+            However, as a participant in the race, you experience the curve differently: you move along it, and your position can be recorded at different times.
+            This function, which maps time to your position in space, is what we refer to as a \emph{parameterized curve}.
+
             \begin{definition}[Curve]
-                A curve is the image of a parameterized curve, i.e. $\{c(t): t\in I\}$.
-            \end{definition}
-            \begin{definition}[Regular curve]
-                A parameterized curve $c$ is called regular if $\dot{c}(t)\neq 0$ for all $t\in I$, which means no cusps or corners.
-            \end{definition}
-            \begin{definition}[Diffeomorphism]
-                A smooth map $\varphi: I_2\rightarrow I_1$ is called a diffeomorphism if $\varphi$ is bijective and $\varphi^{-1}$ is also smooth.
-            \end{definition}
-            \begin{definition}[Reparameterization]
-                If $\varphi: I_2\rightarrow I_1$ is a diffeomorphism and $c:I_1\rightarrow\mathbb{R}^n$ is a parameterized curve, then $c_2(t) = c_1\big(\varphi(t)\big): I_2\rightarrow\mathbb{R}^n$ is also a parameterized curve. And $c_2$ is then called reparameterization of $c_1$.
-            \end{definition}
-            \begin{lemma}
-                The length of $c_1$ and $c_2$ are the same.
-            \end{lemma}
-            \begin{proof}
-                Since $c_2(t) = c_1\big(\varphi(t)\big)$, we have
-                \begin{equation*}
-                    \begin{aligned}
-                        \difFracAt{}{t}{t} c_2 = \varphi'(t)\difFracAt{}{s}{\varphi(t)}c_1
-                    \end{aligned}
-                \end{equation*}
-                thus
-                \begin{equation*}
-                    \begin{aligned}
-                        L(c_2) &= \int_{a_2}^{b_2}\bigg|\bigg|\difFracAt{}{t}{t} c_2\bigg|\bigg|dt \\
-                        &= \int_{a_2}^{b_2}\big|\varphi'(t)\big|\cdot\bigg|\bigg|\difFracAt{}{s}{\varphi(t)}c_1\bigg|\bigg|dt \\
-                        &\stackrel{s=\varphi(t)}{=}\int_{a_1}^{b_1}\bigg|\bigg|\difFracAt{}{s}{s} c_1\bigg|\bigg|ds \\
-                        &= L(c_1)
-                    \end{aligned}
-                \end{equation*}
-            \end{proof}
-            \begin{proposition}
-                Every regular curve $c: I\rightarrow\mathbb{R}^n$ has a parameterization with respect to arc-length. That is, there exists a diffeomorphism $\varphi: I\rightarrow I$ such that $\Tilde{c}(s) = c\big(\varphi(s)\big)$ has unit-speed.
-            \end{proposition}
-            \begin{theorem}[Moving frame]
-                Let $c: I\rightarrow\mathbb{R}^n$ be a unit-speed curve with $\ddot{c}(t)\neq 0$ for all $t$, then $T(t) := \dot{c}(t)$, $N(t) := \cfrac{\ddot{c}(t)}{||\ddot{c}(t)||}$ have unit length and are perpendicular.
-            \end{theorem}
-            \begin{definition}[Curvature]
-                The curvature of a unit-speed curve $c: I\rightarrow\mathbb{R}^n$ is defined as $\kappa(t) = ||\ddot{c}(t)||$.
+                A \emphDef{parameterized curve} is a smooth map $c: I\to\R^n(n = 2, 3)$, where $I$ is an interval, usually $[a,b]$ or $(0,1)$.
+                A \emphDef{curve} is the image of a parameterized curve, i.e., the set $\set{c(t) \given t\in I}$.
             \end{definition}
 
+            Note that the parameter $t$ does not necessarily represent time; it can be any parameter that varies along the curve.
+            For example, in the case of the bike race, $t$ could represent the distance traveled along the track instead of the time elapsed.
+            Nonetheless, it is often convenient to think of $t$ as time, as it provides an intuitive way to understand the motion along the curve.
+            In this spirit, we refer to $\dot{c}(t) = \difFrac{c}{t}$ as the velocity vector and $\ddot{c}(t) = \difFrac{\dot{c}}{t}$ as the acceleration vector.
+
+            There are many different parameterizations for the same curve.
+            For example, different riders may travel at different speeds, leading to different parameterizations of the same physical curve.
+            So we need a way to pass from one parameterization to another.
+            \begin{definition}[Diffeomorphism]
+                A smooth map $\varphi: I_2\to I_1$ is called a \emphDef{diffeomorphism} if $\varphi$ is bijective (one-to-one and onto) and its inverse $\varphi^{-1}$ is also smooth.
+            \end{definition}
+            \begin{definition}[Reparameterization]
+                If $\varphi: I_2 \to I_1$ is a diffeomorphism with\footnote{A diffeomorphism $\varphi$ always has either $\varphi'(t) > 0$ or $\varphi'(t) < 0$ for all $t$. The latter case would correspond to reversing the direction of the curve.} $\varphi'(t) > 0$ and $c_1:I_1 \to \R^n$ is a parameterized curve, then $c_2(t) = c_1\bigl(\varphi(t)\bigr): I_2 \to \R^n$ is also a parameterized curve, called the \emphDef{reparameterization} of $c_1$ by $\varphi$.
+            \end{definition}
+
+            We will often introduce a certain property of the curve using a parameterization, and then show that this property does not depend on the choice of parameterization.
+            For example, the length of a curve is a property that should be independent of how we parameterize it -- all riders should better agree on the length of the track, regardless of their speed.
+            \begin{definition}[Length of a curve]
+                The length of a parameterized curve $c: I \to \R^n$ is defined as
+                \begin{equation}
+                        L(c) \defeq \int_a^b \norm{\dot{c}(t)}\dif t
+                \end{equation}
+                where $I = [a,b]$ or $(a,b)$.
+            \end{definition}
+
+            \begin{lemma}
+                If $c_2$ is a reparameterization of $c_1$, then the length of $c_1$ and $c_2$ are the same.
+            \end{lemma}
+            \begin{proof}
+                Since $c_2(t) = c_1\bigl(\varphi(t)\bigr)$ for some diffeomorphism $\varphi: I_2\to I_1$, we have by the chain rule
+                \begin{equation*}
+                    \begin{aligned}
+                        \difFracAt{}{t}{t} c_2 = \varphi'(t)\difFracAt{}{s}{\varphi(t)}c_1.
+                    \end{aligned}
+                \end{equation*}
+                Assume, without loss of generality, that $I_1 = [a_1, b_1]$ and $I_2 = [a_2, b_2]$ with $\varphi(a_2) = a_1$ and $\varphi(b_2) = b_1$. Thus,
+                \begin{equation*}
+                    \begin{aligned}
+                        L(c_2) &= \int_{a_2}^{b_2}\norm*{\difFracAt{}{t}{t} c_2}\dif t \\
+                        &= \int_{a_2}^{b_2}\big|\varphi'(t)\big|\cdot\norm*{\difFracAt{}{s}{\varphi(t)}c_1}\dif t \\
+                        &\stackrel{s=\varphi(t)}{=}\int_{a_1}^{b_1}\norm*{\difFracAt{}{s}{s} c_1}ds \\
+                        &= L(c_1),
+                    \end{aligned}
+                \end{equation*}
+                where we used the reparameterization theorem for integrals in the third step.
+                \footnotetext{The proof exhibits a general strategy that we will use often in this course: when we want to investigate a certain property of a curve or surface, we will use a parameterization to boil it down to a problem in calculus that we know how to solve. Here, we just used the chain rule and the reparameterization theorem for integrals.}
+            \end{proof}
+            
+            At this point, a word of caution is in order.
+            In the definition of a curve, we required the parameterization to be smooth (i.e, all derivatives exist and are continuous).
+            However, this does not imply that the curve itself is smooth in a geometric sense.
+            For example, the parameterization $c(t) = (t^3, t^2)$ is smooth, but the curve it describes has a cusp at the origin.
+            \begin{figure}[H]
+                \centering
+                \begin{tikzpicture}
+                    \draw[->] (-3.2,0) -- (3.2,0);
+                    \draw[->] (0,-0.1) -- (0,2.2);
+
+                    \draw[thick, blue, samples=100, domain=-1.5:1.5] plot (\x*\x*\x, \x*\x);
+                \end{tikzpicture}
+                \caption{Plot of the smooth curve $c(t) = (t^3, t^2)$ showing a cusp at the origin.}
+            \end{figure}
+            To avoid such singularities, we introduce the following definition.
+
+            \begin{definition}[Regular curve]
+                A parameterized curve $c$ is called \emphDef{regular} if $\dot{c}(t)\neq 0$ for all $t\in I$.
+                Such a curve, in particular, has no cusps or corners.
+            \end{definition}
+    
+            The regularity condition ensures that the curve has a well-defined tangent vector at every point, which is crucial for many applications in differential geometry.
+            We will almost always assume that the curves we work with are regular.
+            The following result shows that every regular curve can be reparameterized to have unit speed, which is often a convenient choice.
+            \begin{proposition}
+                For every regular curve $c: I \to \R^n$, there exists a diffeomorphism $\varphi: I \to I$ such that $\Tilde{c}(s) = c\big(\varphi(s)\big)$ has unit-speed, i.e., $\norm{\dot{\Tilde{c}}(s)} = 1$ for all $s\in I$.
+            \end{proposition}
+            A curve with unit-speed is also called an \emphDef{arc-length parameterization} of the curve, since the parameter $t$ directly measures the length along the curve from some starting point.
+            Indeed, if we let $l(t) = \int_{t_0}^{t} \norm{\dot{c}(\tau)} \dif \tau$ be the length of the arc from a given point $c(t_0)$ to $c(t)$, then for a unit-speed curve, we have $l(t) = t - t_0$.
+
+            For a unit-speed curve, the velocity vector $\dot{c}(t)$ has unit length by definition.
+            We can use the acceleration to find a second vector $N(t)$ that is perpendicular to $\dot{c}(t)$ and also has unit length.
+            \begin{theorem}[Moving frame]
+                Let $c: I\to\R^n$ be a unit-speed curve with $\ddot{c}(t)\neq 0$ for all $t$, then 
+                \begin{equation}
+                    T(t) \defeq \dot{c}(t), \quad N(t) \defeq \cfrac{\ddot{c}(t)}{\norm{\ddot{c}(t)}}                
+                \end{equation}
+                have unit length and are perpendicular to each other, i.e., they form a pair of orthonormal vectors.
+            \end{theorem}
+            If the curve lies in $\R^2$, then we get two orthonormal vectors $T(t)$ and $N(t)$ that span $\R^2$, i.e., an orthonormal basis of $\R^2$ that moves along the curve.
+            This is called a \emphDef{moving or Frenet--Serret frame} along the curve.
+
+            \begin{definition}[Curvature]
+                The curvature of a unit-speed curve $c: I\to\R^n$ is defined as $\kappa(t) = \norm{\ddot{c}(t)}$.
+            \end{definition}
+            What is the curvature of a general regular curve $c: I\to\R^n$?
+            The natural definition is to first reparameterize $c$ to a unit-speed curve $\Tilde{c}$ by a suitable reparameterization $\varphi$ and then define the curvature of $c$ as the curvature of $\Tilde{c}$.
+            One has to be a bit careful here to measure the curvature at the same point on the curve:
+            If $c(t)$ is a point on the curve, then $\Tilde{c}(s) = c\big(\varphi(s)\big)$ is the same point if $s = \varphi^{-1}(t)$.
+            Accordingly, we define the curvature $\kappa(t)$ of $c$ at $t\in I$ as the curvature $\tilde{\kappa}(s)$ of $\Tilde{c}$ at $s = \varphi^{-1}(t)$, i.e., 
+            \begin{equation}
+                \kappa(t) = \tilde{\kappa}\bigl(\varphi^{-1}(t)\bigr).
+            \end{equation}
+            \begin{lemma}
+                If $c: I\to\R^n$ is a regular curve, then its curvature is given by
+                \begin{equation}
+                    \kappa(t) = \frac{1}{v(t)^2}\sqrt{\norm{\ddot{c}(t)}^2 - \dot{v}(t)^2} = \frac{\sqrt{v(t)^2\norm{\ddot{c}(t)}^2 - \bigl(\dot{c}(t) \cdot \ddot{c}(t)\bigr)^2}}{v(t)^3},
+                \end{equation}
+                where $v(t) = \norm{\dot{c}(t)}$ is the speed of $c$ at time $t$.
+            \end{lemma}
 
         \section{Moon in the puddle}
             The 1-order approximation of a curve is tangent line, while the 2-order approximation is osculating circle.
