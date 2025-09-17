@@ -172,10 +172,10 @@
             The 1-order approximation of a curve is tangent line, while the 2-order approximation is osculating circle.
 
             \begin{theorem}[Jordan curve theorem]
-                Every simple loop divides $\mathbb{R}^2$ into two sets: one is bounded, called the inside; one is unbounded, called the outside.
+                Every simple loop divides $\R^2$ into two sets: one is bounded, called the inside; one is unbounded, called the outside.
             \end{theorem}
             \begin{lemma}
-                Suppose we have a simple, regular loop $c:I\rightarrow\mathbb{R}^3$ such that $\kappa(t)\neq 0$ for all $t\in I$, then there exists a time $t_0\in I$ such that the osculating circle at $c(t_0)$ lies inside of $c$.
+                Suppose we have a simple, regular loop $c:I\to\R^3$ such that $\kappa(t)\neq 0$ for all $t\in I$, then there exists a time $t_0\in I$ such that the osculating circle at $c(t_0)$ lies inside of $c$.
             \end{lemma}
             \begin{figure}[H]
                 \centering
@@ -183,13 +183,13 @@
                 \caption{Just note that incircle $\sigma$ at $p$ has to touch loop $c$ at another point $q$, but for $\sigma_{\infty}$, $q_{\infty} = p_{\infty}$ -- a contradiction.}
             \end{figure}
             \begin{theorem}["Moon in the puddle"]
-                Let $c: I\rightarrow\mathbb{R}^2$ be a simple, regular loop such that $\kappa(t)\neq 0$. If $\kappa(t)\le 1$, then the region surrounded by $c$ contains a unit disc.
+                Let $c: I\to\R^2$ be a simple, regular loop such that $\kappa(t)\neq 0$. If $\kappa(t)\le 1$, then the region surrounded by $c$ contains a unit disc.
             \end{theorem}
             \begin{remark}
                 The theorem about the Moon in a puddle provides the simplest meaningful example of a local-to-global theorem which is mainly what differential geometry is about.
             \end{remark}
             \begin{definition}[Winding number]
-                Let $c: [a, b]\rightarrow\mathbb{R}^2$ be a loop and $P_0$ be a point not on the curve. The winding number $W(c, P_0)$ is the number of times the curve goes counter clockwise around $P_0$.
+                Let $c: [a, b]\to\R^2$ be a loop and $P_0$ be a point not on the curve. The winding number $W(c, P_0)$ is the number of times the curve goes counter clockwise around $P_0$.
             \end{definition}
             \begin{remark}
                 \begin{itemize}
@@ -200,21 +200,21 @@
 
             
 
-        \section{Frenet-Serret frames for curves in $\mathbb{R}^3$}
-            Curves in $\mathbb{R}^3$ can
+        \section{Frenet-Serret frames for curves in $\R^3$}
+            Curves in $\R^3$ can
             \begin{itemize}
                 \item bend: measured by curvature (how much the curve deviates from being straight in a plane)
                 \item twist: measured by torsion (how much this plane rotates along the curve)
             \end{itemize}
 
             \begin{definition}[Frenet-Serret frame]
-                Let $c$ be a unit-speed curve in $\mathbb{R}^3$, $T(t) = \dot{c}(t)$ be the tangent field, curvature $\kappa(t) = |\ddot{c}(t)|$. Assume $\kappa(t)>0$, then $N(t) = \cfrac{\ddot{c}(t)}{|\ddot{c}(t)|}$, and $B(t) = T(t)\times N(t)$ is the binormal field. Here $\{T,N,B\}$ is called the Frenet-Serret frame.
+                Let $c$ be a unit-speed curve in $\R^3$, $T(t) = \dot{c}(t)$ be the tangent field, curvature $\kappa(t) = |\ddot{c}(t)|$. Assume $\kappa(t)>0$, then $N(t) = \cfrac{\ddot{c}(t)}{|\ddot{c}(t)|}$, and $B(t) = T(t)\times N(t)$ is the binormal field. Here $\set{T,N,B}$ is called the Frenet-Serret frame.
             \end{definition}
             \begin{remark}
                 $T(t), N(t), B(t)$ are orthogomal to each other and have unit length, notice that $|v\times w| = (v,v)(w,w) - (v,w)^2$.
             \end{remark}
             \begin{theorem}
-                If $c: I\rightarrow\mathbb{R}^3$ is a unit-speed curve with F-N frame $T, N, B$, then
+                If $c: I\to\R^3$ is a unit-speed curve with F-N frame $T, N, B$, then
                 \begin{equation*}
                     \begin{aligned}
                         \difFrac{}{t}
@@ -289,12 +289,12 @@
                 \end{aligned}
             \end{equation*}
             \begin{proposition}
-                $c: I\rightarrow\mathbb{R}^3$ is a unit-speed curve with $\kappa > 0$, then $c$ is taking values in a plane if and only if $\tau = 0$.
+                $c: I\to\R^3$ is a unit-speed curve with $\kappa > 0$, then $c$ is taking values in a plane if and only if $\tau = 0$.
             \end{proposition}
             \begin{proof}
                 $\Longrightarrow$ If $c$ lies in a plane, then the plane is spanned by $T$ and $N$, i.e. $\dot{c}(t)$ and $\cfrac{\ddot{c}(t)}{\kappa(t)}$, which means $B$ is a constant vector. According to Frenet-Serret eq, it's obvious that $\tau = 0$.
             
-                $\Longleftarrow$ If $\tau = 0$, then $\dot{B}(t) = 0$, so $B(t) = B(0)\in\mathbb{R}^3$. Claim $c$ lies in the plane orthogonal to $B$. Let
+                $\Longleftarrow$ If $\tau = 0$, then $\dot{B}(t) = 0$, so $B(t) = B(0)\in\R^3$. Claim $c$ lies in the plane orthogonal to $B$. Let
                 \begin{equation*}
                     \begin{aligned}
                         f(t) = \bigg( c(t) - c(0) \bigg)\cdot B(0)
@@ -310,7 +310,7 @@
             \end{proof}
 
             \begin{theorem}
-                Given differentiable functions $\kappa: [0, T]\rightarrow\mathbb{R}$ and $\tau: [0, T]\rightarrow\mathbb{R}$, $T(0), N(0), B(0)\in\mathbb{R}^3$, then there exists a unique unit-speed curve $c: [0,T]\rightarrow\mathbb{R}^3$ with curvature $\kappa$ and torsion $\tau$, and Frenet-Serret frame at $t = 0$, $T(0), N(0), B(0)$.
+                Given differentiable functions $\kappa: [0, T]\to\R$ and $\tau: [0, T]\to\R$, $T(0), N(0), B(0)\in\R^3$, then there exists a unique unit-speed curve $c: [0,T]\to\R^3$ with curvature $\kappa$ and torsion $\tau$, and Frenet-Serret frame at $t = 0$, $T(0), N(0), B(0)$.
              \end{theorem}
              \begin{proof}
                  Suppose two curves $c, \Bar{c}$ with the same curvature $\kappa$ and torsion $\tau$.
@@ -331,27 +331,27 @@
     \part{Surfaces}\label{Part:Surfaces}
     
         \section{Definition and Construction of Surfaces}
-            The idea to define surface is to glue multiple parameterizations together. That is, surface looks like a piece of $\mathbb{R}^2$ in the vicinity of each point.
+            The idea to define surface is to glue multiple parameterizations together. That is, surface looks like a piece of $\R^2$ in the vicinity of each point.
 
             \begin{definition}[Coordinate chart]
-                Given a subset $S\subseteq\mathbb{R}^2$ on $S$ consists of
+                Given a subset $S\subseteq\R^2$ on $S$ consists of
                 \begin{itemize}
-                    \item an open subset $D\subseteq\mathbb{R}^2$
-                    \item a non-deg, injective smooth map $\phi:\mathbb{R}^2\supseteq D\rightarrow\mathbb{R}^3$
-                    \item an open subset $\theta\subseteq\mathbb{R}^3$
+                    \item an open subset $D\subseteq\R^2$
+                    \item a non-deg, injective smooth map $\phi:\R^2\supseteq D\to\R^3$
+                    \item an open subset $\theta\subseteq\R^3$
                 \end{itemize}
-                such that $\phi(D) = \{ \phi(p): p\in D \} = S\cap\theta$.
+                such that $\phi(D) = \set{ \phi(p): p\in D } = S\cap\theta$.
             \end{definition}
 
             \begin{definition}[Surface]
-                A subset $S\subseteq\mathbb{R}^2$ is called a surface if every point $m\in S$ has a coordinate chart centered at $m$.
+                A subset $S\subseteq\R^2$ is called a surface if every point $m\in S$ has a coordinate chart centered at $m$.
             \end{definition}
         
             \begin{definition}[Graph]
-                Every smooth function $f: \mathbb{R}^2\supseteq D\rightarrow\mathbb{R}$ defines a parameterized surfaces 
+                Every smooth function $f: \R^2\supseteq D\to\R$ defines a parameterized surfaces 
                 \begin{equation*}
                     \begin{aligned}
-                        S = \text{graph of } f = \big\{ (x,y,z)\in\mathbb{R}^3: (x,y)\in D, z=f(x,y) \big\}
+                        S = \text{graph of } f = \set*{ (x,y,z)\in\R^3: (x,y)\in D, z=f(x,y) }
                     \end{aligned}
                 \end{equation*}
                 which has a global chart
@@ -363,10 +363,10 @@
             \end{definition}
 
             \begin{definition}[level sets]
-                Let $g:\mathbb{R}^3\rightarrow\mathbb{R}$ be a smooth function. For every $c\in\mathbb{R}$
+                Let $g:\R^3\to\R$ be a smooth function. For every $c\in\R$
                 \begin{equation*}
                     \begin{aligned}
-                        S = g^{-1}(c) = \{ (x,y,z): g(x,y,z) = c \}
+                        S = g^{-1}(c) = \set{ (x,y,z): g(x,y,z) = c }
                     \end{aligned}
                 \end{equation*}
             \end{definition}
@@ -387,29 +387,29 @@
             
 	\section{Vector fields and Tangent space}\label{sec:Vector fields and Tangent space}
             \begin{definition}[Vector fields on surface]
-			A vector field on surface $S$ is a smooth map $X: S\rightarrow\mathbb{R}^3$ such that
+			A vector field on surface $S$ is a smooth map $X: S\to\R^3$ such that
     		  \begin{equation*}
     		      \begin{aligned}
-    		          X(p)\thinspace\in\thinspace T_pS\thinspace\subseteq\thinspace\mathbb{R}^3
+    		          X(p)\thinspace\in\thinspace \TBundle_p S\thinspace\subseteq\thinspace\R^3
     		      \end{aligned}
     		  \end{equation*}
             \end{definition}
 
-		\begin{definition}[$T_pf$]
-			Given a smooth function $f: S\rightarrow\mathbb{R}$ and a tangent vector $X\in T_pS$, the directional derivative of $f$ in $X$-direction
+		\begin{definition}[$\tangent_p f$]
+			Given a smooth function $f: S\to\R$ and a tangent vector $X\in \TBundle_p S$, the directional derivative of $f$ in $X$-direction
 			\begin{equation*}
 				\begin{aligned}
-					T_pf(X) := \difFracAt{}{t}{t=0} f\big(c(t)\big) \in\mathbb{R}
+					\tangent_p f(X) := \difFracAt{}{t}{t=0} f\big(c(t)\big) \in\R
 				\end{aligned}
 			\end{equation*}
-			for some curve $c: I\rightarrow S$ with $c(0) =p$ and $\dot{c}(0) = X$. Note that this definition of the directional derivative doesn't depend on a chart.
+			for some curve $c: I\to S$ with $c(0) =p$ and $\dot{c}(0) = X$. Note that this definition of the directional derivative doesn't depend on a chart.
 		\end{definition}
 		\begin{marginfigure}
                 \vspace{-4.2cm}
                 \begin{figure}[H]
                     \centering
                     \includegraphics[width = 1\textwidth]{pic/Tpf.jpg}
-                    \caption{$T_pf$}
+                    \caption{$\tangent_p f$}
                 \end{figure}
 		\end{marginfigure}
 
@@ -418,13 +418,13 @@
 			Last time we have seen that
 			\begin{equation*}
 				\begin{aligned}
-					T_{(0,0)}\phi: \mathbb{R}^2\rightarrow T_{\phi(0, 0)}S
+					T_{(0,0)}\phi: \R^2\to T_{\phi(0, 0)}S
 				\end{aligned}
 			\end{equation*}
 			is bijective. Same argument
 			\begin{equation*}
 				\begin{aligned}
-					T_{(u, v)}\phi: \mathbb{R}^2\rightarrow T_{\phi(u, v)}S
+					T_{(u, v)}\phi: \R^2\to T_{\phi(u, v)}S
 				\end{aligned}
 			\end{equation*}
 			is also bijective. Then, for every $p\in S$ that lies in $\phi(D)$, we find $(u, v)\in D$ such that $\phi(u, v) = p$ and define
@@ -458,9 +458,9 @@
 		As a computational tool, differential forms measure the vector field of a surface, thus enabling integration on it, and you can see it as the dual space of the tangent space.
 	
 		\begin{definition}[1-form]
-			A 1-form is a family $\alpha_p: T_pS\rightarrow\mathbb{R},\thinspace\thinspace p\in S$ of linear maps.
+			A 1-form is a family $\alpha_p: \TBundle_p S\to\R,\thinspace\thinspace p\in S$ of linear maps.
 		\end{definition}
-		Let $\alpha_p: T_pD\rightarrow\mathbb{R},\thinspace\thinspace D\in\mathbb{R}^2$ be a linear map, then
+		Let $\alpha_p: \TBundle_p D\to\R,\thinspace\thinspace D\in\R^2$ be a linear map, then
 		\begin{equation*}
 			\begin{aligned}
 				\alpha_p(v) = \alpha_p(v_1\partial x + v_2\partial y) = v_1\alpha_p(\partial x) + v_2\alpha_p(\partial y).
@@ -469,32 +469,32 @@
 		Hence, $\alpha_p(v)$ is determined by the two numbers $\alpha_1 = \alpha_p(\partial x)$ and $\alpha_2 = \alpha_p(\partial y)$, which means it's defined by its actions on tangent values, and $\alpha_1$, $\alpha_2$ are called the components of $\alpha$.
 
         \begin{definition}[1-form $(dx)_p$]
-            1-form $(dx)_p: T_pD\rightarrow\mathbb{R}$ on $D$ defined by
+            1-form $(dx)_p: \TBundle_p D\to\R$ on $D$ defined by
             \begin{equation*}
                 \begin{aligned}
                     (dx)_p(\partial x)_p = 1, \quad (dx)_p(\partial y)_p = 0
                 \end{aligned}
             \end{equation*}
-            and similarly for $(dy)_p$, which means $(\partial x)_p$ and $(\partial y)_p$ are a basis of $T_pD$, $(dx)_p$ and $(dy)_p$ are the dual basis. Moreover, every diff 1-form $\alpha$ on $D\subseteq\mathbb{R}^2$ open is of the form
+            and similarly for $(dy)_p$, which means $(\partial x)_p$ and $(\partial y)_p$ are a basis of $\TBundle_p D$, $(dx)_p$ and $(dy)_p$ are the dual basis. Moreover, every diff 1-form $\alpha$ on $D\subseteq\R^2$ open is of the form
             \begin{equation*}
                 \begin{aligned}
                     \alpha_p = \alpha_1(p)(dx)_p + \alpha_2(p)(dy)_p
                 \end{aligned}
             \end{equation*}
-            of smooth functions $\alpha_1, \alpha_2: D\rightarrow\mathbb{R}$.
+            of smooth functions $\alpha_1, \alpha_2: D\to\R$.
         \end{definition}
     
-        \begin{proposition}[$T_pf$]
-            Let $f: S\rightarrow\mathbb{R}$ be a smooth function on $S$, and the directional derivative gives us a linear map
+        \begin{proposition}[$\tangent_p f$]
+            Let $f: S\to\R$ be a smooth function on $S$, and the directional derivative gives us a linear map
             \begin{equation*}
                 \begin{aligned}
-                    T_pf: T_pS\rightarrow\mathbb{R}
+                    \tangent_p f: \TBundle_p S\to\R
                 \end{aligned}
             \end{equation*}
             which can be viewed as a 1-form on $S$. Usually, it's defined by $df$:
             \begin{equation*}
                 \begin{aligned}
-                    (df)_p(v) = T_pf(v) = (\nabla f)\cdot v
+                    (df)_p(v) = \tangent_p f(v) = (\nabla f)\cdot v
                 \end{aligned}
             \end{equation*}
         \end{proposition}
@@ -504,15 +504,15 @@
         \begin{figure}[H]
             \centering
             \includegraphics[width = 0.7\textwidth]{pic/Topographic Map and the Gradient 1-Form.png}
-            \caption{Topographic Map and the Gradient 1-Form. As we zoom in on a small region surrounding a point $p$ in the topographic map of a surface $S$, the contours look straighter and straighter, and more and more evenly spaced. Ultimately they become the representatives of the topographic map of the tangent plane $T_p$ to the surface at the point directly above $p$, the latter map being a depiction of the gradient 1-form.}
+            \caption{Topographic Map and the Gradient 1-Form. As we zoom in on a small region surrounding a point $p$ in the topographic map of a surface $S$, the contours look straighter and straighter, and more and more evenly spaced. Ultimately they become the representatives of the topographic map of the tangent plane $\TBundle_p S$ to the surface at the point directly above $p$, the latter map being a depiction of the gradient 1-form.}
         \end{figure}
 
         \begin{proposition}[$df$]
-            If $f: \mathbb{R}^2\supseteq D\rightarrow\mathbb{R}$ is a smooth function, then $df$ is completely defined by $df(\partial x)$ and $df(\partial y)$. Let's calculate them:
+            If $f: \R^2\supseteq D\to\R$ is a smooth function, then $df$ is completely defined by $df(\partial x)$ and $df(\partial y)$. Let's calculate them:
             
             \begin{equation*}
                 \begin{aligned}
-                    \big((df)(\partial x)\big)_p &= (df)_p\big((\partial x)_p\big) = T_pf\big((\partial x)_p\big) \\
+                    \big((df)(\partial x)\big)_p &= (df)_p\big((\partial x)_p\big) = \tangent_p f\big((\partial x)_p\big) \\
                     &= \cfrac{\partial(u,v,w)}{\partial(x,y)}(1\quad 0)^T(p) = \cfrac{\partial(u,v,w)}{\partial x}(p) = \cfrac{\partial f}{\partial x}(p) 
                 \end{aligned}
             \end{equation*}
@@ -531,13 +531,13 @@
         \end{proposition}
         
         \begin{definition}[1-form $\alpha^{\phi}$ on $D$]
-            $\alpha$ is 1-form on $S$, $\alpha_p: T_pS\rightarrow\mathbb{R}$ for all $p\in S$, and $\phi: \mathbb{R}^2\supseteq D\rightarrow S$ a chart. For all $(x,y)\in D$, $T_{(x,y)}\phi: \mathbb{R}^2\rightarrow T_{\phi(x, y)}S$. Define 1-form $\alpha^{\phi}$ on $D$ by
+            $\alpha$ is 1-form on $S$, $\alpha_p: \TBundle_p S\to\R$ for all $p\in S$, and $\phi: \R^2\supseteq D\to S$ a chart. For all $(x,y)\in D$, $T_{(x,y)}\phi: \R^2\to T_{\phi(x, y)}S$. Define 1-form $\alpha^{\phi}$ on $D$ by
             \begin{equation*}
                 \begin{aligned}
                     \alpha_{(x,y)}^{\phi} = \big(T_{(x,y)}\phi\big)^*\big(\alpha_{\phi(x,y)}\big), \quad \alpha_{(x,y)}^{\phi}(v) = \alpha_{\phi(x,y)}\big( T_{(x,y)}\phi(v) \big)
                 \end{aligned}
             \end{equation*}
-            $\alpha^\phi$ is the chart representation of $\alpha$. For the first equation, as in the tangent space, we have $T_{(x,y)}\phi: \mathbb{R}^2\rightarrow T_{\phi(x,y)}S$, so in the dual space, we define $\alpha_{(x,y)}^{\phi} = \big(T_{(x,y)}\phi\big)^*\big(\alpha_{\phi(x,y)}\big)$. For the second equation, $\alpha^\phi$ eats $v = v_1\partial x + v_2\partial y$, and $\alpha$ eats $T\phi(v) = v_1\frac{\partial\phi}{\partial x} + v_2\frac{\partial\phi}{\partial y}$.
+            $\alpha^\phi$ is the chart representation of $\alpha$. For the first equation, as in the tangent space, we have $T_{(x,y)}\phi: \R^2\to T_{\phi(x,y)}S$, so in the dual space, we define $\alpha_{(x,y)}^{\phi} = \big(T_{(x,y)}\phi\big)^*\big(\alpha_{\phi(x,y)}\big)$. For the second equation, $\alpha^\phi$ eats $v = v_1\partial x + v_2\partial y$, and $\alpha$ eats $T\phi(v) = v_1\frac{\partial\phi}{\partial x} + v_2\frac{\partial\phi}{\partial y}$.
         \end{definition}
     
         Based on the definition, we can get a very simple conclusion
@@ -549,17 +549,17 @@
         i.e. the components of $\alpha_{(x,y)}^\phi$ are $\alpha_{\phi(x,y)}\bigg( \cfrac{\partial\phi}{\partial x} \bigg)$ and $\alpha_{\phi(x,y)}\bigg( \cfrac{\partial\phi}{\partial y} \bigg)$. If $\phi = c(t)$, then the component of $\alpha_t^{c}$ is $\alpha_{c(t)}\big(\dot{c}(t)\big)$.
     
         \begin{definition}[Integration]
-            $\alpha$ is 1-form on a surface $S$, and $c: [a, b]\rightarrow S$ is a smooth curve in $S$, then
+            $\alpha$ is 1-form on a surface $S$, and $c: [a, b]\to S$ is a smooth curve in $S$, then
             \begin{equation*}
                 \begin{aligned}
-                    \int_{c}\alpha = \int_{a}^{b}\alpha_{c(t)}\big(\dot{c}(t)\big) dt
+                    \int_{c}\alpha = \int_{a}^{b}\alpha_{c(t)}\big(\dot{c}(t)\big) \dif t
                 \end{aligned}
             \end{equation*}
             is the integration of $\alpha$ along $c$.
         \end{definition}
     
         \begin{theorem}[Fundamental theorem of calculus]
-            If $f: S\rightarrow\mathbb{R}$ is a smooth function, and $c: [a,b]\rightarrow S$ is a smooth curve, then
+            If $f: S\to\R$ is a smooth function, and $c: [a,b]\to S$ is a smooth curve, then
             \begin{equation*}
                 \begin{aligned}
                     \int_{c}df = f\big(c(b)\big) - f\big(c(a)\big)
@@ -570,8 +570,8 @@
         \begin{proof}
             \begin{equation*}
                 \begin{aligned}
-                    \int\limits_{c}df &= \int\limits_{a}^{b}(df)_{c(t)}\big(\dot{c}(t)\big)dt = \int\limits_{a}^{b} T_{c(t)}f\big(\dot{c}(t)\big)dt \\ 
-                    &= \int\limits_{a}^{b}\cfrac{df\big(c(t)\big)}{d\big(c(t)\big)}\big(\dot{c}(t)\big)dt = \int\limits_{a}^{b}\difFrac{}{t}f\big(c(t)\big)dt = f\big(c(t)\big)\bigg|_a^b
+                    \int\limits_{c}df &= \int\limits_{a}^{b}(df)_{c(t)}\big(\dot{c}(t)\big)\dif t = \int\limits_{a}^{b} T_{c(t)}f\big(\dot{c}(t)\big)\dif t \\ 
+                    &= \int\limits_{a}^{b}\cfrac{df\big(c(t)\big)}{d\big(c(t)\big)}\big(\dot{c}(t)\big)\dif t = \int\limits_{a}^{b}\difFrac{}{t}f\big(c(t)\big)\dif t = f\big(c(t)\big)\bigg|_a^b
                 \end{aligned}
             \end{equation*}
         \end{proof}
@@ -594,11 +594,11 @@
 			If $\alpha$ is a 1-form on $S$, then the exterior differential in the $S$ is defined as
 			\begin{equation*}
 				\begin{aligned}
-					(d\alpha)_p(\partial x, \partial y) &= T_p\big( \alpha(\partial y)\big)(\partial x) - T_p\big( \alpha(\partial x)\big)(\partial y) \\
+					(d\alpha)_p(\partial x, \partial y) &= \tangent_p\big( \alpha(\partial y)\big)(\partial x) - \tangent_p\big( \alpha(\partial x)\big)(\partial y) \\
 					&= \nabla_{\partial x}\alpha(\partial y) - \nabla_{\partial y}\alpha(\partial x)
 				\end{aligned}
 			\end{equation*}
-			for every chart $\phi: D\rightarrow S$ around $p$.
+			for every chart $\phi: D\to S$ around $p$.
 		\end{definition}
 		\begin{remark}
 			\begin{equation*}
@@ -607,7 +607,7 @@
 					&d(df) = 0
 				\end{aligned}
 			\end{equation*}
-			1-form is called closed if $d\alpha=0$, and is called exact if there exists $f: S\rightarrow\mathbb{R}$ such that $df = \alpha$. Actually, every exact form is also closed, but not every closed form is exact.
+			1-form is called closed if $d\alpha=0$, and is called exact if there exists $f: S\to\R$ such that $df = \alpha$. Actually, every exact form is also closed, but not every closed form is exact.
 		\end{remark}
 		\begin{definition}[Integration of 2-forms]
 			The integral of the 2-form $\beta$ over the rectangle $R$ is 
@@ -616,7 +616,7 @@
 					\int_{R}\beta = \int_{a}^{b}\int_{c}^{d}\beta_{R(x,y)}\bigg( \cfrac{\partial R(x,y)}{\partial x}, \cfrac{\partial R(x,y)}{\partial y} \bigg) dydx
 				\end{aligned}
 			\end{equation*}
-			where $\cfrac{\partial R(x,y)}{\partial x}$ is the tangent vector at $R(x,y)\in S$ given by the curve $t\rightarrow R(t+x, y)$, and similar definition for $\cfrac{\partial R(x,y)}{\partial y}$.
+			where $\cfrac{\partial R(x,y)}{\partial x}$ is the tangent vector at $R(x,y)\in S$ given by the curve $t\to R(t+x, y)$, and similar definition for $\cfrac{\partial R(x,y)}{\partial y}$.
 		\end{definition}
 		
             We shall ask: "what does $\int\limits_{R}\beta$ computes?" Let 
@@ -625,7 +625,7 @@
                     \beta = F_1dy\wedge dz + F_2dz\wedge dx + F_3dx\wedge dy
                 \end{aligned}
             \end{equation*}
-            be a 2-form on $U\subseteq\mathbb{R}^3$ with smooth function $F_i: U\rightarrow\mathbb{R}$. We may think of $F=(F_1, F_2, F_3): U\rightarrow\mathbb{R}^3$ as a vector field on $U\subseteq\mathbb{R}^3$. Let $R: [a,b]\times[c,d]\rightarrow U$ be a rectangular region, denote 
+            be a 2-form on $U\subseteq\R^3$ with smooth function $F_i: U\to\R$. We may think of $F=(F_1, F_2, F_3): U\to\R^3$ as a vector field on $U\subseteq\R^3$. Let $R: [a,b]\times[c,d]\to U$ be a rectangular region, denote 
             \begin{equation*}
                 \begin{aligned}
                     T_x(x,y) = \cfrac{\partial R(x,y)}{\partial x}, \quad T_y(x,y) = \cfrac{\partial R(x,y)}{\partial y}
@@ -645,7 +645,7 @@
 		which is the classical surface integral over the vector field $F$ = flux of $F$ through the rectangle $R$.
 		
 		\begin{theorem}[Green's thm]
-			Suppose $U\subseteq\mathbb{R}^2$ open, $\alpha$ a 2-form on $U$. Let $R: [a,b]\times[c,d]$ injective and s.t. the det of jacobian is positive. Let $\partial R$ be the boundary curve of $R$, then
+			Suppose $U\subseteq\R^2$ open, $\alpha$ a 2-form on $U$. Let $R: [a,b]\times[c,d]$ injective and s.t. the det of jacobian is positive. Let $\partial R$ be the boundary curve of $R$, then
 			\begin{equation*}
 				\begin{aligned}
 					\int_{R}d\alpha = \int_{\partial R}\alpha
@@ -697,21 +697,21 @@
 		Recall for curves, we had a moving frame (Cartan) at every point of curve (T, N, B), which was adapted the curve (T = $\dot{c}$). The change of this frame, expanded in terms of the frame, told us the curvature and the torsion of the  curve. For the surface, the idea is to do something similar to get the curvature of a surface.
 		
 		\begin{definition}[Moving frame]
-			A moving frame on an open subset $U\subseteq\mathbb{R}^3$ consists of vector fields $e_1, e_2, e_3: U\rightarrow\mathbb{R}^3$ such that for each point $x\in U$, the values $e_1(x), e_2(x), e_3(x)$ are an orthonormal basis of $\mathbb{R}^3$.
+			A moving frame on an open subset $U\subseteq\R^3$ consists of vector fields $e_1, e_2, e_3: U\to\R^3$ such that for each point $x\in U$, the values $e_1(x), e_2(x), e_3(x)$ are an orthonormal basis of $\R^3$.
 		\end{definition}
 	
 		\begin{definition}[Change of frame]
-			Suppose $e_1: U\rightarrow\mathbb{R}^3$, $e_1 = (f_1, f_2, f_3)$ where $f: U\rightarrow\mathbb{R}$, then
+			Suppose $e_1: U\to\R^3$, $e_1 = (f_1, f_2, f_3)$ where $f: U\to\R$, then
 			\begin{equation*}
 				\begin{aligned}
 					de_1 = (df_1, df_2, df_3)
 				\end{aligned}
 			\end{equation*}
-			Since $(df_i)_x: \mathbb{R}^3\rightarrow\mathbb{R}$ is linear, hence also $(de_1)_x = ((df_1)_x, (df_2)_x, (df_3)_x): \mathbb{R}^3\rightarrow\mathbb{R}^3$ is a linear map,  and $(de_1)_x(v) = ((df_1)_x(v), (df_2)_x(v), (df_3)_x(v))$ shows how the $e_i$ changes in $v$ direction.
+			Since $(df_i)_x: \R^3\to\R$ is linear, hence also $(de_1)_x = ((df_1)_x, (df_2)_x, (df_3)_x): \R^3\to\R^3$ is a linear map,  and $(de_1)_x(v) = ((df_1)_x(v), (df_2)_x(v), (df_3)_x(v))$ shows how the $e_i$ changes in $v$ direction.
 		\end{definition}
 	
 		\begin{definition}[Expand change to the frame itself]
-			Since $(de_i)_x(v)\in\mathbb{R}^3$, and $e_1(x), e_2(x), e_3(x)$ is a basis of $\mathbb{R}^3$, we can expand $(de_i)_x(v)$ in terms of $e_j(x)$:
+			Since $(de_i)_x(v)\in\R^3$, and $e_1(x), e_2(x), e_3(x)$ is a basis of $\R^3$, we can expand $(de_i)_x(v)$ in terms of $e_j(x)$:
 			\begin{equation*}
 				\begin{aligned}
 					(de_i)_x(v) = \sum\limits_{j=1}^3(\omega_i^j)_x(v)e_j(x)
@@ -751,7 +751,7 @@
 		\end{equation*}
 	
 		\begin{remark}
-			Let $c$ be a unit-speed curve with $\kappa> 0$. Suppose that $e_1, e_2, e_3$ is a moving frame on $\mathbb{R}^3$ such that the restriction to $c$ gives the Frenet-Serret frame, then
+			Let $c$ be a unit-speed curve with $\kappa> 0$. Suppose that $e_1, e_2, e_3$ is a moving frame on $\R^3$ such that the restriction to $c$ gives the Frenet-Serret frame, then
 			\begin{equation*}
 				\begin{aligned}
 					&(w_1^2)_{c(t)}(T) = \kappa(t) \\
@@ -763,7 +763,7 @@
 		\end{remark}
 	
 		\begin{proposition}[The connection forms via the attitude matrix]
-			Let $f = [f_1, f_2, f_3]$ be the standard basis of $\mathbb{R}^3$, and suppose the rotation is described by the attitude matrix $[A] = [a_{ij}]$, which satisfies $[A]^T = [A]^{-1}$, then
+			Let $f = [f_1, f_2, f_3]$ be the standard basis of $\R^3$, and suppose the rotation is described by the attitude matrix $[A] = [a_{ij}]$, which satisfies $[A]^T = [A]^{-1}$, then
 			\begin{equation*}
 				\begin{aligned}
 					[e] = [A][f]
@@ -786,11 +786,11 @@
 		The frame $e_1, e_2, e_3$ is not the most basic object, we want to replace the moving frame field $e_i$ with its dual 1-form $\theta_i$.
 	
 		\begin{definition}[Dual frame]
-			The dual frame are 1-forms $\theta_1, \theta_2, \theta_3$ on $\mathbb{R}^3$ such that $(\theta_i)_x(e_j(x)) = \delta_{ij}$.
+			The dual frame are 1-forms $\theta_1, \theta_2, \theta_3$ on $\R^3$ such that $(\theta_i)_x(e_j(x)) = \delta_{ij}$.
 		\end{definition}
 	
 		\begin{definition}[The duals $\theta_i$ of $e_i$ in terms of the duals $dx_j$ of $f_j$]
-			We know that the attitude matrix $[a_{ij}]$ transforms the fixed Euclidean basis $\{f_j\}$ into Cartan's frame field $\{e_i\}$, we now show that the same rotation matrix transforms the 1-form basis $\{dx_j\}$ dual to $\{f_j\}$ into the 1-form basis $\{\theta_i\}$ dual to $\{e_i\}$:
+			We know that the attitude matrix $[a_{ij}]$ transforms the fixed Euclidean basis $\set{f_j}$ into Cartan's frame field $\set{e_i}$, we now show that the same rotation matrix transforms the 1-form basis $\set{dx_j}$ dual to $\set{f_j}$ into the 1-form basis $\set{\theta_i}$ dual to $\set{e_i}$:
 			\begin{equation*}
 				\begin{aligned}
 					[\theta] = [A][dx]
@@ -885,25 +885,25 @@
 
         \newpage
 	\section{Gauss map and shape operator}\label{Sec:Gauss map and shape operator}
-		\en{"As we have seen in Chapter 1, the consideration of the rate of change of the tangent line to a curve $c$ led us to an important geometric entity, namely, the curvature of $c$. In this chapter we shall extend this idea to regular surfaces; that is, we shall try to measure how rapidly a surface $S$ pulls away from the tangent plane $T_p(S)$ in a neighborhood of a point $p\in S$. This is equivalent to measuring the rate of change at $p$ os a unit normal vector field $N$ on a neighborhood of $p$. As we shall see shortly, this rate of change is given by a linear map on $T_pS$ which happens to be self-adjoint. A surprisingly large number of local properties of $S$ at $p$ can be derived from the study of this linear map." \\ Selected from do Carmo, Differential Geometry of Curves and Surfaces, page 134}Similar to study curves through Frenet-Serret frame, we use the Cartan method to study the surface $S$, and the strategy is to put frames on $S$ (adapted), then study the rate of the frame's change.
+		\en{"As we have seen in Chapter 1, the consideration of the rate of change of the tangent line to a curve $c$ led us to an important geometric entity, namely, the curvature of $c$. In this chapter we shall extend this idea to regular surfaces; that is, we shall try to measure how rapidly a surface $S$ pulls away from the tangent plane $\TBundle_p S$ in a neighborhood of a point $p\in S$. This is equivalent to measuring the rate of change at $p$ os a unit normal vector field $N$ on a neighborhood of $p$. As we shall see shortly, this rate of change is given by a linear map on $\TBundle_p S$ which happens to be self-adjoint. A surprisingly large number of local properties of $S$ at $p$ can be derived from the study of this linear map." \\ Selected from do Carmo, Differential Geometry of Curves and Surfaces, page 134}Similar to study curves through Frenet-Serret frame, we use the Cartan method to study the surface $S$, and the strategy is to put frames on $S$ (adapted), then study the rate of the frame's change.
 		
-		Recall that if $S$ is a surface that is oriented, then there exists a normal field $n: S\rightarrow\mathbb{R}^3$, which vanishes nowhere, so we can define a map from $p\in S$ to the normal vector $n(p)$ at this point, which is called Gauss map.
+		Recall that if $S$ is a surface that is oriented, then there exists a normal field $n: S\to\R^3$, which vanishes nowhere, so we can define a map from $p\in S$ to the normal vector $n(p)$ at this point, which is called Gauss map.
 		
 		\begin{definition}[Gauss map]
-			If $n(p)$ has unit norm for $\forall p\in S$, then we call $n: S\rightarrow S^2\subseteq\mathbb{R}^3$ the gauss map of $S$. Moreover, for the surface $\phi: D\rightarrow S$, gauss map $n$ can be written as
+			If $n(p)$ has unit norm for $\forall p\in S$, then we call $n: S\to S^2\subseteq\R^3$ the gauss map of $S$. Moreover, for the surface $\phi: D\to S$, gauss map $n$ can be written as
 			\begin{equation*}
 				\begin{aligned}
-					n(u, v) := \cfrac{\frac{\partial\phi}{\partial u}\times\frac{\partial\phi}{\partial v}}{||\frac{\partial\phi}{\partial u}\times\frac{\partial\phi}{\partial v}||}
+					n(u, v) := \cfrac{\frac{\partial\phi}{\partial u}\times\frac{\partial\phi}{\partial v}}{\norm{\frac{\partial\phi}{\partial u}\times\frac{\partial\phi}{\partial v}}}
 				\end{aligned}
 			\end{equation*}
 		\end{definition}
 	
 		\begin{remark}
-			If $n: S\rightarrow S^2$ is the gauss map, and $e_1, e_2, e_3$ a frame on $\mathbb{R}^3$, then this frame is adapted to $S$ if and only if $n(p) = e_3(p)$.
+			If $n: S\to S^2$ is the gauss map, and $e_1, e_2, e_3$ a frame on $\R^3$, then this frame is adapted to $S$ if and only if $n(p) = e_3(p)$.
 		\end{remark}
 	
 		\begin{example}
-			Consider the cylinder $S = \{(x,y,z): x^2+y^2=r^2\}$, and the tangent space $V\subseteq\mathbb{R}^3$ is tangent to $S$ at $p=(x,y,z)\in S$ iff there is a curve $c(t)\in S$ satisfying $c(0)=p, \dot{c}(0)=v\in V$. If $c(t) = \big(x(t), y(t), z(t)\big)$, then $x(t)^2+y(t)^2=r^2$, and take derivative, we get
+			Consider the cylinder $S = \set{(x,y,z): x^2+y^2=r^2}$, and the tangent space $V\subseteq\R^3$ is tangent to $S$ at $p=(x,y,z)\in S$ iff there is a curve $c(t)\in S$ satisfying $c(0)=p, \dot{c}(0)=v\in V$. If $c(t) = \big(x(t), y(t), z(t)\big)$, then $x(t)^2+y(t)^2=r^2$, and take derivative, we get
 			\begin{equation*}
 				\begin{aligned}
 					x\cdot v_1 + y\cdot v_2 = 0
@@ -915,44 +915,44 @@
 					v_1 = ya, \quad v_2 = -xa, \quad v_3 \thinspace\thinspace\text{arbitrary}
 				\end{aligned}
 			\end{equation*}
-			for some constant $a\in\mathbb{R}$. Therefore, the tangent space of $S$  is spanned by
+			for some constant $a\in\R$. Therefore, the tangent space of $S$  is spanned by
 			\begin{equation*}
 				\begin{aligned}
 					y\partial x-x\partial y, \quad \partial z
 				\end{aligned}
 			\end{equation*}
-			for $(x,y,z)\in S$, and the normal field $n: S\rightarrow\mathbb{R}^3$ is $n = x\partial x+y\partial y$, thus for example
+			for $(x,y,z)\in S$, and the normal field $n: S\to\R^3$ is $n = x\partial x+y\partial y$, thus for example
 			\begin{equation*}
 				\begin{aligned}
 					e_1 = \partial z,\quad e_2 = e_1\times e_3,\quad e_3 = \cfrac{x\partial x + y\partial y}{\sqrt{x^2+y^2}}
 				\end{aligned}
 			\end{equation*}
-			is a frame on $\mathbb{R}^3\backslash \{0\}$ adapted for $S$.
+			is a frame on $\R^3\backslash \set{0}$ adapted for $S$.
 		\end{example}
 	
 		\begin{lemma}[Moving frame and tangent vector field]
-			Let $S$ be a oriented surface with unit normal $n$, then there exists an adapted moving frame on open subset $\mathcal{O}\subseteq S$ if and only if there exists a non-vanishing tangent vector field $v$ on $\mathcal{O}(v_p\in T_pS)$.
+			Let $S$ be a oriented surface with unit normal $n$, then there exists an adapted moving frame on open subset $\mathcal{O}\subseteq S$ if and only if there exists a non-vanishing tangent vector field $v$ on $\mathcal{O}(v_p\in \TBundle_p S)$.
 		\end{lemma}
 		
 		\begin{proof}
-			$\Longrightarrow$: If $(e_1, e_2, e_3)$ is an adapted moving frame, $e_1(p)\in T_pS$ and never vanishes.
+			$\Longrightarrow$: If $(e_1, e_2, e_3)$ is an adapted moving frame, $e_1(p)\in \TBundle_p S$ and never vanishes.
 			
 			$\Longleftarrow$: If $v$ is nowhere vanishing on $\mathcal{O}\subseteq S$, then
 			\begin{equation*}
 				\begin{aligned}
-					e_1 = \cfrac{v}{||v||}, \quad e_2 = e_1\times n, \quad e_3 = n
+					e_1 = \cfrac{v}{\norm{v}}, \quad e_2 = e_1\times n, \quad e_3 = n
 				\end{aligned}
 			\end{equation*}
 			is an adapted frame on $\mathcal{O}$.
 		\end{proof}
 
-		If $e_1, e_2, e_3$ is an adapted frame $\mathcal{O}\in\mathbb{R}^3$, then
+		If $e_1, e_2, e_3$ is an adapted frame $\mathcal{O}\in\R^3$, then
 		\begin{equation*}
 			\begin{aligned}
-				(de_i)_p(v) = \sum\limits_j(\omega_i^j)_p(v)e_j(p)\quad\text{for}\thinspace\thinspace p\in\mathcal{O}\cap S,\thinspace\thinspace v\in T_pS\subseteq\mathbb{R}^3.
+				(de_i)_p(v) = \sum\limits_j(\omega_i^j)_p(v)e_j(p)\quad\text{for}\thinspace\thinspace p\in\mathcal{O}\cap S,\thinspace\thinspace v\in \TBundle_p S\subseteq\R^3.
 			\end{aligned}
 		\end{equation*}
-		For curves, only needed points on the curve and $v=T$, the tangent direction to recover the curvature and torsion of the curve, but for the surfaces, we have two tangent directions. Because of the anti-symmetry of $(\omega_i^j)$, the only independent elements are $\omega_1^2, \omega_1^3, \omega_2^3$, where $\omega_1^2$ measures how much $e_1$ changes in $e_2$ direction, showing the information about $T_pS$, which is "intrinsic"; while $\omega_1^3, \omega_2^3$ measures how $e_3$ changes in $e_1, e_2$ direction, showing the change of the gauss map/normal vector field, which is "extrinsic".
+		For curves, only needed points on the curve and $v=T$, the tangent direction to recover the curvature and torsion of the curve, but for the surfaces, we have two tangent directions. Because of the anti-symmetry of $(\omega_i^j)$, the only independent elements are $\omega_1^2, \omega_1^3, \omega_2^3$, where $\omega_1^2$ measures how much $e_1$ changes in $e_2$ direction, showing the information about $\TBundle_p S$, which is "intrinsic"; while $\omega_1^3, \omega_2^3$ measures how $e_3$ changes in $e_1, e_2$ direction, showing the change of the gauss map/normal vector field, which is "extrinsic".
 
             
 
@@ -960,10 +960,10 @@
 			The shape operator (Weingarten map)
 			\begin{equation*}
 				\begin{aligned}
-					\mathcal{S}_p = -T_pn = -\nabla n_p: T_pS\rightarrow T_pS
+					\mathcal{S}_p = -\tangent_p n = -\nabla n_p: \TBundle_p S\to \TBundle_p S
 				\end{aligned}
 			\end{equation*}
-			measures the change of $n: S\rightarrow S^2$, and
+			measures the change of $n: S\to S^2$, and
 			\begin{equation*}
 				\begin{aligned}
 					\mathcal{S}_p(v) &= -\nabla_v n_p = -dn_p\cdot v = -\bigg(\cfrac{\partial n}{\partial x}, \cfrac{\partial n}{\partial y}, \cfrac{\partial n}{\partial z}\bigg)\bigg|_{(x,y,z)=p}\cdot v \\
@@ -982,15 +982,15 @@
             \begin{figure}[H]
                 \centering
                 \includegraphics[width = 0.8\textwidth]{pic/Shape operator.png}
-                \caption{The Shape Operator applied to a short tangent vector $v$ emanating from $p$ in $T_p$ tells us how much the normal changes from the tail to the tip of $v$. This change $\delta n \approx -\mathcal{S}(v)$ ultimately lies in the parallel tangent plane to $S^2$ at $n(p)$. Superimposing the two tangent planes, $S$ may be viewed as a linear transformation of $T_p$ to itself, here depicted detached from $S$, floating between the two surfaces.}
+                \caption{The Shape Operator applied to a short tangent vector $v$ emanating from $p$ in $\TBundle_p S$ tells us how much the normal changes from the tail to the tip of $v$. This change $\delta n \approx -\mathcal{S}(v)$ ultimately lies in the parallel tangent plane to $S^2$ at $n(p)$. Superimposing the two tangent planes, $S$ may be viewed as a linear transformation of $\TBundle_p S$ to itself, here depicted detached from $S$, floating between the two surfaces.}
             \end{figure}
 
 
 		\begin{proposition}[$\mathcal{S}_p$ is a self-adjoint linear operator]
-			For each point $p$ of $S\subseteq\mathbb{R}^3$, the shape operator is a self-adjoint linear operator
+			For each point $p$ of $S\subseteq\R^3$, the shape operator is a self-adjoint linear operator
 			\begin{equation*}
 				\begin{aligned}
-					\mathcal{S}_p: T_pS\rightarrow T_pS
+					\mathcal{S}_p: \TBundle_p S\to \TBundle_p S
 				\end{aligned}
 			\end{equation*}
 			on the tangent plane of $S$ at $p$.
@@ -1003,13 +1003,13 @@
 					0 = \nabla_v(n_p\cdot n_p) = 2(\nabla_vn_p)\cdot n_p = -2\mathcal{S}_p(v)\cdot n_p
 				\end{aligned}
 			\end{equation*}
-			where $v$ is tangent to $S$ at $p$, thus $\mathcal{S}_p$ is a function from $T_pS$ to $T_pS$. The linearity of $\mathcal{S}_p$ is a consequence of a linearity property of covariant derivatives:
+			where $v$ is tangent to $S$ at $p$, thus $\mathcal{S}_p$ is a function from $\TBundle_p S$ to $\TBundle_p S$. The linearity of $\mathcal{S}_p$ is a consequence of a linearity property of covariant derivatives:
 			\begin{equation*}
 				\begin{aligned}
 					\mathcal{S}_p(av+bw) = -\nabla_{av+bw}n_p = -(a\nabla_vn_p + b\nabla_wn_p) = a\mathcal{S}_p(v) + b\mathcal{S}_p(w)
 				\end{aligned}
 			\end{equation*}
-                Suppose $\{x_u, x_v\}$ are the associated basis of $T_pS$, then $(n, x_u) = 0 = (n, x_v)$, take the derivatives of them relative to $v$ and $u$, obtain
+                Suppose $\set{x_u, x_v}$ are the associated basis of $\TBundle_p S$, then $(n, x_u) = 0 = (n, x_v)$, take the derivatives of them relative to $v$ and $u$, obtain
                 \begin{equation*}
                     \begin{aligned}
                         (n_v, x_u) + (n, x_{uv}) = 0 \\
@@ -1028,14 +1028,14 @@
 			Sphere of radius $R$ has gauss map $n_p = \cfrac{p}{R},\thinspace n_p\cdot n_p = 1$, so
 			\begin{equation*}
 				\begin{aligned}
-					\mathcal{S}_p(v) = -T_pn(v) = -\difFracAt{}{t}{t=0} n\big( c(t) \big) = -\difFracAt{}{t}{t=0} \cfrac{c(t)}{R} = -\cfrac{v}{R}
+					\mathcal{S}_p(v) = -\tangent_p n(v) = -\difFracAt{}{t}{t=0} n\big( c(t) \big) = -\difFracAt{}{t}{t=0} \cfrac{c(t)}{R} = -\cfrac{v}{R}
 				\end{aligned}
 			\end{equation*}
-			which doesn't depend on $p$, and gets small if $R\rightarrow +\infty$.
+			which doesn't depend on $p$, and gets small if $R\to +\infty$.
 		\end{example}
 
 		\begin{proposition}["Detection of curvature via acceleration"]
-			If $c: I\rightarrow S$ is a smooth curve in $S$, then
+			If $c: I\to S$ is a smooth curve in $S$, then
 			\begin{equation*}
 				\begin{aligned}
 					\ddot{c}(t)\cdot n\big(c(t)\big) = \dot{c}(t)\cdot\mathcal{S}_{c(t)}\big( \dot{c}(t) \big)
@@ -1063,7 +1063,7 @@
 		\begin{definition}[The first fundamental form]\mn{The first fundamental form $I$ of a surface element is just the restriction of Euclidean inner product to all tangent planes.}
 			\begin{equation*}
 				\begin{aligned}
-					I_p(v,w) = v\cdot w, \thinspace\thinspace p\in S, \thinspace\thinspace v,w\in T_pS.
+					I_p(v,w) = v\cdot w, \thinspace\thinspace p\in S, \thinspace\thinspace v,w\in \TBundle_p S.
 				\end{aligned}
 			\end{equation*}
 		\end{definition}
@@ -1071,13 +1071,13 @@
 		\begin{definition}[The second fundamental form]
 			\begin{equation*}
 				\begin{aligned}
-					II_p(v,w) =v\cdot\mathcal{S}_p(w) = I_p\big(v, \mathcal{S}_p(w)\big), \thinspace\thinspace p\in S, \thinspace\thinspace v,w\in T_pS.
+					II_p(v,w) =v\cdot\mathcal{S}_p(w) = I_p\big(v, \mathcal{S}_p(w)\big), \thinspace\thinspace p\in S, \thinspace\thinspace v,w\in \TBundle_p S.
 				\end{aligned}
 			\end{equation*}
 		\end{definition}
 
 		\begin{remark}
-			If $\phi: \mathbb{R}^2\supseteq D(coords\thinspace\thinspace x_1, x_2)\rightarrow S\subseteq\mathbb{R}^3$ is chart, then
+			If $\phi: \R^2\supseteq D(coords\thinspace\thinspace x_1, x_2)\to S\subseteq\R^3$ is chart, then
 			\begin{equation*}
 				\begin{aligned}
 					I_{ij}^\phi(x_1, x_2) = I_{\phi(x_1,y_2)}\bigg(\cfrac{\partial\phi}{\partial x_i}, \cfrac{\partial\phi}{\partial x_j} \bigg) = \cfrac{\partial\phi}{\partial x_i}\cdot\cfrac{\partial\phi}{\partial x_j}
@@ -1140,15 +1140,15 @@
 			As $\mathcal{S}_p(v) = -v$, we have $II(\theta,\varphi) = -I(\theta, \varphi)$.
 		\end{example}
             \begin{proposition}
-                Consider the surface given by the graph of a smooth function $f: \mathbb{R}^2\supseteq U\rightarrow\mathbb{R},\thinspace S=\{(x,y,z)|(x,y)\in U, z=f(x,y)\}$. Suppose $f(0,0)=0$, then
+                Consider the surface given by the graph of a smooth function $f: \R^2\supseteq U\to\R,\thinspace S=\set{(x,y,z)|(x,y)\in U, z=f(x,y)}$. Suppose $f(0,0)=0$, then
                 \begin{equation*}
                     \begin{aligned}
-                        \cfrac{\partial f}{\partial x}(0,0) = \cfrac{\partial f}{\partial y}(0,0) = 0\Longleftrightarrow T_{(0,0)}S = \{(v_1, v_2, v_3)|v_3=0\}
+                        \cfrac{\partial f}{\partial x}(0,0) = \cfrac{\partial f}{\partial y}(0,0) = 0\Longleftrightarrow T_{(0,0)}S = \set{(v_1, v_2, v_3)|v_3=0}
                     \end{aligned}
                 \end{equation*}
             \end{proposition}
             \begin{proof}
-                Assume $c: I\rightarrow S, c(0) = (0,0,0)$ and $\dot{c}(0) = (v_1,v_2,v_3)$. Let
+                Assume $c: I\to S, c(0) = (0,0,0)$ and $\dot{c}(0) = (v_1,v_2,v_3)$. Let
                 \begin{equation*}
                     \begin{aligned}
                         c(t) = \big(x(t),y(t),z(t)\big), \quad z(t) = f\big(x(t), y(t)\big)
@@ -1185,7 +1185,7 @@
 
 
         \section{Normal curvature}
-            $\mathcal{S}_p: T_pS\rightarrow T_pS$ measures the curvature of the surface $S\subseteq\mathbb{R}^3$, we'd like to extract "number" from that linear operator $\mathcal{S}_p$. A direct way is to assume $\{e_1, e_2, e_3\}$ adapted to $S$, and then
+            $\mathcal{S}_p: \TBundle_p S\to \TBundle_p S$ measures the curvature of the surface $S\subseteq\R^3$, we'd like to extract "number" from that linear operator $\mathcal{S}_p$. A direct way is to assume $\set{e_1, e_2, e_3}$ adapted to $S$, and then
             \begin{equation*}
                 \begin{aligned}
                     II_{ij} = II_p(e_i, e_j) = e_i\cdot\mathcal{S}_pe_j
@@ -1193,7 +1193,7 @@
             \end{equation*}
             The disadvantage of this way is depending on the frame and is complicated, as you need to handle two vectors at the same time. 
             \begin{definition}
-                Another way is let $u\in T_pS$ be a unit vector ($||u||=1$), then define
+                Another way is let $u\in \TBundle_p S$ be a unit vector ($\norm{u}=1$), then define
                 \begin{equation*}
                     \begin{aligned}
                         \kappa_p(u) = II_p(u, u) = u\cdot\mathcal{S}_pu
@@ -1218,11 +1218,11 @@
                         \kappa_{c(t)}\big(\dot{c}(t)\big) = \dot{c}(t)\mathcal{S}_p\big(\dot{c}(t)\big) = \ddot{c}(t)\cdot n_{c(t)} = \kappa(t)N(t)\cdot n_{c(t)} = \kappa(t)\cos\angle\big(N(t),n_{c(t)}\big)
                     \end{aligned}
                 \end{equation*}
-                where $N(t)$ is the normal vector of the curve in $\mathbb{R}^3$, $n_{c(t)}$ is the normal vector of $c(t)$ on the surface, and it's called the "outside"\mn{Think figuratively, when you walk through a very "flat" desert on Earth, you think you're taking a straight path, but from outer space, the path you're taking through the desert is clearly curved.} projection of the curvature of a curve on the surface.
+                where $N(t)$ is the normal vector of the curve in $\R^3$, $n_{c(t)}$ is the normal vector of $c(t)$ on the surface, and it's called the "outside"\mn{Think figuratively, when you walk through a very "flat" desert on Earth, you think you're taking a straight path, but from outer space, the path you're taking through the desert is clearly curved.} projection of the curvature of a curve on the surface.
             \end{remark}
             
             \begin{definition}[Principle curvatures]
-                The maximum and minimum of the normal curvature $\kappa_p(u)$ as $u\in T_pS,\thinspace ||u|| = 1$ are called principle curvatures of $p$, denoted by $\kappa_1$ and $\kappa_2$, the associated directions $u_1$ and $u_2$ are called the principle directions. Equivalently, by threom of linear algebra, $\kappa_1(p)$ and $\kappa_2(p)$ are eigenvalues of $\mathcal{S}_p$ with eigenvectors $u_1$ and $u_2$. That is
+                The maximum and minimum of the normal curvature $\kappa_p(u)$ as $u\in \TBundle_p S,\thinspace \norm{u} = 1$ are called principle curvatures of $p$, denoted by $\kappa_1$ and $\kappa_2$, the associated directions $u_1$ and $u_2$ are called the principle directions. Equivalently, by threom of linear algebra, $\kappa_1(p)$ and $\kappa_2(p)$ are eigenvalues of $\mathcal{S}_p$ with eigenvectors $u_1$ and $u_2$. That is
                 \begin{equation*}
                     \begin{aligned}
                         \mathcal{S}_pu_1 = \kappa_1(p)u_1, \quad \mathcal{S}_pu_2 = \kappa_2(p)u_2
@@ -1342,7 +1342,7 @@
                 }$.\mn{If you forget, see example \ref{Example: the guass map of sphere}.}
             \end{example}
             \begin{example}
-                Since $u_1, u_2$ are orthonormal in $T_pS$, every vector $v\in T_pS$ is of the form $v= v_1u_1+v_2u_2$ for some $v_1, v_2\in\mathbb{R}$, and if $|v|^2=1$, let's say $v_1 =\cos\theta, v_2=\sin\theta$ for $\theta=\angle(v_1, u_1)$, then\mn{It can also be written in the form of matrix:
+                Since $u_1, u_2$ are orthonormal in $\TBundle_p S$, every vector $v\in \TBundle_p S$ is of the form $v= v_1u_1+v_2u_2$ for some $v_1, v_2\in\R$, and if $|v|^2=1$, let's say $v_1 =\cos\theta, v_2=\sin\theta$ for $\theta=\angle(v_1, u_1)$, then\mn{It can also be written in the form of matrix:
                 \begin{equation*}
                     \begin{aligned}
                         \kappa_p(v) &= I_p\big(v, \mathcal{S}_p(v)\big) \\
@@ -1407,7 +1407,7 @@
             \end{figure}
 
             \begin{definition}[The general matrix of $\mathcal{S}$]\mn{The Shape Operator $\mathcal{S}$ is a geometric entity, independent of any particular choice of basis vectors, but the matrix $[\mathcal{S}]$ certainly does depend on this choice.}
-                 Suppose that we choose an arbitrary orthonormal basis $\{E_1, E_2\}$, without first finding the principal directions and curvatures; how will the matrix look? While we may not yet know the principal directions, they certainly exist, so let us suppose that $\{e_1, e_2\}$ are obtained by rotating $\{E_1, E_2\}$ through some unknown angle $\theta$, then\mn{As for why $\varphi = \theta$, it's because $[\mathcal{S}] = [\mathcal{S}]^T$, which may relate to the self-adjoint property of $\mathcal{S}$.}
+                 Suppose that we choose an arbitrary orthonormal basis $\set{E_1, E_2}$, without first finding the principal directions and curvatures; how will the matrix look? While we may not yet know the principal directions, they certainly exist, so let us suppose that $\set{e_1, e_2}$ are obtained by rotating $\set{E_1, E_2}$ through some unknown angle $\theta$, then\mn{As for why $\varphi = \theta$, it's because $[\mathcal{S}] = [\mathcal{S}]^T$, which may relate to the self-adjoint property of $\mathcal{S}$.}
                  \begin{equation*}
                      \begin{aligned}
                          [\mathcal{S}] = R_{\theta}\circ\Sigma\circ R_{-\theta}
@@ -1454,7 +1454,7 @@
                 \end{equation}
             \end{proposition}
             \begin{proof}
-                Suppose $\{e_1, e_2, e_3\}$ is a Darboux frame on $S$, $\mathcal{S}e_1=\kappa_1e_1$, $\mathcal{S}e_2=\kappa_2e_2$. Hence
+                Suppose $\set{e_1, e_2, e_3}$ is a Darboux frame on $S$, $\mathcal{S}e_1=\kappa_1e_1$, $\mathcal{S}e_2=\kappa_2e_2$. Hence
                 \begin{equation*}
                     \begin{aligned}
                         II_{ij} = II(e_i, e_j) = e_i\cdot\mathcal{S}e_j
@@ -1547,7 +1547,7 @@
                 In particular, $\kappa_1, \kappa_2 = H \pm \sqrt{H^2-\kappa}$.
             \end{proposition}
             \begin{proposition}
-                Let $e_1, e_2, e_3$ be a moving frame adapted to $S\in\mathbb{R}^3$ with dual frame $\theta^j$ and connection forms $\omega_i^j$, then
+                Let $e_1, e_2, e_3$ be a moving frame adapted to $S\in\R^3$ with dual frame $\theta^j$ and connection forms $\omega_i^j$, then
                 \begin{equation}\label{Equation: domega12}
                     \begin{aligned}
                         d\omega_2^1 = \kappa\thinspace\theta^1\wedge\theta^2
@@ -1587,9 +1587,9 @@
             \begin{remark}
                 $\omega_1^2$ measures the rate of change of the frame $e_1$, $e_2$ on $S$, and $\kappa$ becomes kind of second order rate of change. Eq \eqref{Equation: domega12} depends only on $e_1$, $e_2$, which means $\kappa$ only depends on the behavior of $e_1$, $e_2$. In contrast, according to eq \eqref{Equation: omega theta H}, $II$, $\mathcal{S}_p$, $\omega_1^3$, $\omega_2^3$ and $H$ all depend on $e_1$, $e_2$, $e_3$. The astonishing thing is $\kappa=\kappa_1\kappa_2$ is independent of $e_3$.
 
-                To sum up, for a adapted frame $e_1$, $e_2$, $e_3$ with dual frame $\theta_1$, $\theta_2$, $\theta_3$ and connection forms $\omega_i^j$, restricted to $S$ (only on $T_pS$), we have
+                To sum up, for a adapted frame $e_1$, $e_2$, $e_3$ with dual frame $\theta_1$, $\theta_2$, $\theta_3$ and connection forms $\omega_i^j$, restricted to $S$ (only on $\TBundle_p S$), we have
                 \begin{itemize}
-                    \item $\theta_1$, $\theta_2$ are the dual frame of $e_1(p)$, $e_2(p)\in T_pS$
+                    \item $\theta_1$, $\theta_2$ are the dual frame of $e_1(p)$, $e_2(p)\in \TBundle_p S$
                     \vspace{-0.15cm}
                     \item $\omega_1^2$ measures the rate of change of $e_1$, $e_2$
                     \vspace{-0.15cm}
@@ -1632,21 +1632,21 @@
                 \end{equation*}
             \end{theorem}
             \begin{remark}
-                Roughly speaking, intrinsic properties can be measured by inhibitions living on $S$ (= ant perspective); extrinsic properties depend on how the surface $S$ is realized as a subset of $\mathbb{R}^3$ (= space view).
+                Roughly speaking, intrinsic properties can be measured by inhibitions living on $S$ (= ant perspective); extrinsic properties depend on how the surface $S$ is realized as a subset of $\R^3$ (= space view).
             \end{remark}
 
-            Next we want to see how do frame properties transform as we change our surface. Suppose $F: S(\subseteq\mathbb{R}^3) \rightarrow \Bar{S}(\subseteq\mathbb{R}^3)$, and we want to use $F$ to compare objects living on $\Bar{S}$ with the objects on $S$.
+            Next we want to see how do frame properties transform as we change our surface. Suppose $F: S(\subseteq\R^3) \to \Bar{S}(\subseteq\R^3)$, and we want to use $F$ to compare objects living on $\Bar{S}$ with the objects on $S$.
             \begin{definition}[Pushforward and Pullback]
-                pushforward: objects on $S \rightarrow$ objects on $\Bar{S}$.
+                pushforward: objects on $S \to$ objects on $\Bar{S}$.
                 
                 pullback: objects living on $\Bar{S}$ induce something living on $S$.
             \end{definition}
 
             \begin{example}[Pushforward of curves]
-                If $c: I\rightarrow S$, then the pushforward of $c$ via $F$ is the curve in $\Bar{S}$.
+                If $c: I\to S$, then the pushforward of $c$ via $F$ is the curve in $\Bar{S}$.
                 \begin{equation*}
                     \begin{aligned}
-                        c_F = F\circ c: I\rightarrow\Bar{S}
+                        c_F = F\circ c: I\to\Bar{S}
                     \end{aligned}
                 \end{equation*}
                 i.e.
@@ -1657,35 +1657,35 @@
                 \end{equation*}
             \end{example}
             \begin{example}[Pushforward of tangent vectors]
-                If $v\in T_pS$,  represented by a curve $c:I\rightarrow S$, then the pushforward of $v$ is the tangent vector $w\in T_{F(p)}\Bar{S}$ represented by the curve $c_F = F\circ c$, i.e.
+                If $v\in \TBundle_p S$,  represented by a curve $c:I\to S$, then the pushforward of $v$ is the tangent vector $w\in T_{F(p)}\Bar{S}$ represented by the curve $c_F = F\circ c$, i.e.
                 \begin{equation*}
                     \begin{aligned}
-                        w = \difFracAt{}{t}{t=0} F(c(t)) = T_pF\bigg(\difFracAt{}{t}{t=0} c(t)\bigg) = T_pF(v)
+                        w = \difFracAt{}{t}{t=0} F(c(t)) = \tangent_p F\bigg(\difFracAt{}{t}{t=0} c(t)\bigg) = \tangent_p F(v)
                     \end{aligned}
                 \end{equation*}
-                therefore, this pushforward is just the derivative $T_pF: T_pS\rightarrow T_{F(p)}\Bar{S}$.
+                therefore, this pushforward is just the derivative $\tangent_p F: \TBundle_p S\to T_{F(p)}\Bar{S}$.
             \end{example}
             \begin{example}[Pullback of a 1-form]
                 If $\alpha$ is a 1-form on $\Bar{S}$, then the pullback of $\alpha$ by $F$ is the 1-form $\beta$ defined by
                 \begin{equation*}
                     \begin{aligned}
-                        \beta_p(v) = \alpha_{F(p)}\bigg( T_pF(v) \bigg)\in\mathbb{R}, \thinspace\thinspace\thinspace p\in S,\thinspace\thinspace\thinspace v\in T_pS, \thinspace\thinspace\thinspace T_pF(v)\in T_{F(p)}\Bar{S}
+                        \beta_p(v) = \alpha_{F(p)}\bigg( \tangent_p F(v) \bigg)\in\R, \thinspace\thinspace\thinspace p\in S,\thinspace\thinspace\thinspace v\in \TBundle_p S, \thinspace\thinspace\thinspace \tangent_p F(v)\in T_{F(p)}\Bar{S}
                     \end{aligned}
                 \end{equation*}
                 Moreover, the 1-form $\beta$ is usually written as $\beta = F^*\alpha$.
             \end{example}
             \begin{example}[Pullback of bilinear forms]
-                If $\alpha_{\Bar{p}}: T_{\Bar{p}}\Bar{S}\times T_{\Bar{p}}\Bar{S}\rightarrow\mathbb{R}$ is a (smooth) family of bilinear forms on $\Bar{S}$, then the pullback $(F^*\alpha)_p: T_pS\times T_pS\rightarrow\mathbb{R}$ is defined by
+                If $\alpha_{\Bar{p}}: T_{\Bar{p}}\Bar{S}\times T_{\Bar{p}}\Bar{S}\to\R$ is a (smooth) family of bilinear forms on $\Bar{S}$, then the pullback $(F^*\alpha)_p: \TBundle_p S\times \TBundle_p S\to\R$ is defined by
                 \begin{equation*}
                     \begin{aligned}
-                        (F^*\alpha)_p(v, w) = \alpha_{F(p)}\bigg( T_pF(v), T_pF(w) \bigg)\in\mathbb{R},\quad T_pF(v), T_pF(w)\in T_{F(p)}\Bar{S}
+                        (F^*\alpha)_p(v, w) = \alpha_{F(p)}\bigg( \tangent_p F(v), \tangent_p F(w) \bigg)\in\R,\quad \tangent_p F(v), \tangent_p F(w)\in T_{F(p)}\Bar{S}
                     \end{aligned}
                 \end{equation*}
                 which is a family of bilinear forms on $S$, with the same symmetries as $\alpha$.
             \end{example}
             
             \begin{example}
-                $\phi: \mathbb{R}^2\supseteq U\rightarrow S$ is a chart on $S$, then
+                $\phi: \R^2\supseteq U\to S$ is a chart on $S$, then
                 \begin{equation*}
                     \begin{aligned}
                         \phi^*II = II^\phi \\
@@ -1706,13 +1706,13 @@
             \begin{proof}
                 \begin{equation*}
                     \begin{aligned}
-                        \bigg(F^*(\alpha\wedge\beta)\bigg)_p(v, w) &= (\alpha\wedge\beta)_{F(p)}\bigg( T_pF(v), T_pF(w) \bigg) \\
-                        &= \alpha_{F(p)}\bigg( T_pF(v) \bigg)\cdot\beta_{F(p)}\bigg( T_pF(w) \bigg) - \alpha_{F(p)}\bigg( T_pF(w) \bigg)\cdot\beta_{F(p)}\bigg( T_pF(v) \bigg) \\
+                        \bigg(F^*(\alpha\wedge\beta)\bigg)_p(v, w) &= (\alpha\wedge\beta)_{F(p)}\bigg( \tangent_p F(v), \tangent_p F(w) \bigg) \\
+                        &= \alpha_{F(p)}\bigg( \tangent_p F(v) \bigg)\cdot\beta_{F(p)}\bigg( \tangent_p F(w) \bigg) - \alpha_{F(p)}\bigg( \tangent_p F(w) \bigg)\cdot\beta_{F(p)}\bigg( \tangent_p F(v) \bigg) \\
                         &= \big(F^*\alpha_p \big)(v)\cdot\big(F^*\beta_p \big)(w) - \big(F^*\alpha_p \big)(w)\cdot\big(F^*\beta_p \big)(v) \\
                         &= \bigg(\big(F^*\alpha\big)\wedge\big(F^*\beta\big)\bigg)_p(v,w)
                     \end{aligned}
                 \end{equation*}
-                Let $\phi: U\rightarrow S$ be a chart on $S$, then
+                Let $\phi: U\to S$ be a chart on $S$, then
                 \begin{equation*}
                     \begin{aligned}
                         &\bigg( d(F^*\alpha) \bigg)_{\phi(x,y)}\bigg( T_{x,y}\phi(\partial x), T_{x,y}\phi(\partial y) \bigg) \\
@@ -1726,10 +1726,10 @@
             \end{proof}
 
             \begin{definition}[Isometry of surfaces]
-                An isometry of surfaces $S$ and $\Bar{S}$ is a bijective map $F: S\rightarrow\Bar{S}$ that preserves the inner product of tangent vectors:
+                An isometry of surfaces $S$ and $\Bar{S}$ is a bijective map $F: S\to\Bar{S}$ that preserves the inner product of tangent vectors:
                 \begin{equation*}
                     \begin{aligned}
-                        v\cdot w = T_pF(v)\cdot T_pF(w), \quad\forall v, w \in T_pS
+                        v\cdot w = \tangent_p F(v)\cdot \tangent_p F(w), \quad\forall v, w \in \TBundle_p S
                     \end{aligned}
                 \end{equation*}
                 i.e.
@@ -1740,7 +1740,7 @@
                 \end{equation*}
             \end{definition}
             \begin{definition}[Local isometry]
-                Local isometry is a map $F: S\rightarrow\Bar{S}$ such that every point $p\in S$ has some neighborhood $U\subseteq S$ such that $F: S\supseteq U\rightarrow F(U)\subseteq\Bar{S}$ is a isometry.
+                Local isometry is a map $F: S\to\Bar{S}$ such that every point $p\in S$ has some neighborhood $U\subseteq S$ such that $F: S\supseteq U\to F(U)\subseteq\Bar{S}$ is a isometry.
             \end{definition}
             According to definition, (local) isometries preserve the length of tangent vectors, but does it also preserve the distance of two points at the surface?
 
@@ -1761,19 +1761,19 @@
                 \end{equation*}
             \end{proposition}
             \begin{proof}
-                $T_pF: T_pS\rightarrow T_p\Bar{S}$ preserves the length of vectors, thus
+                $\tangent_p F: \TBundle_p S\to \TBundle_p \Bar{S}$ preserves the length of vectors, thus
                 \begin{equation*}
                     \begin{aligned}
-                        L(c) = L(F\circ c) = \int_0^1\bigg|\bigg|\difFrac{}{t} F\big(c(t)\big)\bigg|\bigg|dt
+                        L(c) = L(F\circ c) = \int_0^1\norm*{\difFrac{}{t} F\big(c(t)\big)}\dif t
                     \end{aligned}
                 \end{equation*}
             \end{proof}
 
             \begin{theorem}[Gauss Theorema Egregium, 1827, "Remarkable Theorem"]
-                The Gauss curvature $\kappa$ of a surface $S$ only depends on the first fundamental form $I$ on $S$, and it's invariant under local isometries $F: S\rightarrow\Bar{S}$, i.e.
+                The Gauss curvature $\kappa$ of a surface $S$ only depends on the first fundamental form $I$ on $S$, and it's invariant under local isometries $F: S\to\Bar{S}$, i.e.
                 \begin{equation*}
                     \begin{aligned}
-                        \kappa(p) = \Bar{\kappa}\big(F(p)\big),\thinspace\thinspace\thinspace\forall p\in S,\thinspace\thinspace\thinspace \text{where}\thinspace\thinspace \Bar{\kappa}: \Bar{S}\rightarrow\mathbb{R} \thinspace\thinspace\text{gauss curvature of} \thinspace\thinspace\Bar{S}
+                        \kappa(p) = \Bar{\kappa}\big(F(p)\big),\thinspace\thinspace\thinspace\forall p\in S,\thinspace\thinspace\thinspace \text{where}\thinspace\thinspace \Bar{\kappa}: \Bar{S}\to\R \thinspace\thinspace\text{gauss curvature of} \thinspace\thinspace\Bar{S}
                     \end{aligned}
                 \end{equation*}
             \end{theorem}
@@ -1791,8 +1791,8 @@
             \end{itemize}
             \begin{lemma}
                 \begin{itemize}
-                    \item If $(e_1, e_2, e_3)$ is a frame on $\mathbb{R}^3$ adapted to $S$, then $e_1(p)$ and $e_2(p)$ form an orthonormal basis of $T_pS$ with respect to $S$, because $I(e_i, e_j) = e_i\cdot e_j$.
-                    \item Conversely, if $e_1$, $e_2$ are vector fields on $S$ forming an ONB of $T_pS,\forall p\in S$, then they can be extended to a frame $e_1, e_2, e_3$ on $\mathbb{R}^3$ adapted to $S$. 
+                    \item If $(e_1, e_2, e_3)$ is a frame on $\R^3$ adapted to $S$, then $e_1(p)$ and $e_2(p)$ form an orthonormal basis of $\TBundle_p S$ with respect to $S$, because $I(e_i, e_j) = e_i\cdot e_j$.
+                    \item Conversely, if $e_1$, $e_2$ are vector fields on $S$ forming an ONB of $\TBundle_p S,\forall p\in S$, then they can be extended to a frame $e_1, e_2, e_3$ on $\R^3$ adapted to $S$. 
                 \end{itemize}
             \end{lemma}
             \begin{lemma}
@@ -1832,9 +1832,9 @@
                 which means $\kappa$ only depends on the tangent plane $e_1$, $e_2$.
             \end{proof}
             \begin{lemma}[Behavior of $e_1,e_2,\theta^1,\theta^2$ and $\omega_1^2$ under isometries]
-                $F:S\rightarrow\Bar{S}$ isometry. Let $e_1,e_2$ be a tangent plane on $S$, with dual frame $\theta^1,\theta^2$ and connection form $\omega_1^2$, then
+                $F:S\to\Bar{S}$ isometry. Let $e_1,e_2$ be a tangent plane on $S$, with dual frame $\theta^1,\theta^2$ and connection form $\omega_1^2$, then
                 \begin{enumerate}
-                    \item $\Bar{e}_1(\Bar{p}) = T_pF(e_1(p))$, $\Bar{e}_2(\Bar{p}) = T_pF(e_2(p))$ \big($\Bar{p} = F(p)$\big), are tangent frames on $\Bar{S}$
+                    \item $\Bar{e}_1(\Bar{p}) = \tangent_p F(e_1(p))$, $\Bar{e}_2(\Bar{p}) = \tangent_p F(e_2(p))$ \big($\Bar{p} = F(p)$\big), are tangent frames on $\Bar{S}$
                     \item The dual tangent frame $\Bar{\theta}^1,\Bar{\theta}^2$ on $\Bar{S}$ associated with $\Bar{e}_1, \Bar{e}_2$ is uniquely defined by 
                     \begin{equation*}
                         \begin{aligned}
@@ -1854,7 +1854,7 @@
                     \item 
                     \begin{equation*}
                         \begin{aligned}
-                            \Bar{I}_{F(p)}\bigg(\Bar{e}_i(\Bar{p}), \Bar{e}_j(\Bar{p})\bigg) &= \Bar{I}_{F(p)}\bigg(T_pF\big(e_i(p)\big), T_pF\big(e_j(p)\big)\bigg) \\ 
+                            \Bar{I}_{F(p)}\bigg(\Bar{e}_i(\Bar{p}), \Bar{e}_j(\Bar{p})\bigg) &= \Bar{I}_{F(p)}\bigg(\tangent_p F\big(e_i(p)\big), \tangent_p F\big(e_j(p)\big)\bigg) \\ 
                             &= (F^*\Bar{I})\big(e_i(p),e_j(p)\big) \\ 
                             &= I\big(e_i(p),e_j(p)\big)
                         \end{aligned}
@@ -1863,8 +1863,8 @@
                     \item Let's check $F^*\Bar{\theta}^1 = \theta^1$ on the basis $e_1,e_2$
                     \begin{equation*}
                         \begin{aligned}
-                            (F^*\Bar{\theta}^1)_p(e_1) = \Bar{\theta}_{F(p)}^1\big(T_pF(e_1)\big) = \Bar{\theta}_{F(p)}^1\Bar{e}_1(\Bar{p}) = 1 \\
-                            (F^*\Bar{\theta}^1)_p(e_2) = \Bar{\theta}_{F(p)}^1\big(T_pF(e_2)\big) = \Bar{\theta}_{F(p)}^1\Bar{e}_2(\Bar{p}) = 0
+                            (F^*\Bar{\theta}^1)_p(e_1) = \Bar{\theta}_{F(p)}^1\big(\tangent_p F(e_1)\big) = \Bar{\theta}_{F(p)}^1\Bar{e}_1(\Bar{p}) = 1 \\
+                            (F^*\Bar{\theta}^1)_p(e_2) = \Bar{\theta}_{F(p)}^1\big(\tangent_p F(e_2)\big) = \Bar{\theta}_{F(p)}^1\Bar{e}_2(\Bar{p}) = 0
                         \end{aligned}
                     \end{equation*}
                     therefore
@@ -1937,7 +1937,7 @@
 
             As we get the Remarkable Theorem, we wonder if we can reconstruct surfaces from curvature. The answer is in general no, but in some situations yes. 
             \begin{theorem}[Reconstruct surfaces from curvature]
-                Let $S\subseteq\mathbb{R}^3$ surface such that every two points on $S$ can be connected by a path in $S$ and every point is an umbillic point, then $S$ has constant Gaussian curvature $\kappa\ge 0$, and
+                Let $S\subseteq\R^3$ surface such that every two points on $S$ can be connected by a path in $S$ and every point is an umbillic point, then $S$ has constant Gaussian curvature $\kappa\ge 0$, and
                 \begin{itemize}
                     \item If $\kappa=0$, then $S$ is point of the plain
                     \item If $\kappa>0$, then $S$ is point of the sphere of radius $\cfrac{1}{\sqrt{\kappa}}$
@@ -1958,7 +1958,7 @@
                 \end{equation*}
             \end{proof}
             \begin{theorem}
-                If $S$ is a compact surface in $\mathbb{R}^3$ with constant Guassian curvature $\kappa>0$, then $S$ is the sphere of radius $\cfrac{1}{\sqrt{\kappa}}$.
+                If $S$ is a compact surface in $\R^3$ with constant Guassian curvature $\kappa>0$, then $S$ is the sphere of radius $\cfrac{1}{\sqrt{\kappa}}$.
             \end{theorem}
 
 
@@ -2001,7 +2001,7 @@
             curvature of curve
             \begin{equation*}
                 \begin{aligned}
-                    \kappa(t) = \cfrac{||\ddot{c}(t)||}{v^2} = \sqrt{\kappa_g^2(t) + \kappa_n^2(t)}
+                    \kappa(t) = \cfrac{\norm{\ddot{c}(t)}}{v^2} = \sqrt{\kappa_g^2(t) + \kappa_n^2(t)}
                 \end{aligned}
             \end{equation*}
             Also
@@ -2043,7 +2043,7 @@
                 \end{enumerate}
             \end{definition}
             \begin{example}
-                $S$ = plane $\mathbb{R}^2$ in $\mathbb{R}^3$, $c(t): I \rightarrow\mathbb{R}^2$, $\dot{c}(t)$ is normal (z-axis) iff $\ddot{c}(t) = 0$, i.e. geodesics in $\mathbb{R}^2$ are just straight lines.
+                $S$ = plane $\R^2$ in $\R^3$, $c(t): I \to\R^2$, $\dot{c}(t)$ is normal (z-axis) iff $\ddot{c}(t) = 0$, i.e. geodesics in $\R^2$ are just straight lines.
             \end{example}
             \begin{example}
                 $S$ = sphere, a great circle is the intrinsic of the sphere with a plane through the origin. If we parametric such a great circle to have constant speed, then it is a geodesic, since its acceleration is purely pointing to the center (=normal).
@@ -2056,10 +2056,10 @@
                 \caption{Constructing a Geodesic via Parallel Transport. Launch a particle from $p$ with velocity $v$, and define $G$ to be the curve obtained by parallel-transporting $v$ along itself, so that the new velocity at the neighboring point $q$ is $v_{||}$. Then the acceleration $\dot{v}$ is given by $\dot{v}\epsilon = v_{||} - v$. But then $\dot{v}\propto n$, and therefore $G$ is geodesic.}
             \end{figure}
             \begin{definition}[Vector field along curve]
-                Let $c:I\rightarrow S$ be a curve. A vector field along $c$ is a smooth map $X:I\rightarrow\mathbb{R}^3$ such that $X(t)\in T_{c(t)}S$ for all $t\in I$.
+                Let $c:I\to S$ be a curve. A vector field along $c$ is a smooth map $X:I\to\R^3$ such that $X(t)\in T_{c(t)}S$ for all $t\in I$.
             \end{definition}
 
-            According to the definition, $X(t) = \dot{c}(t)$ is a vector field along $c$. The derivative of $X$, is a map $\difFrac{}{t} X: I\rightarrow\mathbb{R}^3$, but $\difFrac{}{t} X$ is usually not tangent to $S$. The idea to handle this is to decompose $\difFrac{}{t} X$ into part that is tangent to $S$ and another part that is normal.
+            According to the definition, $X(t) = \dot{c}(t)$ is a vector field along $c$. The derivative of $X$, is a map $\difFrac{}{t} X: I\to\R^3$, but $\difFrac{}{t} X$ is usually not tangent to $S$. The idea to handle this is to decompose $\difFrac{}{t} X$ into part that is tangent to $S$ and another part that is normal.
 
             For this purpose, choose a adapted frame $e_1, e_2, e_3$ on $S$, then
             \begin{equation*}
@@ -2067,7 +2067,7 @@
                     X(t) = f_1(t)e_1\big(c(t)\big) + f_2(t)e_2\big(c(t)\big)
                 \end{aligned}
             \end{equation*}
-            for some smooth function $f_1, f_2: I\rightarrow\mathbb{R}$, thus
+            for some smooth function $f_1, f_2: I\to\R$, thus
             \begin{equation*}
                 \begin{aligned}
                     \frac{d}{dt}X(t) = &\bigg( \dot{f}_1(t) + f_2(t)\omega_2^1\big(\dot{c}(t)\big) \bigg)e_1\big(c(t)\big) + \bigg( \dot{f}_2(t) + f_1(t)\omega_1^2\big(\dot{c}(t)\big) \bigg)e_2\big(c(t)\big) + \\ 
@@ -2132,8 +2132,8 @@
                 $\cfrac{\nabla}{dt}$ has some similar properties with $\difFrac{}{t}$.
                 \begin{enumerate}
                     \item $\cfrac{\nabla}{dt}X$ does not depend on the frame used in the definition
-                    \item Leibniz property: $\cfrac{\nabla}{dt}\big(\lambda x\big) = \dot{\lambda}X + \lambda\cfrac{\nabla}{dt}X$ for $\lambda: I\rightarrow\mathbb{R}$
-                    \item Chain rule: For every smooth function $\phi: J\rightarrow I, J\in\mathbb{R}$ interval
+                    \item Leibniz property: $\cfrac{\nabla}{dt}\big(\lambda x\big) = \dot{\lambda}X + \lambda\cfrac{\nabla}{dt}X$ for $\lambda: I\to\R$
+                    \item Chain rule: For every smooth function $\phi: J\to I, J\in\R$ interval
                     \begin{equation*}
                         \begin{aligned}
                             \frac{\nabla}{ds}\big(X\circ \phi\big)(s) = \dot{\phi}(s)\frac{\nabla}{dt}X\big(\phi(s)\big)
@@ -2145,7 +2145,7 @@
                             \frac{d}{dt}I\big(X, Y\big) = I\bigg(\frac{\nabla}{dt}X, Y\bigg) + I\bigg(X, \frac{\nabla}{dt}Y\bigg)
                         \end{aligned}
                     \end{equation*}
-                    \item Let $c: I\times[-1, 1]\rightarrow S$ be a smooth map and let $\cfrac{\nabla}{dt}$ be cov derivative along the curve $t\rightarrow c(t,\epsilon)(\epsilon$ fixed), and let $\cfrac{\nabla}{d\epsilon}$ be the cov derivative along $\epsilon\rightarrow c(t,\epsilon)(t$ fixed), then
+                    \item Let $c: I\times[-1, 1]\to S$ be a smooth map and let $\cfrac{\nabla}{dt}$ be cov derivative along the curve $t\to c(t,\epsilon)(\epsilon$ fixed), and let $\cfrac{\nabla}{d\epsilon}$ be the cov derivative along $\epsilon\to c(t,\epsilon)(t$ fixed), then
                     \begin{equation*}
                         \begin{aligned}
                             \frac{\nabla}{dt}\thinspace\frac{\partial}{\partial\epsilon}\thinspace c(t,\epsilon) = \frac{\nabla}{d\epsilon}\thinspace\frac{\partial}{\partial t}\thinspace c(t,\epsilon)
@@ -2172,7 +2172,7 @@
             \end{proof}
 
             \begin{theorem}[Parallel transport]
-                Given a curve $c: I\rightarrow S$ and a vector $X_0\in T_{c(t)}S$, there exists a unique vector field $X$ along $c$ satisfying
+                Given a curve $c: I\to S$ and a vector $X_0\in T_{c(t)}S$, there exists a unique vector field $X$ along $c$ satisfying
                 \begin{equation*}
                     \begin{aligned}
                         \frac{\nabla}{dt}X(t) = 0, \quad X(0) = X_0
@@ -2193,7 +2193,7 @@
                         X(t) = r\cos\varphi(t)e_1\big(c(t)\big) + r\sin\varphi(t)e_2\big(c(t)\big)
                     \end{aligned}
                 \end{equation*}
-                reduced to find this angle function $\varphi: I\rightarrow\mathbb{R}$.
+                reduced to find this angle function $\varphi: I\to\R$.
                 \begin{equation*}
                     \begin{aligned}
                         0 &= \frac{\nabla}{dt}X(t) \\
@@ -2217,7 +2217,7 @@
             \begin{remark}
                 \begin{itemize}
                     \item For the plane, $\omega_1^2 = 0$, so $\varphi$ is constant and does not depend on $c$, i.e. parallel transport does not depend on the curve choose to connect to points.
-                    \item But on surfaces, $\varphi$ depends on $c$, i.e. parallel transport of a vector frame $p$ to $q$ depends on the curve chosen to connect $p\rightarrow q$. Hence, if $c: [0,1]\rightarrow S$ is a closed loop in $S$, then the vectors $X(0)$ and $X(1)$ are rotated by angle
+                    \item But on surfaces, $\varphi$ depends on $c$, i.e. parallel transport of a vector frame $p$ to $q$ depends on the curve chosen to connect $p\to q$. Hence, if $c: [0,1]\to S$ is a closed loop in $S$, then the vectors $X(0)$ and $X(1)$ are rotated by angle
                     \begin{equation*}
                         \begin{aligned}
                             \text{Hol}(c) &= \varphi(1) - \varphi(0) \\
@@ -2250,7 +2250,7 @@
             
 
         \section{Geodesics: variations}
-            Assume for a moment that $f: S\rightarrow\mathbb{R}$ is a smooth function and we would like to find the minima of $f$, i.e. find the zeros of the derivative $T_mf$. So we need to find the point $m$ such for any curve $\gamma: I\rightarrow S$ satisfy at $m$, we have
+            Assume for a moment that $f: S\to\R$ is a smooth function and we would like to find the minima of $f$, i.e. find the zeros of the derivative $T_mf$. So we need to find the point $m$ such for any curve $\gamma: I\to S$ satisfy at $m$, we have
             \begin{equation*}
                 \begin{aligned}
                     0 = T_mf\big(\dot{\gamma}(0)\big) = \frac{d}{d\epsilon}\bigg|_0f\big(\gamma(\epsilon)\big)
@@ -2260,12 +2260,12 @@
             Here we apply some ideas to the "function"
             \begin{equation*}
                 \begin{aligned}
-                    L: \{\text{all paths connect } p\rightarrow q\} \rightarrow\mathbb{R}
+                    L: \set{\text{all paths connect } p\to q} \to\R
                 \end{aligned}
             \end{equation*}
             which means we need to say what are variations of a curve.
             \begin{definition}[Varieties of a curve]
-                If $c: [0, 1]\rightarrow S$ is a curve from $p=c(0)$ to $q=c(1)$, then a smooth varieties of $c$ is a family of curves $c_\epsilon$, depending on some particular $\epsilon\in[0,1]$ such that $\hat{c}:[0,1]\times[0,1]\rightarrow S$ is smooth, written as $\hat{c}(t,\epsilon) = c_\epsilon(t)$, and $c_\epsilon$ is just $c$, i.e. $\hat{c}(t, 0) = c(t)$. If $c_\epsilon(0) = p$ and $c_\epsilon(1) = q$, the $c_\epsilon$ is said to be variation with fixed endpoints.
+                If $c: [0, 1]\to S$ is a curve from $p=c(0)$ to $q=c(1)$, then a smooth varieties of $c$ is a family of curves $c_\epsilon$, depending on some particular $\epsilon\in[0,1]$ such that $\hat{c}:[0,1]\times[0,1]\to S$ is smooth, written as $\hat{c}(t,\epsilon) = c_\epsilon(t)$, and $c_\epsilon$ is just $c$, i.e. $\hat{c}(t, 0) = c(t)$. If $c_\epsilon(0) = p$ and $c_\epsilon(1) = q$, the $c_\epsilon$ is said to be variation with fixed endpoints.
             \end{definition}
             \vspace{-0.35cm}
             \begin{marginfigure}
@@ -2349,7 +2349,7 @@
                         d(p, q) = L(c)
                     \end{aligned}
                 \end{equation*}
-                But the geodesic doesn't exist for all times. And whatever curve $c$ from $p\rightarrow q$ has
+                But the geodesic doesn't exist for all times. And whatever curve $c$ from $p\to q$ has
                 \begin{equation*}
                     \begin{aligned}
                         L(c) > d(p, q)
@@ -2363,10 +2363,10 @@
                 For $p\in S$, the exponential map
                 \begin{equation*}
                     \begin{aligned}
-                        \text{exp}_p: T_pS\supseteq V_p \rightarrow S
+                        \text{exp}_p: \TBundle_p S\supseteq V_p \to S
                     \end{aligned}
                 \end{equation*}
-                is given by exp$_p(V) = c_V(1)$, where $c_V$ is the geodesic with $c(0) = p, \dot{c}(0) = V$, and $V_p$ contains all $V\in T_pS$ for which $c_V$ is defined at least up to time $t = 1$.
+                is given by exp$_p(V) = c_V(1)$, where $c_V$ is the geodesic with $c(0) = p, \dot{c}(0) = V$, and $V_p$ contains all $V\in \TBundle_p S$ for which $c_V$ is defined at least up to time $t = 1$.
             \end{definition}
             \begin{marginfigure}
                 \vspace{-2.5cm}
@@ -2395,13 +2395,13 @@
             \begin{definition}[Coordinates via geodesics]
                 Get polar coordinates as follows
                 \begin{itemize}
-                    \item Choose an orthonormal basis $f_1$ and $f_2$ in $T_pS$, then
+                    \item Choose an orthonormal basis $f_1$ and $f_2$ in $\TBundle_p S$, then
                     \begin{equation*}
                         \begin{aligned}
                             V = r\cos\varphi f_1 + r\sin\varphi f_2
                         \end{aligned}
                     \end{equation*}
-                    for all nonzero $v\in T_pS$, $\thinspace r$>0, $\thinspace\varphi\in[0, 2\pi)$.
+                    for all nonzero $v\in \TBundle_p S$, $\thinspace r$>0, $\thinspace\varphi\in[0, 2\pi)$.
                     \item Transport it via the exp map
                     \begin{equation*}
                         \begin{aligned}
@@ -2468,7 +2468,7 @@
                 \end{figure}
 		\end{marginfigure}
             \begin{example}
-                In the plane $\mathbb{R}^2$, with standard coordinate, $G(r,\varphi) = r^2$,  $\cfrac{\partial}{\partial r}\sqrt{G} = 1$, $\cfrac{\partial^2}{\partial^2 r}\sqrt{G} = 0$.
+                In the plane $\R^2$, with standard coordinate, $G(r,\varphi) = r^2$,  $\cfrac{\partial}{\partial r}\sqrt{G} = 1$, $\cfrac{\partial^2}{\partial^2 r}\sqrt{G} = 0$.
             \end{example}
             
 
@@ -2490,7 +2490,7 @@
             \end{theorem}
             \begin{remark}
                 \begin{itemize}
-                    \item The role of speeding of the radial geodesics depends only on Gaussian Curvature. For $\kappa>0$, the speeding is slower than on $\mathbb{R}^2$. This gives another way to measure $\kappa$ intrinsically, i.e. gives another proof of Gaussian theorem.
+                    \item The role of speeding of the radial geodesics depends only on Gaussian Curvature. For $\kappa>0$, the speeding is slower than on $\R^2$. This gives another way to measure $\kappa$ intrinsically, i.e. gives another proof of Gaussian theorem.
                     \item Go some fixed distance $R$ away from a point $p$ along a geodesic, this gives the polar circle $C_R$
                     \begin{equation*}
                         \begin{aligned}
@@ -2508,7 +2508,7 @@
                     Transfer, get
                     \begin{equation*}
                         \begin{aligned}
-                            \kappa(p) = \lim\limits_{R\rightarrow 0}\cfrac{3}{\pi}\cdot\cfrac{2\pi R - L(C_R)}{R^3}
+                            \kappa(p) = \lim\limits_{R\to 0}\cfrac{3}{\pi}\cdot\cfrac{2\pi R - L(C_R)}{R^3}
                         \end{aligned}
                     \end{equation*}
                 \end{itemize}
@@ -2519,17 +2519,17 @@
 
     
         \section{Fundamental theorem for surfaces}
-            For curves, we reconstruct the curve from curvature and torsion, with $||\dot{c}|| = 1$; for surfaces, we construct the surface from
+            For curves, we reconstruct the curve from curvature and torsion, with $\norm{\dot{c}} = 1$; for surfaces, we construct the surface from
             \begin{itemize}
                 \item Gaussian curvature is not enough, as plane and the cylinder both have $\kappa = 0$.
                 \item The first fundamental form doesn't say anything about the normal.
                 \item The first and second fundamental forms.
             \end{itemize}
 
-            The problem is, $I$ and $II$ are forms on $T_pS$, which means we need to have $S$ first to specify $I$ and $II$. But we hope to reconstruct a local map of a surface from the local map of $I$ and $II$.
+            The problem is, $I$ and $II$ are forms on $\TBundle_p S$, which means we need to have $S$ first to specify $I$ and $II$. But we hope to reconstruct a local map of a surface from the local map of $I$ and $II$.
 
             \begin{definition}[Pullback of $I$ and $II$ form]
-                If $S$ is a parameterized surface via $\psi: \mathbb{R}^2\supseteq D\rightarrow S$, then
+                If $S$ is a parameterized surface via $\psi: \R^2\supseteq D\to S$, then
                 \begin{equation*}
                     \begin{aligned}
                         g =
@@ -2558,7 +2558,7 @@
                 where $g$ and is the families of symmetric metrics, parameterized by points $(x, y)\in D$.
             \end{definition}
             
-            Given two matrices $g$ and $l$ (parameterized by $D$), can we construct $\psi: D\rightarrow\mathbb{R}^2$ with first and second form $I$ and $II$ on $\psi(D) = S$ such that $\psi^*I = g$ and $\psi^*II = l$?
+            Given two matrices $g$ and $l$ (parameterized by $D$), can we construct $\psi: D\to\R^2$ with first and second form $I$ and $II$ on $\psi(D) = S$ such that $\psi^*I = g$ and $\psi^*II = l$?
             % \mn{The idea is that solving $\psi$ is equal to solve $e_1,e_2,e_3$, and we have to solve the ODE
             % \begin{equation*}
             %     \begin{aligned}
@@ -2598,9 +2598,9 @@
             %         \end{array}
             %     \end{aligned}
             % \end{equation*}
-            % which means we need to calculate $\omega_1^2$, $\omega_1^3$, $\omega_2^3$ first using structure equations. Thus, first of all, we need to get tangent frame $\psi^*e_1, \psi^*e_2$ on $D\subseteq\mathbb{R}^2$ from the $\psi^*I$ through Schmidt orthogonalization.
+            % which means we need to calculate $\omega_1^2$, $\omega_1^3$, $\omega_2^3$ first using structure equations. Thus, first of all, we need to get tangent frame $\psi^*e_1, \psi^*e_2$ on $D\subseteq\R^2$ from the $\psi^*I$ through Schmidt orthogonalization.
             % } 
-            To find the map $\psi$, here we first let $\psi^*e_1$, $\psi^*e_2$ be an orthonormal frame on $D\subseteq\mathbb{R}^2$ with respect to $g$, using Schmidt orthogonalization:
+            To find the map $\psi$, here we first let $\psi^*e_1$, $\psi^*e_2$ be an orthonormal frame on $D\subseteq\R^2$ with respect to $g$, using Schmidt orthogonalization:
             \begin{equation*}
                 \begin{aligned}
                     \psi^*e_1 = \cfrac{1}{\sqrt{g_{11}}}\partial x,\quad \psi^*e_2 = \sqrt{\cfrac{g_{11}}{g_{11}g_{22}-g_{12}^2}}\bigg(-\cfrac{g_{12}}{g_{11}}\partial x + \partial y\bigg)
@@ -2617,11 +2617,11 @@
             \begin{equation*}
                 \begin{aligned}
                     \psi^*\omega_1^3 = &\big(\psi^*\omega_1^3\big)(\partial x)dx + \big(\psi^*\omega_1^3\big)(\partial y)dy \\
-                    = &\omega_1^3\bigg(T_p\psi(\partial x)\bigg)dx + \omega_1^3\bigg(T_p\psi(\partial y)\bigg)dy \\
-                    = &\omega_1^3\bigg( <T_p\psi(\partial x), e_1> e_1 + <T_p\psi(\partial x), e_2> e_2 \bigg)dx + \\
-                    &\omega_1^3\bigg( <T_p\psi(\partial y), e_1> e_1 + <T_p\psi(\partial y), e_2> e_2 \bigg)dy \\
-                    = &\bigg(l_{11}<T_p\psi(\partial x), e_1> + l_{21}<T_p\psi(\partial x), e_2>\bigg)dx + \\
-                    &\bigg(l_{11}<T_p\psi(\partial y), e_1> + l_{21}<T_p\psi(\partial y), e_2>\bigg)dy \\
+                    = &\omega_1^3\bigg(\tangent_p \psi(\partial x)\bigg)dx + \omega_1^3\bigg(\tangent_p \psi(\partial y)\bigg)dy \\
+                    = &\omega_1^3\bigg( <\tangent_p \psi(\partial x), e_1> e_1 + <\tangent_p \psi(\partial x), e_2> e_2 \bigg)dx + \\
+                    &\omega_1^3\bigg( <\tangent_p \psi(\partial y), e_1> e_1 + <\tangent_p \psi(\partial y), e_2> e_2 \bigg)dy \\
+                    = &\bigg(l_{11}<\tangent_p \psi(\partial x), e_1> + l_{21}<\tangent_p \psi(\partial x), e_2>\bigg)dx + \\
+                    &\bigg(l_{11}<\tangent_p \psi(\partial y), e_1> + l_{21}<\tangent_p \psi(\partial y), e_2>\bigg)dy \\
                     = &\bigg(l_{11}<dx, \psi^*e_1> + l_{21}<dx, \psi^*e_2>\bigg)dx + \\
                     &\bigg(l_{11}<dy, \psi^*e_1> + l_{21}<dy, \psi^*e_2>\bigg)dy \\
                     = &\sum\limits_{i=1,2} l_{i1}\big(<dx^1, \psi^*e_i> + <dx^2, \psi^*e_i>\big) dx^i \\
@@ -2638,7 +2638,7 @@
                 \end{equation*}
             \end{theorem}
             \begin{lemma}
-                Assume $\omega_i^j$ satisfy the Gauss-Godozzi equation, then for $p_0\in\mathbb{R}^3$ and frame $f_1,f_2,f_3$ that are orthonormal basis of $\mathbb{R}^2$, there exists a unique smooth $\psi:\mathbb{R}^2\supseteq D\rightarrow\mathbb{R}^3$ and smooth function $e_1, e_2, e_3: \mathbb{R}^2\supseteq D\rightarrow\mathbb{R}^3$ forming an orthonormal basis of $\mathbb{R}^3$ for each $p\in D$ such that
+                Assume $\omega_i^j$ satisfy the Gauss-Godozzi equation, then for $p_0\in\R^3$ and frame $f_1,f_2,f_3$ that are orthonormal basis of $\R^2$, there exists a unique smooth $\psi:\R^2\supseteq D\to\R^3$ and smooth function $e_1, e_2, e_3: \R^2\supseteq D\to\R^3$ forming an orthonormal basis of $\R^3$ for each $p\in D$ such that
                 \begin{equation*}
                     \begin{aligned}
                         &T_{(x,y)}\psi(v) = \theta_{(x,y)}^1(v) e_1(x,y) + \theta_{(x,y)}^2(v) e_2(x,y) \\
@@ -2716,7 +2716,7 @@
                         \end{array}
                     \end{aligned}
                 \end{equation*}
-                and $D = \{ (x,y)\in\mathbb{R}^2: x>0, y\in(0,2\pi) \}$, then
+                and $D = \set{ (x,y)\in\R^2: x>0, y\in(0,2\pi) }$, then
                 \begin{equation*}
                     \begin{aligned}
                         &\psi^*e_1 = \cfrac{1}{\sqrt{a^2+1}}\partial x, \quad \psi^*e_2 = \cfrac{1}{ax}\partial y \\
@@ -2838,7 +2838,7 @@
                 If $g$ and $l$ are families of symmetric matrices, with $g$ positive def, and satisfying the Gauss-Godozzi equation, then there exists a parameterized surface $S$ such that $g$ and $l$ are the local representation of $I$ and $II$ of $S$. Locally, a surface is uniquely (up to translation and rotation) defined by its first and second fundamental form.
             \end{theorem}
             
-            Look at local coordinates first. Suppose $\psi:\mathbb{R}^2 \supseteq D\longrightarrow S$, and we want to know what's the area of $\psi(D)$. For all vectors $(v_1, 0)$ and $(0, v_2)\in\mathbb{R}^2$, the line segment from $\psi(x, y)$ to $\psi(x+v_1, y)$ is linearly approximated by $T_{(x,y)}\psi\big((v_1, 0)\big)$. And similarly, the segment $\psi(x, y)\longrightarrow\psi(x,y+v_2)\approx T_{(x, y)}\psi\big((0, v_2)\big)$. Here the area of $\psi(R)$ is approximated by the area of parallel segment of $T_{(x,y)}\psi\big((v_1, 0)\big)$ and $T_{(x,y)}\psi\big((0, v_2)\big)$, i.e. the area of
+            Look at local coordinates first. Suppose $\psi:\R^2 \supseteq D\longrightarrow S$, and we want to know what's the area of $\psi(D)$. For all vectors $(v_1, 0)$ and $(0, v_2)\in\R^2$, the line segment from $\psi(x, y)$ to $\psi(x+v_1, y)$ is linearly approximated by $T_{(x,y)}\psi\big((v_1, 0)\big)$. And similarly, the segment $\psi(x, y)\longrightarrow\psi(x,y+v_2)\approx T_{(x, y)}\psi\big((0, v_2)\big)$. Here the area of $\psi(R)$ is approximated by the area of parallel segment of $T_{(x,y)}\psi\big((v_1, 0)\big)$ and $T_{(x,y)}\psi\big((0, v_2)\big)$, i.e. the area of
             \begin{marginfigure}
                 \vspace{-2cm}
                 \begin{figure}[H]
@@ -2889,7 +2889,7 @@
             \end{definition}
             \begin{example}
                 \begin{itemize}
-                    \item On the plane $\mathbb{R}^2$, $dA = dx\wedge dy$
+                    \item On the plane $\R^2$, $dA = dx\wedge dy$
                     \item On the unit sphere, $(dA)_p(u_1,u_2) = n_p\cdot(u_1\times u_2)$ and according to one of the total area
                     \begin{equation*}
                         \begin{aligned}
@@ -2954,7 +2954,7 @@
             Far reaching generalizations, we guess
             \begin{equation*}
                 \begin{aligned}
-                    &\int\big\{\text{local data, geometric, def via some auxiliary data}\big\} = \\
+                    &\int \set*{\text{local data, geometric, def via some auxiliary data}} = \\
                     &\text{Topological invariant, with some integrity, doesn't depend on the auxiliary data}
                 \end{aligned}
             \end{equation*}
@@ -2988,22 +2988,22 @@
                 \begin{equation}
                     \label{Equation: kappag_winding}
                     \begin{aligned}
-                        \int_a^b\kappa_g(t)dt = \varphi(b) - \varphi(a) - \int_c\omega_2^1 = \text{Winding number}\cdot 2\pi - \int_c\omega_2^1
+                        \int_a^b\kappa_g(t)\dif t = \varphi(b) - \varphi(a) - \int_c\omega_2^1 = \text{Winding number}\cdot 2\pi - \int_c\omega_2^1
                     \end{aligned}
                 \end{equation}
                 Substitute \eqref{Equation: kappa_omega21} into \eqref{Equation: kappag_winding}, we get
                 \begin{equation*}
                     \begin{aligned}
-                        \int_B\kappa dA + \int_a^b\kappa_g(t)dt = \text{Winding number}\cdot 2\pi
+                        \int_B\kappa dA + \int_a^b\kappa_g(t)\dif t = \text{Winding number}\cdot 2\pi
                     \end{aligned}
                 \end{equation*}
             \end{lemma}
 
             \begin{theorem}[Local version of Gauss-Bonnet]
-                Let $S$ be a compact oriented surface with area element $dA$. For every subset $B\subseteq S$ admitting a global, adapted, positively oriented frame, whose bounding curve $\partial B:[a,b]\rightarrow S$ is smooth, simple and unit-speed, then
+                Let $S$ be a compact oriented surface with area element $dA$. For every subset $B\subseteq S$ admitting a global, adapted, positively oriented frame, whose bounding curve $\partial B:[a,b]\to S$ is smooth, simple and unit-speed, then
                 \begin{equation*}
                     \begin{aligned}
-                        \int_B\kappa dA + \int_a^b\kappa_g(t)dt = 2\pi
+                        \int_B\kappa dA + \int_a^b\kappa_g(t)\dif t = 2\pi
                     \end{aligned}
                 \end{equation*}
             \end{theorem}
@@ -3018,13 +3018,13 @@
                 If $\partial B$ is piece-wise smooth with interior angles $\varphi_1, \cdots, \varphi_n$, then
                 \begin{equation*}
                     \begin{aligned}
-                        \int_B\kappa dA + \int_a^b\kappa_g(t)dt + \bigg(n\pi - \sum\limits_i\varphi_i\bigg) = 2\pi 
+                        \int_B\kappa dA + \int_a^b\kappa_g(t)\dif t + \bigg(n\pi - \sum\limits_i\varphi_i\bigg) = 2\pi 
                     \end{aligned}
                 \end{equation*}
                 particularly, in triangle, we have
                 \begin{equation*}
                     \begin{aligned}
-                        \int_B\kappa dA + \int_a^b\kappa_g(t)dt = \sum\limits_i\varphi_i - \pi 
+                        \int_B\kappa dA + \int_a^b\kappa_g(t)\dif t = \sum\limits_i\varphi_i - \pi 
                     \end{aligned}
                 \end{equation*}        
             \end{theorem}
