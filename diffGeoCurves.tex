@@ -67,10 +67,10 @@
             There are many different parameterizations for the same curve.
             For example, different riders may travel at different speeds, leading to different parameterizations of the same physical curve.
             So we need a way to pass from one parameterization to another.
-            \begin{definition}[Diffeomorphism]
+            \begin{definition}[Diffeo\-morphism]
                 A smooth map $\varphi: I_2\to I_1$ is called a \emphDef{diffeomorphism} if $\varphi$ is bijective (one-to-one and onto) and its inverse $\varphi^{-1}$ is also smooth.
             \end{definition}
-            \begin{definition}[Reparameterization]
+            \begin{definition}[Repara\-meter\-iza\-tion]
                 If $\varphi: I_2 \to I_1$ is a diffeomorphism with\footnote{A diffeomorphism $\varphi$ always has either $\varphi'(t) > 0$ or $\varphi'(t) < 0$ for all $t$. The latter case would correspond to reversing the direction of the curve.} $\varphi'(t) > 0$ and $c_1:I_1 \to \R^n$ is a parameterized curve, then $c_2(t) = c_1\bigl(\varphi(t)\bigr): I_2 \to \R^n$ is also a parameterized curve, called the \emphDef{reparameterization} of $c_1$ by $\varphi$.
             \end{definition}
 
@@ -128,13 +128,13 @@
                 Such a curve, in particular, has no cusps or corners.
             \end{definition}
     
-            The regularity condition ensures that the curve has a well-defined tangent vector at every point, which is crucial for many applications in differential geometry.
+            The regularity condition ensures that the curve has a well-defined, non-zero tangent vector at every point, which is crucial for many applications in differential geometry.
             We will almost always assume that the curves we work with are regular.
             The following result shows that every regular curve can be reparameterized to have unit speed, which is often a convenient choice.
             \begin{proposition}
                 For every regular curve $c: I \to \R^n$, there exists a diffeomorphism $\varphi: I \to I$ such that $\Tilde{c}(s) = c\big(\varphi(s)\big)$ has unit-speed, i.e., $\norm{\dot{\Tilde{c}}(s)} = 1$ for all $s\in I$.
             \end{proposition}
-            A curve with unit-speed is also called an \emphDef{arc-length parameterization} of the curve, since the parameter $t$ directly measures the length along the curve from some starting point.
+            A curve $c(t)$ with unit-speed is also called an \emphDef{arc-length parameterization} of the curve, since the parameter $t$ directly measures the length along the curve from some starting point.
             Indeed, if we let $l(t) = \int_{t_0}^{t} \norm{\dot{c}(\tau)} \dif \tau$ be the length of the arc from a given point $c(t_0)$ to $c(t)$, then for a unit-speed curve, we have $l(t) = t - t_0$.
 
             For a unit-speed curve, the velocity vector $\dot{c}(t)$ has unit length by definition.

@@ -129,7 +129,7 @@
     bodyfont={\normalfont},
     headpunct={\relax},%\newline,
     headformat={%
-        \makebox[0pt][r]{\NAME\ \NUMBER\hspace{\marginparsep}}\hskip-\spacelength{\normalsize\NOTE}},
+        \makebox[0pt][r]{\parbox[t][0pt]{0.45\marginparwidth}{\raggedleft \NAME\ \NUMBER\\\NOTE}\hspace{\marginparsep}}\hskip-\spacelength},
 ]{theorem}
 
 \tcolorboxenvironment{theorem}{
@@ -152,7 +152,7 @@
 \let\endproof\relax
 
 \declaretheoremstyle[
-    headfont={\small\scshape},
+    headfont={\footnotesize},
     notefont={\normalfont},
     bodyfont={\normalfont},
     headpunct={\relax},
