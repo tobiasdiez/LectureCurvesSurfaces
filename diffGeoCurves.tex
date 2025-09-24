@@ -247,7 +247,7 @@
             \end{proposition}
 
             To get a formula for the winding number, we first shift the curve so that $P_0$ is at the origin.
-            Then we can express the curve in polar coordinates as $c(t) = r(t) (\cos\theta(t), \sin\theta(t))$ with $r(t) > 0$ for all $t$.
+            Then we can express the curve in polar coordinates\footnote{Strictly speaking, we view $\theta$ here as a smooth real-valued function of $t$ (and not modulo $2\pi$). This is possible because the polar coordinates furnish a covering map $(r, \theta) \mapsto r \Vector{\cos\theta, \sin\theta}$ from $(0, \infty) \times \R$ to $\R^2 \setminus \set{0}$. Then, using the lifting property of covering spaces, we can lift the curve $c$ in $\R^2 \setminus \set{0}$ to a curve in $(0, \infty) \times \R$, whose coordinates are exactly the functions $r(t)$ and $\theta(t)$.} $c(t) = r(t) (\cos\theta(t), \sin\theta(t))$ with $r(t) > 0$ for all $t$.
             Since the curve is a loop, we have $r(a) = r(b)$ and $\theta(b) = \theta(a) + 2k\pi$ for some integer $k$.
             Clearly $k$ is the winding number of $c$ around the origin.
             To find a formula for $k = \frac{\theta(b) - \theta(a)}{2\pi}$, we will find an expression for $\dot{\theta}(t)$ and then integrate it over $[a,b]$.
