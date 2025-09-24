@@ -167,43 +167,111 @@
                 \end{equation}
                 where $v(t) = \norm{\dot{c}(t)}$ is the speed of $c$ at time $t$.
             \end{lemma}
+            \begin{proof}
+                Homework.
+            \end{proof}
 
-        \section{Moon in the puddle}
             The 1-order approximation of a curve is tangent line, while the 2-order approximation is osculating circle.
 
+        \section{Moon in the puddle}
+
+            One of the overarching themes in differential geometry is to understand how local properties of a curve or surface relate to its global structure.
+            The theorem about the Moon in a puddle is a beautiful example of this idea.
+            It answers the question: If a curve is not too tightly curved, what can we say about the region it encloses?
+
+
+            To understand the theorem, we first need to introduce a few concepts.
+            \begin{definition}[Loop]
+                A parameterized curve $c: [a,b] \to \R^n$ is called a \emphDef{loop} if $c(a) = c(b)$ and all (one-sided) derivatives of $c$ agree at $a$ and $b$, i.e., $\difFracAt{^k}{t^k}{t=a} c(t) = \difFracAt{^k}{t^k}{t=b} c(t)$ for all $k\ge 1$.
+                It is called \emphDef{simple} if it does not intersect itself, i.e., $c(t_1)\neq c(t_2)$ for all $t_1, t_2\in (a,b)$ with $t_1\neq t_2$.
+            \end{definition}
             \begin{theorem}[Jordan curve theorem]
-                Every simple loop divides $\R^2$ into two sets: one is bounded, called the inside; one is unbounded, called the outside.
+                Every simple loop in $\R^2$ divides $\R^2$ into two sets: one is bounded, called the inside; one is unbounded, called the outside.
             \end{theorem}
+
+            A classical result about simple curves is the isoperimetric inequality, which states that among all simple loops with a given length, the circle encloses the largest area.
+            \begin{theorem}[Isoperimetric inequality]
+                Let $c: [a,b]\to\R^2$ be a simple loop in $\R^2$ of length $L$ enclosing an area $A$, then
+                \begin{equation*}
+                    4\pi A \le L^2,
+                \end{equation*}
+                with equality if and only if $c$ is a circle.
+            \end{theorem}
+
+            The isoperimetric inequality is a statement about the relationship between two global properties: the length of a curve and the area it encloses.
+            In contrast, the theorem about the Moon in a puddle is a local-to-global result that connects the local property of curvature to the global property of enclosing a unit disc.
+            The following lemma is the key step in the proof of the theorem.
             \begin{lemma}
-                Suppose we have a simple, regular loop $c:I\to\R^3$ such that $\kappa(t)\neq 0$ for all $t\in I$, then there exists a time $t_0\in I$ such that the osculating circle at $c(t_0)$ lies inside of $c$.
+                Suppose we have a simple, regular loop $c:I\to\R^2$. Then there exists a time $t_0\in I$ such that the osculating circle at $c(t_0)$ exists and lies inside of $c$.
             \end{lemma}
             \begin{figure}[H]
                 \centering
                 \includegraphics[width = 1\textwidth]{pic/Moon in the puddle.png}
-                \caption{Just note that incircle $\sigma$ at $p$ has to touch loop $c$ at another point $q$, but for $\sigma_{\infty}$, $q_{\infty} = p_{\infty}$ -- a contradiction.}
+                \caption{Note that maximal circle $C_p$ at $p$ has to touch loop $c$ at another point $q$, but for $C_{p_{\infty}}$, $q_{\infty} = p_{\infty}$ -- a contradiction.}
             \end{figure}
             \begin{theorem}["Moon in the puddle"]
-                Let $c: I\to\R^2$ be a simple, regular loop such that $\kappa(t)\neq 0$. If $\kappa(t)\le 1$, then the region surrounded by $c$ contains a unit disc.
+                Let $c: I\to\R^2$ be a simple, regular loop. If $\kappa(t)\le 1$ for all $t\in I$, then the region surrounded by $c$ contains a unit disc.
             \end{theorem}
-            \begin{remark}
-                The theorem about the Moon in a puddle provides the simplest meaningful example of a local-to-global theorem which is mainly what differential geometry is about.
-            \end{remark}
+            \begin{proof}
+                By the lemma, there exists a point $p = c(t_0)$ on the curve such that the osculating circle $\sigma$ at $p$ lies inside of $c$.
+                But $\sigma$ has radius $r = \sfrac{1}{\kappa(t_0)} \ge 1$, so it contains a unit disc.
+            \end{proof}
+
+        \section{Winding number}
+            Another common theme in differential geometry is that the integral of a local quantity over a closed curve or surface often yields a discrete global invariant of the object.
+
+            For example, consider a simple loop $c: [a, b] \to \R^2$ in the plane that does not pass through the origin.
+            Then we can look at the expression 
+            \begin{equation}
+                \frac{1}{2\pi}\int_a^b \frac{x(t)\dot{y}(t) - y(t)\dot{x}(t)}{x(t)^2 + y(t)^2} \dif t.
+            \end{equation}
+            A priori, this integral could take any real value.
+            And you might expect that if you deform the curve slightly, the integrand would change continuously, and thus the value of the integral would also change continuously.
+            However, this is not the case.
+            The integral actually takes on only integer values and remains invariant under continuous deformations of the curve that do not pass through the origin.
+
+            To understand why this is true, it is helpful to start from the following geometric notion.
+
             \begin{definition}[Winding number]
-                Let $c: [a, b]\to\R^2$ be a loop and $P_0$ be a point not on the curve. The winding number $W(c, P_0)$ is the number of times the curve goes counter clockwise around $P_0$.
+                Let $c: [a, b]\to\R^2$ be a loop and $P_0$ be a point that does not lie on the curve.
+                The winding number $W(c, P_0)$ is the number of times the curve goes counter-clockwise around $P_0$.
             \end{definition}
-            \begin{remark}
+
+            From geometric considerations, it is clear that the winding number is an integer that satisfies the following properties:
+            \begin{proposition}
                 \begin{itemize}
                     \item $W(c, P_0)$ depends on $P_0$;
                     \item $W(c, P_1) = W(c, P_2)$ if $P_1$ and $P_2$ can be connected by a curve not intersecting $c$.
+                    \item $W(c, P_0)$ is invariant under continuous deformations of $c$ that do not pass through $P_0$, i.e., if $c_\delta$ is a family of loops with $c_\delta(t)\neq P_0$ for all $\delta, t$, then $W(c_\delta, P_0)$ is independent of $\delta$.
                 \end{itemize}
-            \end{remark}
+            \end{proposition}
 
-            
+            To get a formula for the winding number, we first shift the curve so that $P_0$ is at the origin.
+            Then we can express the curve in polar coordinates as $c(t) = r(t) (\cos\theta(t), \sin\theta(t))$ with $r(t) > 0$ for all $t$.
+            Since the curve is a loop, we have $r(a) = r(b)$ and $\theta(b) = \theta(a) + 2k\pi$ for some integer $k$.
+            Clearly $k$ is the winding number of $c$ around the origin.
+            To find a formula for $k = \frac{\theta(b) - \theta(a)}{2\pi}$, we will find an expression for $\dot{\theta}(t)$ and then integrate it over $[a,b]$.
+            Denoting the components of $c(t)$ by $x(t)$ and $y(t)$, we have
+            \begin{equation}\begin{split}
+                \Vector{\dot{x} \\ \dot{y}}
+                    = \dot{c}
+                    &= \dot{r} \Vector{\cos\theta \\ \sin\theta} + r\dot{\theta} \Vector{-\sin\theta \\ \cos\theta} \\
+                    &= \frac{\dot{r}}{r} \Vector{x \\ y} + \dot{\theta} \Vector{-y \\ x}.
+            \end{split}\end{equation}
+            Taking the dot product of both sides with $(-y, x)$, we conclude that
+            \begin{equation}
+                \dot{\theta} = \frac{x\dot{y} - y\dot{x}}{x^2 + y^2}.
+            \end{equation}
+            To find the winding number, we can integrate $\dot{\theta}$:
+            \begin{equation}
+                W(c, 0) = \frac{\theta(b) - \theta(a)}{2\pi} = \frac{1}{2\pi} \int_a^b \frac{x\dot{y} - y\dot{x}}{x^2 + y^2} \dif t.
+            \end{equation}
+            This is exactly the integral we started with!
 
         \section{Frenet-Serret frames for curves in $\R^3$}
             Curves in $\R^3$ can
             \begin{itemize}
-                \item bend: measured by curvature (how much the curve deviates from being straight in a plane)
+                \item bend: measured by curvature (how much the curve deviates from being a straight line in a plane)
                 \item twist: measured by torsion (how much this plane rotates along the curve)
             \end{itemize}
 
@@ -211,61 +279,47 @@
                 Let $c$ be a unit-speed curve in $\R^3$, $T(t) = \dot{c}(t)$ be the tangent field, curvature $\kappa(t) = |\ddot{c}(t)|$. Assume $\kappa(t)>0$, then $N(t) = \cfrac{\ddot{c}(t)}{|\ddot{c}(t)|}$, and $B(t) = T(t)\times N(t)$ is the binormal field. Here $\set{T,N,B}$ is called the Frenet-Serret frame.
             \end{definition}
             \begin{remark}
-                $T(t), N(t), B(t)$ are orthogomal to each other and have unit length, notice that $|v\times w| = (v,v)(w,w) - (v,w)^2$.
+                $T(t), N(t), B(t)$ are orthogonal to each other and have unit length; notice that $|v\times w| = (v,v)(w,w) - (v,w)^2$.
             \end{remark}
-            \begin{theorem}
+            \begin{theorem}[Frenet-Serret equations]
                 If $c: I\to\R^3$ is a unit-speed curve with F-N frame $T, N, B$, then
-                \begin{equation*}
-                    \begin{aligned}
-                        \difFrac{}{t}
-                        \begin{array}{lc}
-                            \setlength{\arraycolsep}{3pt}
-                            \begingroup
-                            \renewcommand*{\arraystretch}{1}
-                            \begin{pmatrix}
-                                T \\
-                                N \\
-                                B \\
-                            \end{pmatrix}
-                            \endgroup
-                        \end{array} = 
-                        \begin{array}{lc}
-                            \setlength{\arraycolsep}{3pt}
-                            \begingroup
-                            \renewcommand*{\arraystretch}{1}
-                            \begin{pmatrix}
-                                0 & \kappa & 0 \\
-                                -\kappa & 0 & \tau \\
-                                0 & -\tau & 0 \\
-                            \end{pmatrix}
-                            \endgroup
-                        \end{array}
-                        \begin{array}{lc}
-                            \setlength{\arraycolsep}{3pt}
-                            \begingroup
-                            \renewcommand*{\arraystretch}{1}
-                            \begin{pmatrix}
-                                T \\
-                                N \\
-                                B \\
-                            \end{pmatrix}
-                            \endgroup
-                        \end{array} = \big(\tau T+\kappa B\big)\times
-                        \begin{array}{lc}
-                            \setlength{\arraycolsep}{3pt}
-                            \begingroup
-                            \renewcommand*{\arraystretch}{1}
-                            \begin{pmatrix}
-                                T \\
-                                N \\
-                                B \\
-                            \end{pmatrix}
-                            \endgroup
-                        \end{array}
-                    \end{aligned}
-                \end{equation*}
-                where $\tau T+\kappa B$ is curve's instantaneous angular velocity vector, which sometimes is referred to as the Darboux vector.
+                \begin{equation}
+                    \difFrac{}{t} \Vector{T \\ N \\ B} =
+                    \Matrix{
+                            0 & \kappa & 0 \\
+                            -\kappa & 0 & \tau \\
+                            0 & -\tau & 0 \\
+                    }
+                    \Vector{T \\ N \\ B}
+                \end{equation}
+                where $\tau(t) = -\dot{B}(t)\cdot N(t) = \dot{N}(t) \cdot B(t)$ is called the torsion of $c$ at $t$.
             \end{theorem}
+
+            \begin{remark}
+                The matrix
+                \begin{equation}
+                    \Omega = \Matrix{
+                            0 & \kappa & 0 \\
+                            -\kappa & 0 & \tau \\
+                            0 & -\tau & 0 \\
+                    }
+                \end{equation}
+                tells us how the Frenet-Serret frame changes along the curve.
+                So if $T, N, B$ are the frame vectors at time $t$, then at time $t + \Delta t$, the frame vectors are approximately
+                \begin{equation}
+                    (1 + \Delta t \, \Omega) \Vector{T \\ N \\ B}.
+                \end{equation}
+                The fact that $\Omega$ is skew-symmetric (i.e., $\Omega^T = -\Omega$) means that the transformation $1 + \Delta t \, \Omega$ is an infinitesimal rotation.
+                Geometrically, this means that as we move along the curve, the Frenet-Serret frame rotates in a way that is determined by the curvature and torsion of the curve.
+
+                To extract the axis of rotation, note that the Frenet-Serret equations can be written also in the form
+                \begin{equation}
+                    \difFrac{}{t} \Vector{T \\ N \\ B} = \big(\tau T+\kappa B\big) \times \Vector{T \\ N \\ B}.
+                \end{equation}
+                In other words, the frame rotates about the axis given by the vector $\tau T + \kappa B$.
+                This shows that the curvature measures the rotation about the binormal axis $B$, while the torsion measures the rotation about the tangent axis $T$.
+                For this reason, the vector $\tau T+\kappa B$ is referred to as the instantaneous angular velocity vector of the curve (it is also called the Darboux vector).
+            \end{remark}
 
             Taylor expand a unit-speed curve $c$ around $t = 0$:
             \begin{equation*}
