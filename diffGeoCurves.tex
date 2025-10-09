@@ -449,9 +449,122 @@
 
 
     \newpage
-    \part{Surfaces}\label{Part:Surfaces}
-    
+    \part{Surfaces}\label{Part:Surfaces}    
         \section{Definition and Construction of Surfaces}
+            Recall that we defined a parameterized curve as a smooth map $\Phi: I\to\R^3$ from an interval $I\subseteq\R$ to $\R^3$.
+            Similarly, we would like to define a parameterized surface as a smooth map $\Phi: D\to\R^3$ from some subset $D\subseteq\R^2$ to $\R^3$.
+
+            Let's start by considering a simple example: the unit sphere $S^2 = \set{ (x,y,z)\in\R^3 \given x^2 + y^2 + z^2 = 1 }$.
+            A natural parameterization of the sphere is given by spherical coordinates:
+            \begin{equation*}
+                \Phi(\theta, \varphi) = \Vector{\sin\theta\cos\varphi \\ \sin\theta\sin\varphi \\ \cos\theta}, \qquad (\theta, \varphi) \in D = [0, \pi] \times [0, 2\pi).
+            \end{equation*}
+            Note that we need closed intervals to cover the entire sphere.
+            While using closed intervals was not a problem for curves, as we could just use one-sided derivatives at the endpoints, it is more problematic for surfaces as we would need to consider one-sided derivatives in multiple directions.
+            For example, consider
+            \begin{equation*}
+                f(x,y) = \begin{cases}
+                    \frac{x^2y}{x^2 + y^2}, & (x,y)\neq (0,0) \\
+                    0, & (x,y) = (0,0)
+                \end{cases}, \qquad (x,y)\in [0,1]\times[0,1].
+            \end{equation*}
+            If we approach the origin along the line $y = x$, then $f(x,x) = \frac{x}{2}$ for all $x\neq 0$, and thus the derivative of $f$ at $(0,0)$ in that direction is $\frac{1}{2}$.
+            However, approaching along the line $x = 0$, we have $f(0,y) = 0$ for all $y$, and thus the derivative at $(0,0)$ in that direction is $0$.
+            Similarly, approaching along $y = 0$ also gives a derivative of $0$.
+
+            We want to avoid such pathological cases.
+            Let's have a closer look at what properties of $D$ we need to talk about derivatives.
+            To define the derivative of a function $f: D\to\R$ at a point $p\in D$, we need to be able to approach $p$ from all directions.
+            That is, if we consider a line through $p$ in any direction $v$, then the point $p + \varepsilon v$ should lie in $D$, at least for all sufficiently small $\varepsilon$.
+            Once we have this property, we can define the derivative of $f$ at $p$ in the direction $v$ by comparing the values of $f$ at $p$ and at $p + \varepsilon v$ as $\varepsilon\to 0$.
+            This is leads us to the following definition.
+            \begin{definition}[Open set in $\R^2$]
+                A subset $D\subseteq\R^2$ is called open if for every point $p\in D$, there exists some $\varepsilon > 0$ such that the open ball
+                \begin{equation*}
+                    B_\varepsilon(p) = \set{ x\in\R^2 \given |x - p| < \varepsilon }
+                \end{equation*}
+                is contained in $D$.
+            \end{definition}
+            For example, the set $D = (0,1)\times(0,1)$ is open, while $[0,1]\times[0,1]$ is not.
+
+            Next, we define what it means for a map $F: D\to\R^m$ defined on an open set $D\subseteq\R^2$ to be smooth.
+            \begin{definition}[Smooth map]
+                A map $F: \R^2 \supseteq D\to\R^m$ defined on an open set $D$ has a \emphDef{directional derivative} at $p\in D$ in the direction $v\in\R^2$ if the limit
+                \begin{equation*}
+                    \difFracAt{}{\varepsilon}{\varepsilon=0} F(p + \varepsilon v) = \lim_{\varepsilon\to 0} \frac{F(p + \varepsilon v) - F(p)}{\varepsilon}
+                \end{equation*}
+                exists.
+                We will denote this derivative by $\tangent_p F(v)$.
+                The resulting map $\tangent_p F: \R^2\to\R^m$ is called the \emphDef{tangent map} of $F$ at $p$.
+                We say that $F$ is continuously differentiable if $\tangent_p F(v)$ exists for all $p\in D$ and $v\in\R^2$, and the map $(p,v)\mapsto \tangent_p F(v)$ is continuous.
+                If, moreover, all higher-order directional derivatives exist and are continuous, then $F$ is called \emphDef{smooth}.
+            \end{definition}
+            This definition may seem a bit different from what you are used to from calculus, where differentiability is defined in terms of partial derivatives.
+            Let's see how the two definitions are related.
+            In $\R^2$, we have to prefered directions: the $x$- and $y$-directions.
+            If we denote the unit vectors in these directions by $e_x = (1, 0)$ and $e_y = (0, 1)$, then the partial derivatives of $F$ at $p$ can be recovered from the directional derivatives via
+            \begin{equation*}
+                \difpFrac{F}{x}(p) = \tangent_p F(e_x), \qquad \difpFrac{F}{y}(p) = \tangent_p F(e_y).
+            \end{equation*}
+            Conversely, if the partial derivatives exist, then the directional derivative in an arbitrary direction $v = (v_x, v_y)$ can be computed as
+            \begin{equation*}
+                \tangent_p F(v) = v_x \difpFrac{F}{x}(p) + v_y \difpFrac{F}{y}(p).
+            \end{equation*}
+            Thus, the tangent map $\tangent_p F: \R^2\to\R^m$ is just the linear map that is represented by the Jacobian matrix of $F$ at $p$.
+            The reformulation in terms of directional derivatives will be useful later when we want to define derivatives on surfaces, where we do not have preferred directions like $e_x$ and $e_y$.
+
+            Recall that for parameterized curves, we often imposed the regularity condition that the derivative $\dot{c}(t)$ is non-zero for all $t$.
+            In the opposite extreme, a curve with $\dot{c}(t) = 0$ for all $t$ is just sitting still at single point --- it degenerates to a $0$-dimensional object.
+            Similarly, we want to impose a non-degeneracy condition for parameterizations of surfaces to prevent them from degenerating to lower-dimensional objects.
+            \begin{definition}[Regular map]
+                A smooth map $F: D\to\R^m$ defined on an open set $D\subseteq\R^2$ is called \emphDef{regular} (or \emphDef{non-degenerate}) if the tangent map $\tangent_p F: \R^2\to\R^m$ is injective for all $p\in D$.
+                Equivalently, the image of $\tangent_p F$ is a $2$-dimensional subspace of $\R^m$, or the partial derivatives $\difpFrac{F}{x}(p)$ and $\difpFrac{F}{y}(p)$ are non-zero and not parallel.
+            \end{definition}
+
+            Now we are ready to define parameterized surfaces.
+            \begin{definition}[Parameterized surface]
+                A \emphDef{parameterized surface} is a smooth, injective, regular map $\Phi: D\to\R^3$ defined on an open set $D\subseteq\R^2$.
+                The image of $\Phi$,
+                \begin{equation*}
+                    S = \Phi(D) = \set{ \Phi(x,y) \given (x,y)\in D },
+                \end{equation*}
+                is called a \emphDef{parameterized surface} as well.
+            \end{definition}
+            Intuitively, you can think of $D$ as a piece of rubber that is smoothly bent and stretched by the map $\Phi$, without creating any folds or creases (which would violate the injectivity or regularity conditions).
+            An equivalent, but slightly different way to think about a parameterization is to imagine it as a grid drawn on the surface, where the lines of the grid correspond to the images of lines of constant $x$ or $y$ in $D$.
+
+            It is handy to have the following dictionary between concepts for curves and surfaces:
+            \begin{center}
+                \begin{tabular}{lcc}
+                    & Curves & Surfaces \\
+                    \toprule
+                    Domain: & Interval $I\subseteq\R$ & Open subset $D\subseteq\R^2$ \\
+                    Parametrization: & $c: I\to\R^3$ & $\Phi: D\to\R^3$ \\
+                    Regularity: & $\dot{c}(t)\neq 0$ & $\tangent_p \Phi$ injective \\
+                    Non-intersecting: & $c$ injective & $\Phi$ injective
+                \end{tabular}
+            \end{center}
+
+            For curves, we saw that smoothness/regularity is a property that depends on the parameterization, not necessarily on the curve itself.
+            The same is true for surfaces.
+            \begin{example}
+                The paraboloid $S = \set{ (x,y,z)\in\R^3 \given z = x^2 + y^2 }$ can be parameterized by
+                \begin{equation*}
+                    \Phi(x,y) = (x,y,x^2+y^2), \qquad (x,y)\in\R^2.
+                \end{equation*}
+                This parameterization is regular since the tangent map
+                \begin{equation*}
+                    \tangent_{(x,y)}\Phi(v_x, v_y) = v_x \Vector{1 \\ 0 \\ 2x} + v_y \Vector{0 \\ 1 \\ 2y}
+                \end{equation*}
+                is injective for all $(x,y)\in\R^2$.
+                But we can also parameterize the same surface by 
+                \begin{equation*}
+                    \Psi(s,t) = (s^3, t^3, s^6 + t^6), \qquad (s,t)\in\R^2.
+                \end{equation*}
+                This "parameterization" is not regular at the origin since $\tangent_{(0,0)}\Psi(v_s, v_t) = (0,0,0)$ for all $(v_s, v_t)\in\R^2$.
+            \end{example}
+
+
             The idea to define surface is to glue multiple parameterizations together. That is, surface looks like a piece of $\R^2$ in the vicinity of each point.
 
             \begin{definition}[Coordinate chart]
