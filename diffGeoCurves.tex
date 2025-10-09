@@ -321,62 +321,129 @@
                 For this reason, the vector $\tau T+\kappa B$ is referred to as the instantaneous angular velocity vector of the curve (it is also called the Darboux vector).
             \end{remark}
 
-            Taylor expand a unit-speed curve $c$ around $t = 0$:
+            To explore the geometric meaning of curvature and torsion, we can use the Frenet-Serret frame as a local coordinate system and then study the behavior of the curve in these coordinates.
+            For this purpose, let $c: I\to\R^3$ be a unit-speed curve with $\kappa(t) > 0$ for all $t\in I$, and let $T(t), N(t), B(t)$ be the Frenet-Serret frame.
+            We can Taylor-expand $c(t)$ around a fixed time, which we take for simplicity to be $t = 0$:
             \begin{equation*}
                 \begin{aligned}
                     c(t) \approx c(0) + t\thinspace\dot{c}(0) + \cfrac{t^2}{2}\thinspace\ddot{c}(0) + \cfrac{t^3}{6}\dddot{c}(0) + \cdots
                 \end{aligned}
             \end{equation*}
-            where 
+            Using the Frenet-Serret equations, we can express the derivatives of $c$ in terms of $\kappa$ and $\tau$ as follows:
             \begin{equation*}
                 \begin{aligned}
-                    &\dot{c}(0) = T(0) \\
-                    &\ddot{c}(0) = \kappa(0)\cdot N(0) \\
-                    &\dddot{c}(0) = \difFracAt{}{t}{t=0} (\kappa N) = \dot{\kappa}(0)N(0) + \kappa(0)\bigg( -\kappa(0)T(0) + \tau(0)B(0) \bigg)
+                    &\dot{c}(0) = T(0), \\
+                    &\ddot{c}(0) = \kappa(0)\cdot N(0), \\
+                    &\dddot{c}(0) = \difFracAt{}{t}{t=0} (\kappa N) = \dot{\kappa}(0)N(0) + \kappa(0)\bigg( -\kappa(0)T(0) + \tau(0)B(0) \bigg).
                 \end{aligned}
             \end{equation*}
-            thus
+            Thus,
             \begin{equation*}
                 \begin{aligned}
                     c(t) &\approx c(0) + \bigg( t - \kappa(0)^2\cfrac{t^3}{6} \bigg)T(0) + \bigg( \kappa(0)\cfrac{t^2}{2} + \dot{\kappa}(0)\cfrac{t^3}{6}\bigg)N(0) + \bigg( \kappa(0)\tau(0)\cfrac{t^3}{6} \bigg)B(0) \\
-                    &\approx c(0) + T(0)t + \kappa(0)N(0)\cfrac{t^2}{2} + \kappa(0)\tau(0)B(0)\cfrac{t^3}{6}
+                    &\approx c(0) + T(0)t + \kappa(0)N(0)\cfrac{t^2}{2} + \kappa(0)\tau(0)B(0)\cfrac{t^3}{6},
                 \end{aligned}
             \end{equation*}
+            where in the last step we dropped the higher-order terms in $t$ for each component.
+            This shows that:
+            \begin{itemize}
+                \item To first order, the curve looks like a straight line in the direction of $T$.
+                \item To second order, the curve is a parabola in the plane spanned by $T$ and $N$, and the curvature $\kappa$ determines how tightly the curve bends in this plane.
+                \item To third order, the curve starts to twist out of the plane spanned by $T$ and $N$, and the torsion $\tau$ measures the rate of this twisting.
+            \end{itemize}
+            From this geometric interpretation, the following proposition is quite intuitive.
             \begin{proposition}
-                $c: I\to\R^3$ is a unit-speed curve with $\kappa > 0$, then $c$ is taking values in a plane if and only if $\tau = 0$.
+                Let $c: I\to\R^3$ be a unit-speed curve with $\kappa > 0$.
+                Then $c$ lies in a plane if and only if $\tau = 0$.
             \end{proposition}
             \begin{proof}
-                $\Longrightarrow$ If $c$ lies in a plane, then the plane is spanned by $T$ and $N$, i.e. $\dot{c}(t)$ and $\cfrac{\ddot{c}(t)}{\kappa(t)}$, which means $B$ is a constant vector. According to Frenet-Serret eq, it's obvious that $\tau = 0$.
+                $\Longrightarrow$: If $c$ lies in a plane, that plane has to be spanned by $T$ and $N$ which implies that $B$ is pointing in a fixed direction. 
+                From the Frenet-Serret equations, it now follows that $\tau = 0$.
             
-                $\Longleftarrow$ If $\tau = 0$, then $\dot{B}(t) = 0$, so $B(t) = B(0)\in\R^3$. Claim $c$ lies in the plane orthogonal to $B$. Let
+                $\Longleftarrow$: If $\tau = 0$, then $\dot{B}(t) = 0$, so $B(t) = B(0)\in\R^3$.
+                Claim: $c$ lies in the plane orthogonal to $B$.
+                To confirm the claim, we have to show that the following function is identically zero:
                 \begin{equation*}
-                    \begin{aligned}
-                        f(t) = \bigg( c(t) - c(0) \bigg)\cdot B(0)
-                    \end{aligned}
+                    f(t) = \bigg( c(t) - c(0) \bigg)\cdot B(0).
                 \end{equation*}
-                then
+                But, since $\dot{c}(t) = T(t)$ is orthogonal to $B(t) = B(0)$, we have
                 \begin{equation*}
-                    \begin{aligned}
-                        &\dot{f}(t) = \dot{c}(t)\cdot B(0) = 0 \\
-                        &f(t) = f(0) = 0
-                    \end{aligned}
+                    \dot{f}(t) = \dot{c}(t)\cdot B(0) = 0.
                 \end{equation*}
+                Thus, $f(t)$ is constant and we conclude that $f(t) = f(0) = 0$.
             \end{proof}
 
+            We saw that the curvature and torsion of a curve determine the local behavior of the curve up to third order.
+            A natural question is whether they also determine the curve globally.
+            Suppose we have two unit-speed curves $c, \Bar{c}$ with the same curvature $\kappa$ and torsion $\tau$.
+            In order to compare their Frenet-Serret frames, we introduce the following function:
+            \begin{equation*}
+                f(t) = \cfrac{1}{2}\thinspace\big|T-\Bar{T}\big|^2 + \cfrac{1}{2}\thinspace\big|N-\Bar{N}\big|^2 + \cfrac{1}{2}\thinspace\big|B-\Bar{B}\big|^2
+            \end{equation*}
+            Then, we compute the derivative:
+            \begin{equation*}
+                \dot{f}(t) = \big(\dot{T} - \dot{\Bar{T}}\big)\big(T-\Bar{T}\big) + \big(\dot{N} - \dot{\Bar{N}}\big)\big(N-\Bar{N}\big) + \big(\dot{B} - \dot{\Bar{B}}\big)\big(B-\Bar{B}\big) = 0
+            \end{equation*}
+            where we used the Frenet-Serret equations and the fact that $\kappa$ and $\tau$ are the same for both curves.
+            Thus, $f(t)$ is constant.
+            In particular, if the two curves have the same initial Frenet-Serret frame, then they have the same Frenet-Serret frame for all times.
+            But then $\dot{c}(t) = T(t) = \dot{\Bar{c}}(t)$, so $c(t)$ and $\Bar{c}(t)$ differ only by a constant vector.
+            This shows that the curvature and torsion determine the curve (up to an initial rotation of the Frenet-Serret frame and a translation of the curve).
+            Quite remarkably, the converse is also true: given functions $\kappa$ and $\tau$, we can construct a curve that has these functions as its curvature and torsion.
             \begin{theorem}
-                Given differentiable functions $\kappa: [0, T]\to\R$ and $\tau: [0, T]\to\R$, $T(0), N(0), B(0)\in\R^3$, then there exists a unique unit-speed curve $c: [0,T]\to\R^3$ with curvature $\kappa$ and torsion $\tau$, and Frenet-Serret frame at $t = 0$, $T(0), N(0), B(0)$.
+                Given differentiable functions $\kappa: [0, T]\to\R$ and $\tau: [0, T]\to\R$, 
+                a point $p_0 \in \R^3$ and an orthonormal basis $T_0, N_0, B_0\in\R^3$, then there exists a unique unit-speed curve $c: [0,T]\to\R^3$ with curvature $\kappa$ and torsion $\tau$, starting at $p_0$ and having Frenet-Serret frame $T(0), N(0), B(0)$ at $t = 0$.
              \end{theorem}
              \begin{proof}
-                 Suppose two curves $c, \Bar{c}$ with the same curvature $\kappa$ and torsion $\tau$.
-                 \begin{equation*}
-                     \begin{aligned}
-                         &f(t) = \cfrac{1}{2}\thinspace\big|T-\Bar{T}\big|^2 + \cfrac{1}{2}\thinspace\big|N-\Bar{N}\big|^2 + \cfrac{1}{2}\thinspace\big|B-\Bar{B}\big|^2 \\
-                         &\dot{f}(t) = \big(\dot{T} - \dot{\Bar{T}}\big)\big(T-\Bar{T}\big) + \big(\dot{N} - \dot{\Bar{N}}\big)\big(N-\Bar{N}\big) + \big(\dot{B} - \dot{\Bar{B}}\big)\big(B-\Bar{B}\big) = 0
-                     \end{aligned}
-                 \end{equation*}
-                 As for the existence, there exists a unique solution for the F-S ODE.
-             \end{proof}
+                We have already convinced ourselves that such a curve, if it exists, is unique.
+                To prove existence, the idea is to regard the Frenet-Serret equations as a system of ordinary differential equations for the \emph{unknown functions} $T, N, B: [0,T]\to\R^3$, which a priori do not have to be related to any curve.
+                But once we have found $T$, we can define a curve $c$ by integrating $T(t) = \dot{c}(t)$.
+
+                To make this idea precise, consider the system of ODEs
+                \begin{equation}
+                    \label{eq:reconstruction:Frenet-Serret}
+                    \difFrac{}{t} \Vector{T \\ N \\ B} =
+                    \Matrix{
+                            0 & \kappa & 0 \\
+                            -\kappa & 0 & \tau \\
+                            0 & -\tau & 0 \\
+                    }
+                    \Vector{T \\ N \\ B}
+                \end{equation}
+                for the unknown functions $T, N, B: [0,T]\to\R^3$ with initial conditions $T_0, N_0, B_0$.
+                By the Picard-Lindelöf theorem, this system has a unique solution.
+                Next, we have to show that the solution satisfies $|T(t)| = |N(t)| = |B(t)| = 1$ and that $T(t), N(t), B(t)$ are mutually orthogonal for all $t$.
+                To see this, we compute
+                \begin{equation*}
+                    \difFrac{}{t} |T|^2 = 2\dot{T}\cdot T = 0, \quad \difFrac{}{t} |N|^2 = 2\dot{N}\cdot N = 0, \quad \difFrac{}{t} |B|^2 = 2\dot{B}\cdot B = 0,
+                \end{equation*}
+                where we used the defining equations~\eqref{eq:reconstruction:Frenet-Serret}.
+                Since $T_0, N_0, B_0$ are orthonormal, it follows that $|T(t)| = |N(t)| = |B(t)| = 1$ for all $t$.
+                Armed with this information, we can also compute
+                \begin{equation*}\begin{aligned}
+                    \difFrac{}{t} (T\cdot N) &= \dot{T}\cdot N + T\cdot \dot{N} = \tau T \cdot B, \\
+                    \difFrac{}{t} (T\cdot B) &= \dot{T}\cdot B + T\cdot \dot{B} = 0, \\
+                    \difFrac{}{t} (N\cdot B) &= \dot{N}\cdot B + N\cdot \dot{B} = 0.                    
+                \end{aligned}\end{equation*}
+                By the second equation, $T(t)\cdot B(t) = T_0\cdot B_0 = 0$ for all $t$.
+                Inserting this into the first equation, we get $T(t) \cdot N(t) = 0$.
+                Finally, the third equation gives $N(t)\cdot B(t) = 0$.
+                So, indeed, $T(t), N(t), B(t)$ form an orthonormal basis of $\R^3$ for all $t$.
+
+                Finally, we define the curve $c: [0,T]\to\R^3$ by
+                \begin{equation*}
+                    c(t) = p_0 + \int_0^t T(\tau) \dif \tau.
+                \end{equation*}
+                By construction, $c$ is a unit-speed curve with $\dot{c}(t) = T(t)$.
+                Moreover, one checks easily that $N(t)$ and $B(t)$ satisfy the Frenet-Serret equations for $c$, from which it follows that $\kappa$ and $\tau$ are indeed the curvature and torsion of $c$.
+            \end{proof}
             
+            \begin{remark}
+                Normally, one would not expect to determine a curve in $\R^3$ from just \emph{two} functions.
+                After all, a curve in $\R^3$ is given by \emph{three} functions (say, its $x, y, z$ coordinates as functions of $t$).
+                The reason this is possible here is that we are considering unit-speed curves, which means that the speed of the curve is fixed to be 1.
+                So, effectively, we specify three functions as well: the curvature $\kappa$, the torsion $\tau$, and the speed $v$ (which is constantly equal to 1).
+            \end{remark}
 
 
 
