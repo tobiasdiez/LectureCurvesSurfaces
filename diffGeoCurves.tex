@@ -26,7 +26,7 @@
     You have encountered them in various contexts, perhaps often without explicitly recognizing them as interesting mathematical entities: when you bind your shoes you entangle and bend curves; when you look at the shape of a leaf or a flower, you observe a beautiful surface in three-dimensional space; when you navigate using a map, you work with a flat representation of the curved surface of the Earth.
     
     The mathematical study of curves and surfaces is called differential geometry.
-    Here, the term "differential" refers to the use of calculus, which allows us to analyze the local properties of these objects by examining how they change under infinitesimally small variations. One of the key challenges is then to understand how these local properties relate to the global structure of the objects.
+    Here, the term ``differential'' refers to the use of calculus, which allows us to analyze the local properties of these objects by examining how they change under infinitesimally small variations. One of the key challenges is then to understand how these local properties relate to the global structure of the objects.
 
     The aim of this course is to introduce you to the fundamental concepts and techniques of differential geometry, focusing on curves and surfaces in three-dimensional space.
     We will explore how to describe these objects mathematically and how to analyze their properties.
@@ -209,7 +209,7 @@
                 \includegraphics[width = 1\textwidth]{pic/Moon in the puddle.png}
                 \caption{Note that maximal circle $C_p$ at $p$ has to touch loop $c$ at another point $q$, but for $C_{p_{\infty}}$, $q_{\infty} = p_{\infty}$ -- a contradiction.}
             \end{figure}
-            \begin{theorem}["Moon in the puddle"]
+            \begin{theorem}[``Moon in the puddle'']
                 Let $c: I\to\R^2$ be a simple, regular loop. If $\kappa(t)\le 1$ for all $t\in I$, then the region surrounded by $c$ contains a unit disc.
             \end{theorem}
             \begin{proof}
@@ -391,8 +391,8 @@
             This shows that the curvature and torsion determine the curve (up to an initial rotation of the Frenet-Serret frame and a translation of the curve).
             Quite remarkably, the converse is also true: given functions $\kappa$ and $\tau$, we can construct a curve that has these functions as its curvature and torsion.
             \begin{theorem}
-                Given differentiable functions $\kappa: [0, T]\to\R$ and $\tau: [0, T]\to\R$, 
-                a point $p_0 \in \R^3$ and an orthonormal basis $T_0, N_0, B_0\in\R^3$, then there exists a unique unit-speed curve $c: [0,T]\to\R^3$ with curvature $\kappa$ and torsion $\tau$, starting at $p_0$ and having Frenet-Serret frame $T(0), N(0), B(0)$ at $t = 0$.
+                Given differentiable functions $\kappa: [0, T]\to\R^+$ and $\tau: [0, T]\to\R$, 
+                a point $p_0 \in \R^3$ and an orthonormal basis $T_0, N_0, B_0\in\R^3$, then there exists a unique unit-speed curve $c: [0,T]\to\R^3$ with curvature $\kappa$ and torsion $\tau$, starting at $p_0$ and having Frenet-Serret frame $T(0)=T_0, N(0)=N_0, B(0)=B_0$ at $t = 0$.
              \end{theorem}
              \begin{proof}
                 We have already convinced ourselves that such a curve, if it exists, is unique.
@@ -501,7 +501,7 @@
             \end{definition}
             This definition may seem a bit different from what you are used to from calculus, where differentiability is defined in terms of partial derivatives.
             Let's see how the two definitions are related.
-            In $\R^2$, we have to prefered directions: the $x$- and $y$-directions.
+            In $\R^2$, we have two preferred directions: the $x$- and $y$-directions.
             If we denote the unit vectors in these directions by $e_x = (1, 0)$ and $e_y = (0, 1)$, then the partial derivatives of $F$ at $p$ can be recovered from the directional derivatives via
             \begin{equation*}
                 \difpFrac{F}{x}(p) = \tangent_p F(e_x), \qquad \difpFrac{F}{y}(p) = \tangent_p F(e_y).
@@ -530,7 +530,7 @@
                 \end{equation*}
                 is called a \emphDef{parameterized surface} as well.
             \end{definition}
-            Intuitively, you can think of $D$ as a piece of rubber that is smoothly bent and stretched by the map $\Phi$, without creating any folds or creases (which would violate the injectivity or regularity conditions).
+            Intuitively, you can think of $S$ as a piece of rubber that is smoothly bent and stretched by the map $\Phi$, without creating any folds or creases (which would violate the injectivity or regularity conditions).
             An equivalent, but slightly different way to think about a parameterization is to imagine it as a grid drawn on the surface, where the lines of the grid correspond to the images of lines of constant $x$ or $y$ in $D$.
 
             It is handy to have the following dictionary between concepts for curves and surfaces:
@@ -561,7 +561,7 @@
                 \begin{equation*}
                     \Psi(s,t) = (s^3, t^3, s^6 + t^6), \qquad (s,t)\in\R^2.
                 \end{equation*}
-                This "parameterization" is not regular at the origin since $\tangent_{(0,0)}\Psi(v_s, v_t) = (0,0,0)$ for all $(v_s, v_t)\in\R^2$.
+                This ``parameterization'' is not regular at the origin since $\tangent_{(0,0)}\Psi(v_s, v_t) = (0,0,0)$ for all $(v_s, v_t)\in\R^2$.
             \end{example}
 
 
