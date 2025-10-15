@@ -1,6 +1,7 @@
 \documentclass[10pt]{article}
 \usepackage{NotesTeXV3,lipsum}
 \usepackage{myMathHeader}
+\usepackage{csquotes}
 %\usepackage{showframe}
 
 \begin{document}
@@ -564,70 +565,196 @@
                 This ``parameterization'' is not regular at the origin since $\tangent_{(0,0)}\Psi(v_s, v_t) = (0,0,0)$ for all $(v_s, v_t)\in\R^2$.
             \end{example}
 
-
-            The idea to define surface is to glue multiple parameterizations together. That is, surface looks like a piece of $\R^2$ in the vicinity of each point.
-
+            However, unlike curves, not every surface can be parameterized by a single parameterization.
+            For example, the sphere $S^2$ cannot be parameterized by a single parameterization without overlaps or singularities.
+            But we can cover the sphere by two parameterizations, for example, one that covers the northern hemisphere (and a bit of the southern hemisphere) and one that covers the southern hemisphere (and a bit of the northern hemisphere).
+            Note that the two parameterizations overlap in a band around the equator.
+            This is a general phenomenon: most surfaces cannot be covered by a single parameterization, but can be covered by multiple parameterizations that overlap.
+            This leads us to the general definition of a surface as an object that at least locally in the vicinity of each point looks like a part of $\R^2$.
             \begin{definition}[Coordinate chart]
-                Given a subset $S\subseteq\R^2$ on $S$ consists of
+                Given a subset $S \subseteq \R^3$, a \emphDef{coordinate chart} on $S$ around a point $p\in S$ consists of
                 \begin{itemize}
-                    \item an open subset $D\subseteq\R^2$
-                    \item a non-deg, injective smooth map $\phi:\R^2\supseteq D\to\R^3$
-                    \item an open subset $\theta\subseteq\R^3$
+                    \item an open subset $D\subseteq\R^2$; {$\, \leftarrow \,$ \small part of $\R^2$}
+                    \item a regular, injective smooth map $\Phi:\R^2\supseteq D\to\R^3$; {$\, \leftarrow \,$ \small looks like}
+                    \item an open subset $\mathcal{O}\subseteq\R^3$ containing $p$; {$\, \leftarrow \,$ \small vicinity of $p$ in $\R^3$}
                 \end{itemize}
-                such that $\phi(D) = \set{ \phi(p): p\in D } = S\cap\theta$.
+                such that $\Phi(D) = \set{ \Phi(p): p\in D } = S\cap\mathcal{O}$ and the inverse map $\Phi^{-1}: S\cap\mathcal{O}\to D$ is continuous.
+                We say that the chart is \emphDef{centered} at $p$ if $0 \in D$ and $\Phi(0) = p$.
             \end{definition}
-
+            Hence, a coordinate chart $\Phi$ is nothing else than a parameterization of the part $\Phi(D)$ of $S$.
             \begin{definition}[Surface]
-                A subset $S\subseteq\R^2$ is called a surface if every point $m\in S$ has a coordinate chart centered at $m$.
+                A subset $S\subseteq\R^3$ is called a \emphDef{surface} if every point $p\in S$ has a coordinate chart centered at $p$.
             \end{definition}
-        
-            \begin{definition}[Graph]
-                Every smooth function $f: \R^2\supseteq D\to\R$ defines a parameterized surfaces 
+            So a surface is not just a subset of $\R^3$, but also comes with a collection of coordinate charts that cover the entire surface.
+            \begin{remark}[Coordinate transition]
+                Note that two different coordinate charts on the same surface may overlap.
+                Strictly speaking, for the definition of a surface, we would need to assume also that the translation from one chart to another is smooth.
+                Similarily, every time we define a concept on a surface using a particular chart, we have to check that the definition does not depend on the choice of the chart.
+                To not overload the course with technicalities, we will usually skip these steps and just assume that everything is well-defined.
+
+                But for the interested reader, here is the precise condition:
+                If $\Phi: D\to S\cap\mathcal{O}$ and $\Psi: E\to S\cap\mathcal{U}$ are two coordinate charts on $S$ with overlaps, i.e., $S\cap\mathcal{O}\cap\mathcal{U}\neq\emptyset$, then the map
                 \begin{equation*}
-                    \begin{aligned}
-                        S = \text{graph of } f = \set*{ (x,y,z)\in\R^3: (x,y)\in D, z=f(x,y) }
-                    \end{aligned}
+                    \Psi^{-1}\circ \Phi: \Phi^{-1}(S\cap\mathcal{O}\cap\mathcal{U}) \to \Psi^{-1}(S\cap\mathcal{O}\cap\mathcal{U})
+                \end{equation*}
+                is called the \emphDef{coordinate transition}.
+                Note that this is a map between two open subsets of $\R^2$.
+                We require that all such coordinate transitions are smooth.
+
+                Perhaps more interesting than this technical condition is that one can actually reconstruct the entire surface $S$ from the collection of its chart transitions.
+                So assuming you are given a collection of open sets $D_i\subseteq\R^2$ and smooth maps $\Phi_{ij}: D_i\supseteq U_{ij}\to D_j$ (that satisfy a certain compatibility condition on triple-overlaps), then you can construct a surface $S$ that has these maps as its coordinate transitions.
+                Intuitively, you can think of this construction as having multiple pieces of rubber $D_i$ that you glue together along the overlapping parts $U_{ij}$, and the map $\Phi_{ij}$ tells you which points in $D_i$ are glued to which points in $D_j$.
+            \end{remark}
+            Verifying that a given subset $S\subseteq\R^3$ is a surface by checking the definition directly can be quite tedious.
+            Fortunately, there are two standard constructions that allow us to construct many surfaces in a straightforward way.
+
+            The first construction is via graphs of functions.
+            \begin{proposition}[Graph]
+                Every smooth function $f: \R^2\supseteq D\to\R$ defined on an open subset $D$ yields a parameterized surface
+                \begin{equation*}
+                        S = \text{graph of } f = \set*{ (x,y,z)\in\R^3: (x,y)\in D, z=f(x,y) },
                 \end{equation*}
                 which has a global chart
                 \begin{equation*}
-                    \begin{aligned}
-                        \phi(x,y)  = \big(x,y,f(x,y)\big)
-                    \end{aligned}
+                    \Phi(x,y) = \bigl(x,y,f(x,y)\bigr), \qquad (x,y)\in D.
                 \end{equation*}
-            \end{definition}
+            \end{proposition}
 
-            \begin{definition}[level sets]
-                Let $g:\R^3\to\R$ be a smooth function. For every $c\in\R$
+            The second construction is via level sets of functions.
+            \begin{proposition}[Level set]
+                Let $g:\R^3\to\R$ be a smooth function. For every $c\in\R$, the level set
                 \begin{equation*}
-                    \begin{aligned}
-                        S = g^{-1}(c) = \set{ (x,y,z): g(x,y,z) = c }
-                    \end{aligned}
+                        S = g^{-1}(c) = \set{ (x,y,z) \in \R^3: g(x,y,z) = c }
                 \end{equation*}
-            \end{definition}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                is a surface if 
+                \begin{equation*}
+                    \nabla g(p) = \Vector{\difpFrac{g}{x}(p), \difpFrac{g}{y}(p), \difpFrac{g}{z}(p)} \neq 0
+                \end{equation*}
+                for all $p\in S$.
+            \end{proposition}
+            It is important that we need to check the condition $\nabla g(p)\neq 0$ only for points $p$ on the level set $S$.
+            \begin{proof}
+                Geometrically, the vector $\nabla g(p)$ yields a normal direction to the surface $S$ at $p$.
+                If this vector is non-zero, then we can use it to construct a coordinate chart around $p$ by projecting the surface $S$ onto the plane orthogonal to $\nabla g(p)$.
             
-	\section{Vector fields and Tangent space}\label{sec:Vector fields and Tangent space}
-            \begin{definition}[Vector fields on surface]
-			A vector field on surface $S$ is a smooth map $X: S\to\R^3$ such that
-    		  \begin{equation*}
-    		      \begin{aligned}
-    		          X(p)\thinspace\in\thinspace \TBundle_p S\thinspace\subseteq\thinspace\R^3
-    		      \end{aligned}
-    		  \end{equation*}
-            \end{definition}
+                To make this idea precise, let $p\in S$ and assume without loss of generality that $\difpFrac{g}{z}(p)\neq 0$ (otherwise, we can just relabel the coordinates).
+                By the implicit function theorem, there exists an open neighborhood $\mathcal{O}\subseteq\R^3$ of $p$ and a smooth function $f: \R^2\supseteq D\to\R$ defined on an open set $D\subseteq\R^2$ such that $g(x,y,f(x,y)) = c$ for all $(x,y)\in D$ and all points in $S\cap\mathcal{O}$ are of the form $(x,y,f(x,y))$ for some $(x,y)\in D$, i.e.,
+                \begin{equation*}
+                    S\cap\mathcal{O} = \set{ (x,y,z)\in\mathcal{O} \given z = f(x,y), (x,y)\in D }.
+                \end{equation*}
+                Thus, the map
+                \begin{equation*}
+                    \Phi(x,y) = \Vector{x,y,f(x,y)}, \qquad (x,y)\in D
+                \end{equation*}
+                is a coordinate chart on $S$ around $p$.
+            \end{proof}
+
+	\section{Tangent space and Vector fields}\label{sec:Vector fields and Tangent space}
+        The basic idea to do calculus on surfaces is to use the coordinate charts to locally identify parts of the surface with parts of $\R^2$, where we already know how to differentiate and integrate functions.
+        The first step in this direction is to define what it means for a function on a surface to be differentiable.
+        \begin{definition}[Smooth function on surface]
+            A function $f: S\to\R^k$ defined on a surface $S$ is called \emphDef{smooth} if for every coordinate chart $\Phi: \R^2 \supseteq D\to S$, the composition
+            \begin{equation*}
+                f\circ \Phi: \R^2 \supseteq D \to \R^k
+            \end{equation*}
+            is a smooth function in the usual sense.
+
+            The map $f \circ \Phi$ is called the \emphDef{chart representation} of $f$, and we sometimes denote it by $f_\Phi$.
+        \end{definition}
+
+        It is quite natural to study the geometry of a surface $S$ by \textquote{probing} it with curves $c: I\to \R^3$ that lie on the surface.
+        \begin{definition}[Curve on surface]
+            A smooth parametrized curve $c: I\to\R^3$ is called a \emphDef{smooth curve on the surface $S$} if $c(t)\in S$ for all $t\in I$.
+        \end{definition}
+        Equivalently, we could have defined a smooth curve on the surface as a map $c: I\to S$ for which the composition $c_\Phi = \Phi^{-1} \circ c: I_\Phi \to \R^3$ is smooth for every coordinate chart $\Phi$ on $S$, where $I_\Phi = c^{-1}(\Phi(D))$ is the part of $I$ that is mapped into the chart $\Phi(D)$.
+
+        Naturally, we expect that the velocity vector $\dot{c}(t)$ of a curve on the surface $S$ is always tangent to the surface.
+        This motivates the following definition.
+        \begin{definition}[Tangent space]
+            Given a surface $S\subseteq\R^3$ and a point $p\in S$, a \emphDef{tangent vector} to $S$ at $p$ is a vector $X\in\R^3$ such that there exists a smooth curve $c: I\to S$ with $c(0) = p$ and $\dot{c}(0) = X$. The \emphDef{tangent space $\TBundle_p S$} of $S$ at $p$ is defined as the set of all tangent vectors to $S$ at $p$.
+        \end{definition}
+        Intuitively, the tangent space $\TBundle_p S$ is the plane that just touches the surface $S$ at $p$.
+        \begin{example}
+            Let $S^2$ be the unit sphere in $\R^3$ centered at the origin.
+            Consider a curve $c: I\to S^2$ starting at $p\in S^2$ with velocity $X = \dot{c}(0)$.
+            Since $|c(t)|^2 = 1$ for all $t$, we have
+            \begin{equation*}
+                0 = \difFrac{}{t} |c(t)|^2 = 2 c(t)\cdot \dot{c}(t).
+            \end{equation*}
+            Evaluating this equation at $t = 0$ gives $0 = p\cdot X$.
+            Thus, the tangent space of the sphere at $p$ is given by
+            \begin{equation*}
+                \TBundle_p S^2 = \set{ X\in\R^3 \given p\cdot X = 0 }.
+            \end{equation*}
+        \end{example}
+
+        The simplest surfaces are just open subsets $D$ of $\R^2$.
+        In this case, we can identify the tangent space $\TBundle_{(x,y)} D$ at $(x, y)\in D$ with $\R^2$ itself.
+        To see this, consider a curve $c: I\to D$ with $c(0) = (x, y)$ and velocity $v = \dot{c}(0)$.
+        Then, $v\in\R^2$.
+        Conversely, given any $v\in\R^2$, we can define the curve $c(t) = (x, y) + tv$, which starts at $(x, y)$ and has velocity $\dot{c}(0) = v$.
+        Thus, we have $\TBundle_{(x,y)} D = \R^2$.
+        In particular, we can view every vector $v = (v_1, v_2)\in\R^2$ as a tangent vector at any point $(x,y)\in D$.
+        It is often convenient to \emph{not} rely on the identification $\TBundle_{(x,y)} D = \R^2$, but to use a more geometric notation.
+        To this end, we define the tangent vector $\partial_x (x,y)$ at $(x,y)$ as the tangent vector of the curve $c(t) = (x + t, y)$ at $t = 0$, i.e., $\partial_x (x,y) = (1,0)$.
+        Similarly, we define the tangent vector $\partial_y (x,y)$ at $(x,y)$ as the tangent vector of the curve $c(t) = (x, y + t)$ at $t = 0$, i.e., $\partial_y (x,y) = (0,1)$.
+        At this stage, $\partial_x (x,y)$ and $\partial_y (x,y)$ are just different names for the vectors $(1,0)$ and $(0,1)$, but later we will see that this naming is more natural when working with general surfaces.
+        With this notation, we can write any tangent vector $v = (v_1, v_2) \in\TBundle_{(x,y)} D$ as
+        \begin{equation*}
+            v = v_1 \partial_x (x,y) + v_2 \partial_y (x,y).
+        \end{equation*}
+
+        Now let $\Phi: \R^2 \supseteq D\to \R^3$ be a coordinate chart on a surface $S$ centered at $p = \Phi(0)$.
+        Recall that the directional derivative of $\Phi$ at $(0, 0)$ in the direction $v\in\R^2$ is given by \begin{equation}
+            \tangent_{(0,0)} \Phi(v) = \difFracAt{}{\varepsilon}{\varepsilon=0} \Phi(\varepsilon v) = v_1 \difpFrac{\Phi}{x}(0, 0)  + v_2 \difpFrac{\Phi}{y}(0, 0).
+        \end{equation}
+        In particular, using the notation introduced above, we have
+        \begin{equation*}
+            \tangent_{(0,0)} \Phi(\partial_x (0,0)) = \difFracAt{}{\varepsilon}{\varepsilon=0} \Phi(\varepsilon (1,0)) = \difpFrac{\Phi}{x}(0, 0).
+        \end{equation*}
+        But now note that $\varepsilon \mapsto \Phi(\varepsilon (1,0))$ is a smooth curve on the surface $S$ that starts at $p$.
+        Hence, its velocity $\tangent_{(0,0)} \Phi(\partial_x (0,0)) = \difpFrac{\Phi}{x}(0, 0)$ is a tangent vector to $S$ at $p$.
+        Since, it is the image of $\partial_x (0,0)$ under the chart $\Phi$, we will denote it by $\partial^\Phi_x (p)$.
+        Similarily,
+        \begin{equation*}
+            \partial^\Phi_y (p) \defeq \tangent_{(0,0)} \Phi(\partial_y (0,0)) = \difpFrac{\Phi}{y}(0, 0).
+        \end{equation*}
+        In other words, we have defined two tangent vectors $\partial^\Phi_x (p)$ and $\partial^\Phi_y (p)$ at $p$ that correspond to the $x$- and $y$-directions in the chart $\Phi$.
+        So we would expect that some of the well-known properties of the coordinate vectors $\partial_x$ and $\partial_y$ in $\R^2$ carry over to the vectors $\partial^\Phi_x (p)$ and $\partial^\Phi_y (p)$ on the surface $S$.
+        The following lemma confirms this intuition.
+        \begin{lemma}
+            For every point $p\in S$ and every coordinate chart $\Phi: D\to S$ centered at $p$, the tangent space $\TBundle_p S$ is spanned by the two tangent vectors $\partial^\Phi_x (p)$ and $\partial^\Phi_y (p)$. That is, every tangent vector $X\in\TBundle_p S$ can be written as
+            \begin{equation*}
+                X = X_1 \partial^\Phi_x (p) + X_2 \partial^\Phi_y (p)
+            \end{equation*}
+            for some unique $X_1, X_2\in\R$.
+            In particular, $\TBundle_p S$ is a $2$-dimensional vector space.
+        \end{lemma}
+        \begin{proof}
+            We already have seen that $\partial^\Phi_x (p)$ and $\partial^\Phi_y (p)$ are tangent vectors at $p$.
+            What remains to be shown is that they span the entire tangent space $\TBundle_p S$.
+            To this end, let $X\in\TBundle_p S$ be an arbitrary tangent vector.
+            By definition, there exists a smooth curve $c: I\to S$ with $c(0) = p$ and $\dot{c}(0) = X$.
+            Since $\Phi$ is a coordinate chart around $p$, the curve $c$ can be represented in the chart $\Phi$ by the curve $c_\Phi = \Phi^{-1} \circ c: I \to D$ (by possibly shrinking $I$).
+            Write the velocity of $c_\Phi$ at $0$ as $\dot{c}_\Phi(0) = (X_1, X_2)\in\R^2$.
+            Then, using the chain rule, we have
+            \begin{equation*}
+                X = \dot{c}(0) = \tangent_{(0,0)} \Phi\big(\dot{c}_\Phi(0)\big) = \tangent_{(0,0)} \Phi(X_1, X_2) = X_1 \partial^\Phi_x (p) + X_2 \partial^\Phi_y (p).
+            \end{equation*}
+            This concludes the proof.
+        \end{proof}
+        The proof shows that the tangent map $\tangent_{(0,0)} \Phi: \R^2\to\TBundle_p S$ is bijective and thus identifies $\R^2$ with the tangent space $\TBundle_p S$.
+        Under this identification, the coordinate vectors $\partial_x (0,0) = (1,0)$ and $\partial_y (0,0) = (0, 1)$ in $\R^2$ correspond to the tangent vectors $\partial^\Phi_x (p)$ and $\partial^\Phi_y (p)$ in $\TBundle_p S$.
+
+
+        \begin{definition}[Vector fields on surface]
+        A vector field on surface $S$ is a smooth map $X: S\to\R^3$ such that
+            \begin{equation*}
+                \begin{aligned}
+                    X(p)\thinspace\in\thinspace \TBundle_p S\thinspace\subseteq\thinspace\R^3
+                \end{aligned}
+            \end{equation*}
+        \end{definition}
 
 		\begin{definition}[$\tangent_p f$]
 			Given a smooth function $f: S\to\R$ and a tangent vector $X\in \TBundle_p S$, the directional derivative of $f$ in $X$-direction
@@ -2484,7 +2611,7 @@
             
 
         \section{Geodesics: variations}
-            Assume for a moment that $f: S\to\R$ is a smooth function and we would like to find the minima of $f$, i.e. find the zeros of the derivative $T_mf$. So we need to find the point $m$ such for any curve $\gamma: I\to S$ satisfy at $m$, we have
+            Assume for a moment that $f: S\to\R$ is a smooth function and we would like to find the minima of $f$, i.e. find the zeros of the derivative $T_p f$. So we need to find the point $p$ such for any curve $\gamma: I\to S$ satisfy at $p$, we have
             \begin{equation*}
                 \begin{aligned}
                     0 = T_mf\big(\dot{\gamma}(0)\big) = \frac{d}{d\epsilon}\bigg|_0f\big(\gamma(\epsilon)\big)
