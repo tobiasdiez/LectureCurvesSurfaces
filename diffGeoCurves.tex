@@ -78,7 +78,7 @@
             We will often introduce a certain property of the curve using a parameterization, and then show that this property does not depend on the choice of parameterization.
             For example, the length of a curve is a property that should be independent of how we parameterize it -- all riders should better agree on the length of the track, regardless of their speed.
             \begin{definition}[Length of a curve]
-                The length of a parameterized curve $c: I \to \R^n$ is defined as
+                The \emphDef{length} of a parameterized curve $c: I \to \R^n$ is defined as
                 \begin{equation}
                         L(c) \defeq \int_a^b \norm{\dot{c}(t)}\dif t
                 \end{equation}
@@ -151,7 +151,7 @@
             This is called a \emphDef{moving or Frenet--Serret frame} along the curve.
 
             \begin{definition}[Curvature]
-                The curvature of a unit-speed curve $c: I\to\R^n$ is defined as $\kappa(t) = \norm{\ddot{c}(t)}$.
+                The \emphDef{curvature} of a unit-speed curve $c: I\to\R^n$ is defined as $\kappa(t) = \norm{\ddot{c}(t)}$.
             \end{definition}
             What is the curvature of a general regular curve $c: I\to\R^n$?
             The natural definition is to first reparameterize $c$ to a unit-speed curve $\Tilde{c}$ by a suitable reparameterization $\varphi$ and then define the curvature of $c$ as the curvature of $\Tilde{c}$.
@@ -235,7 +235,7 @@
 
             \begin{definition}[Winding number]
                 Let $c: [a, b]\to\R^2$ be a loop and $P_0$ be a point that does not lie on the curve.
-                The winding number $W(c, P_0)$ is the number of times the curve goes counter-clockwise around $P_0$.
+                The \emphDef{winding number} $W(c, P_0)$ is the number of times the curve goes counter-clockwise around $P_0$.
             \end{definition}
 
             From geometric considerations, it is clear that the winding number is an integer that satisfies the following properties:
@@ -277,7 +277,7 @@
             \end{itemize}
 
             \begin{definition}[Frenet-Serret frame]
-                Let $c$ be a unit-speed curve in $\R^3$, $T(t) = \dot{c}(t)$ be the tangent field, curvature $\kappa(t) = |\ddot{c}(t)|$. Assume $\kappa(t)>0$, then $N(t) = \cfrac{\ddot{c}(t)}{|\ddot{c}(t)|}$, and $B(t) = T(t)\times N(t)$ is the binormal field. Here $\set{T,N,B}$ is called the Frenet-Serret frame.
+                Let $c$ be a unit-speed curve in $\R^3$, $T(t) = \dot{c}(t)$ be the tangent field, curvature $\kappa(t) = |\ddot{c}(t)|$. Assume $\kappa(t)>0$, then $N(t) = \cfrac{\ddot{c}(t)}{|\ddot{c}(t)|}$, and $B(t) = T(t)\times N(t)$ is the binormal field. Here $\set{T,N,B}$ is called the \emphDef{Frenet-Serret frame}.
             \end{definition}
             \begin{remark}
                 $T(t), N(t), B(t)$ are orthogonal to each other and have unit length; notice that $|v\times w| = (v,v)(w,w) - (v,w)^2$.
@@ -480,7 +480,7 @@
             Once we have this property, we can define the derivative of $f$ at $p$ in the direction $v$ by comparing the values of $f$ at $p$ and at $p + \varepsilon v$ as $\varepsilon\to 0$.
             This is leads us to the following definition.
             \begin{definition}[Open set in $\R^2$]
-                A subset $D\subseteq\R^2$ is called open if for every point $p\in D$, there exists some $\varepsilon > 0$ such that the open ball
+                A subset $D\subseteq\R^2$ is called \emphDef{open} if for every point $p\in D$, there exists some $\varepsilon > 0$ such that the open ball
                 \begin{equation*}
                     B_\varepsilon(p) = \set{ x\in\R^2 \given |x - p| < \varepsilon }
                 \end{equation*}
@@ -748,7 +748,7 @@
 
 
         \begin{definition}[Vector fields on surface]
-        A vector field on surface $S$ is a smooth map $X: S\to\R^3$ such that
+        A \emphDef{vector field on surface $S$} is a smooth map $X: S\to\R^3$ such that
             \begin{equation*}
                 \begin{aligned}
                     X(p)\thinspace\in\thinspace \TBundle_p S\thinspace\subseteq\thinspace\R^3
@@ -757,7 +757,7 @@
         \end{definition}
 
 		\begin{definition}[$\tangent_p f$]
-			Given a smooth function $f: S\to\R$ and a tangent vector $X\in \TBundle_p S$, the directional derivative of $f$ in $X$-direction
+			Given a smooth function $f: S\to\R$ and a tangent vector $X\in \TBundle_p S$, the \emphDefx {directional derivative of $f$ in $X$-direction}
 			\begin{equation*}
 				\begin{aligned}
 					\tangent_p f(X) := \difFracAt{}{t}{t=0} f\big(c(t)\big) \in\R
@@ -819,7 +819,7 @@
 		As a computational tool, differential forms measure the vector field of a surface, thus enabling integration on it, and you can see it as the dual space of the tangent space.
 	
 		\begin{definition}[1-form]
-			A 1-form is a family $\alpha_p: \TBundle_p S\to\R,\thinspace\thinspace p\in S$ of linear maps.
+			A \emphDef{1-form} is a family $\alpha_p: \TBundle_p S\to\R,\thinspace\thinspace p\in S$ of linear maps.
 		\end{definition}
 		Let $\alpha_p: \TBundle_p D\to\R,\thinspace\thinspace D\in\R^2$ be a linear map, then
 		\begin{equation*}
@@ -830,13 +830,13 @@
 		Hence, $\alpha_p(v)$ is determined by the two numbers $\alpha_1 = \alpha_p(\partial x)$ and $\alpha_2 = \alpha_p(\partial y)$, which means it's defined by its actions on tangent values, and $\alpha_1$, $\alpha_2$ are called the components of $\alpha$.
 
         \begin{definition}[1-form $(dx)_p$]
-            1-form $(dx)_p: \TBundle_p D\to\R$ on $D$ defined by
+            \emphDef{1-form $(dx)_p: \TBundle_p D\to\R$ on $D$} defined by
             \begin{equation*}
                 \begin{aligned}
                     (dx)_p(\partial x)_p = 1, \quad (dx)_p(\partial y)_p = 0
                 \end{aligned}
             \end{equation*}
-            and similarly for $(dy)_p$, which means $(\partial x)_p$ and $(\partial y)_p$ are a basis of $\TBundle_p D$, $(dx)_p$ and $(dy)_p$ are the dual basis. Moreover, every diff 1-form $\alpha$ on $D\subseteq\R^2$ open is of the form
+            and similarly for $(dy)_p$, which means $(\partial x)_p$ and $(\partial y)_p$ are a basis of $\TBundle_p D$, $(dx)_p$ and $(dy)_p$ are the \emphDef{dual basis}. Moreover, every diff 1-form $\alpha$ on $D\subseteq\R^2$ open is of the form
             \begin{equation*}
                 \begin{aligned}
                     \alpha_p = \alpha_1(p)(dx)_p + \alpha_2(p)(dy)_p
@@ -892,7 +892,7 @@
         \end{proposition}
         
         \begin{definition}[1-form $\alpha^{\phi}$ on $D$]
-            $\alpha$ is 1-form on $S$, $\alpha_p: \TBundle_p S\to\R$ for all $p\in S$, and $\phi: \R^2\supseteq D\to S$ a chart. For all $(x,y)\in D$, $T_{(x,y)}\phi: \R^2\to T_{\phi(x, y)}S$. Define 1-form $\alpha^{\phi}$ on $D$ by
+            $\alpha$ is 1-form on $S$, $\alpha_p: \TBundle_p S\to\R$ for all $p\in S$, and $\phi: \R^2\supseteq D\to S$ a chart. For all $(x,y)\in D$, $T_{(x,y)}\phi: \R^2\to T_{\phi(x, y)}S$. Define \emphDef{1-form $\alpha^{\phi}$ on $D$} by
             \begin{equation*}
                 \begin{aligned}
                     \alpha_{(x,y)}^{\phi} = \big(T_{(x,y)}\phi\big)^*\big(\alpha_{\phi(x,y)}\big), \quad \alpha_{(x,y)}^{\phi}(v) = \alpha_{\phi(x,y)}\big( T_{(x,y)}\phi(v) \big)
@@ -916,7 +916,7 @@
                     \int_{c}\alpha = \int_{a}^{b}\alpha_{c(t)}\big(\dot{c}(t)\big) \dif t
                 \end{aligned}
             \end{equation*}
-            is the integration of $\alpha$ along $c$.
+            is the \emphDef{integration} of $\alpha$ along $c$.
         \end{definition}
     
         \begin{theorem}[Fundamental theorem of calculus]
@@ -952,7 +952,7 @@
         \newpage
 	\section{Exterior differential and Integration of 2-forms}\label{Sec:Exterior differential and Integration of 2-forms}
 		\begin{definition}[Exterior differential]
-			If $\alpha$ is a 1-form on $S$, then the exterior differential in the $S$ is defined as
+			If $\alpha$ is a 1-form on $S$, then the \emphDef{exterior differential} in the $S$ is defined as
 			\begin{equation*}
 				\begin{aligned}
 					(d\alpha)_p(\partial x, \partial y) &= \tangent_p\big( \alpha(\partial y)\big)(\partial x) - \tangent_p\big( \alpha(\partial x)\big)(\partial y) \\
@@ -971,7 +971,7 @@
 			1-form is called closed if $d\alpha=0$, and is called exact if there exists $f: S\to\R$ such that $df = \alpha$. Actually, every exact form is also closed, but not every closed form is exact.
 		\end{remark}
 		\begin{definition}[Integration of 2-forms]
-			The integral of the 2-form $\beta$ over the rectangle $R$ is 
+			\emphDef{The integral of the 2-form $\beta$ over the rectangle $R$} is 
 			\begin{equation*}
 				\begin{aligned}
 					\int_{R}\beta = \int_{a}^{b}\int_{c}^{d}\beta_{R(x,y)}\bigg( \cfrac{\partial R(x,y)}{\partial x}, \cfrac{\partial R(x,y)}{\partial y} \bigg) dydx
@@ -1058,7 +1058,7 @@
 		Recall for curves, we had a moving frame (Cartan) at every point of curve (T, N, B), which was adapted the curve (T = $\dot{c}$). The change of this frame, expanded in terms of the frame, told us the curvature and the torsion of the  curve. For the surface, the idea is to do something similar to get the curvature of a surface.
 		
 		\begin{definition}[Moving frame]
-			A moving frame on an open subset $U\subseteq\R^3$ consists of vector fields $e_1, e_2, e_3: U\to\R^3$ such that for each point $x\in U$, the values $e_1(x), e_2(x), e_3(x)$ are an orthonormal basis of $\R^3$.
+			A \emphDef{moving frame} on an open subset $U\subseteq\R^3$ consists of vector fields $e_1, e_2, e_3: U\to\R^3$ such that for each point $x\in U$, the values $e_1(x), e_2(x), e_3(x)$ are an orthonormal basis of $\R^3$.
 		\end{definition}
 	
 		\begin{definition}[Change of frame]
@@ -1147,7 +1147,7 @@
 		The frame $e_1, e_2, e_3$ is not the most basic object, we want to replace the moving frame field $e_i$ with its dual 1-form $\theta_i$.
 	
 		\begin{definition}[Dual frame]
-			The dual frame are 1-forms $\theta_1, \theta_2, \theta_3$ on $\R^3$ such that $(\theta_i)_x(e_j(x)) = \delta_{ij}$.
+			The \emphDef{dual frame} are 1-forms $\theta_1, \theta_2, \theta_3$ on $\R^3$ such that $(\theta_i)_x(e_j(x)) = \delta_{ij}$.
 		\end{definition}
 	
 		\begin{definition}[The duals $\theta_i$ of $e_i$ in terms of the duals $dx_j$ of $f_j$]
