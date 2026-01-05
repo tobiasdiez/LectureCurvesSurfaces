@@ -1251,7 +1251,7 @@
 		Recall that if $S$ is a surface that is oriented, then there exists a normal field $n: S\to\R^3$, which vanishes nowhere, so we can define a map from $p\in S$ to the normal vector $n(p)$ at this point, which is called Gauss map.
 		
 		\begin{definition}[Gauss map]
-			If $n(p)$ has unit norm for $\forall p\in S$, then we call $n: S\to S^2\subseteq\R^3$ the gauss map of $S$. Moreover, for the surface $\phi: D\to S$, gauss map $n$ can be written as
+			If $n(p)$ has unit norm for $\forall p\in S$, then we call $n: S\to S^2\subseteq\R^3$ the \emphDef{gauss map} of $S$. Moreover, for the surface $\phi: D\to S$, gauss map $n$ can be written as
 			\begin{equation*}
 				\begin{aligned}
 					n(u, v) := \cfrac{\frac{\partial\phi}{\partial u}\times\frac{\partial\phi}{\partial v}}{\norm{\frac{\partial\phi}{\partial u}\times\frac{\partial\phi}{\partial v}}}
@@ -1318,7 +1318,7 @@
             
 
 		\begin{definition}[Shape operator]\label{Definition: Shape operator}
-			The shape operator (Weingarten map)
+			The \emphDef{shape operator (Weingarten map)}
 			\begin{equation*}
 				\begin{aligned}
 					\mathcal{S}_p = -\tangent_p n = -\nabla n_p: \TBundle_p S\to \TBundle_p S
@@ -1560,7 +1560,7 @@
                         \kappa_p(u) = II_p(u, u) = u\cdot\mathcal{S}_pu
                     \end{aligned}
                 \end{equation*}
-                which is called the normal curvature in the $u$-direction.    
+                which is called the \emphDef{normal curvature} in the $u$-direction.    
             \end{definition}
             
             \begin{example}
@@ -1583,7 +1583,7 @@
             \end{remark}
             
             \begin{definition}[Principle curvatures]
-                The maximum and minimum of the normal curvature $\kappa_p(u)$ as $u\in \TBundle_p S,\thinspace \norm{u} = 1$ are called principle curvatures of $p$, denoted by $\kappa_1$ and $\kappa_2$, the associated directions $u_1$ and $u_2$ are called the principle directions. Equivalently, by threom of linear algebra, $\kappa_1(p)$ and $\kappa_2(p)$ are eigenvalues of $\mathcal{S}_p$ with eigenvectors $u_1$ and $u_2$. That is
+                The maximum and minimum of the normal curvature $\kappa_p(u)$ as $u\in \TBundle_p S,\thinspace \norm{u} = 1$ are called \emphDef{principle curvatures} of $p$, denoted by $\kappa_1$ and $\kappa_2$, the associated directions $u_1$ and $u_2$ are called the \emphDef{principle directions}. Equivalently, by threom of linear algebra, $\kappa_1(p)$ and $\kappa_2(p)$ are eigenvalues of $\mathcal{S}_p$ with eigenvectors $u_1$ and $u_2$. That is
                 \begin{equation*}
                     \begin{aligned}
                         \mathcal{S}_pu_1 = \kappa_1(p)u_1, \quad \mathcal{S}_pu_2 = \kappa_2(p)u_2
@@ -1785,10 +1785,10 @@
             \begin{definition}
                 A point $p\in S$ is called
                 \begin{itemize}[itemsep=-0.2mm]
-                    \item umbilic (novel): if $\kappa_1(p) = \kappa_2(p)$, i.e. $\kappa_p(u)$ is independent of $u$, ex every point on the sphere.
-                    \item elliptic: if $\kappa_1(p)$ and $\kappa_2(p)$ have the same sign ($\kappa_1\neq\kappa_2$)
-                    \item hyperbolic: if $\kappa_1(p)$ and $\kappa_2(p)$ have the opposite sign, which is saddle-like.
-                    \item parabolic: if $\kappa_1(p) = 0$ or $\kappa_2(p) = 0$, ex cylinder.
+                    \item \emphDef{umbilic (novel)}: if $\kappa_1(p) = \kappa_2(p)$, i.e. $\kappa_p(u)$ is independent of $u$, ex every point on the sphere.
+                    \item \emphDef{elliptic}: if $\kappa_1(p)$ and $\kappa_2(p)$ have the same sign ($\kappa_1\neq\kappa_2$)
+                    \item \emphDef{hyperbolic}: if $\kappa_1(p)$ and $\kappa_2(p)$ have the opposite sign, which is saddle-like.
+                    \item \emphDef{parabolic}: if $\kappa_1(p) = 0$ or $\kappa_2(p) = 0$, ex cylinder.
                 \end{itemize}
             \end{definition}
             \begin{figure}[H]
@@ -1797,10 +1797,10 @@
                 \caption{[a] If $\kappa_1$ and $\kappa_2$ have the same sign then the surface locally resembles a hill, and a slice parallel to the tangent plane yields an ellipse (or misses the surface entirely). [b] If $\kappa_1$ and $\kappa_2$ have opposite sign then the surface locally resembles a saddle. A parallel slice above the tangent plane yields both branches of a hyperbola.}
             \end{figure}
             \begin{definition}[Darboux frame]
-                A frame $e_1, e_2, e_3$ adapted to $S$ is called the Darboux frame if $e_1(p)$ and $e_2(p)$ are the principle directions at $p$.
+                A frame $e_1, e_2, e_3$ adapted to $S$ is called the \emphDef{Darboux frame} if $e_1(p)$ and $e_2(p)$ are the principle directions at $p$.
             \end{definition}
             \begin{definition}[Line of curvature]
-                A unit-speed curve $c$ is called a line of curvature if $\dot{c}$ is always a principal direction, e.g. $\dot{c}(t) = u_1(c(t))$.
+                A unit-speed curve $c$ is called \emphDef{a line of curvature} if $\dot{c}$ is always a principal direction, e.g. $\dot{c}(t) = u_1(c(t))$.
             \end{definition}
             \begin{theorem}[do Carmo 3.4.4, O'Neill, 6.2.5]
                 Away from umbilic points, a Darboux frame frame always exists.
@@ -1886,7 +1886,7 @@
             The preceding subsection found the geometrical meaning of the eigenvalues and eigenvectors of the shape operator. Now we examine the determinant and trace of $S$, i.e. extract numbers from a matrix, independent of the basis. That is, apply a 2$\times$2 matrix to the shape operator.
 
             \begin{definition}[Gaussian and mean curvature]
-                $\kappa(t) = \text{det}\mathcal{S}_p = \kappa_1(p)\cdot\kappa_2(p)$ is called the Gaussian curvature. And $H(p) = \frac{1}{2}\text{tr}\mathcal{S}_p = \frac{1}{2}\big(\kappa_1(p)+\kappa_2(p)\big)$ is called the mean curvature.
+                $\kappa(t) = \text{det}\mathcal{S}_p = \kappa_1(p)\cdot\kappa_2(p)$ is called the \emphDef{Gaussian curvature}. And $H(p) = \frac{1}{2}\text{tr}\mathcal{S}_p = \frac{1}{2}\big(\kappa_1(p)+\kappa_2(p)\big)$ is called the \emphDef{mean curvature}.
             \end{definition}
             
             \begin{example}
@@ -1998,9 +1998,9 @@
 
             Next we want to see how do frame properties transform as we change our surface. Suppose $F: S(\subseteq\R^3) \to \Bar{S}(\subseteq\R^3)$, and we want to use $F$ to compare objects living on $\Bar{S}$ with the objects on $S$.
             \begin{definition}[Pushforward and Pullback]
-                pushforward: objects on $S \to$ objects on $\Bar{S}$.
+                \emphDef{pushforward}: objects on $S \to$ objects on $\Bar{S}$.
                 
-                pullback: objects living on $\Bar{S}$ induce something living on $S$.
+                \emphDef{pullback}: objects living on $\Bar{S}$ induce something living on $S$.
             \end{definition}
 
             \begin{example}[Pushforward of curves]
@@ -2087,7 +2087,7 @@
             \end{proof}
 
             \begin{definition}[Isometry of surfaces]
-                An isometry of surfaces $S$ and $\Bar{S}$ is a bijective map $F: S\to\Bar{S}$ that preserves the inner product of tangent vectors:
+                An \emphDef{isometry} of surfaces $S$ and $\Bar{S}$ is a bijective map $F: S\to\Bar{S}$ that preserves the inner product of tangent vectors:
                 \begin{equation*}
                     \begin{aligned}
                         v\cdot w = \tangent_p F(v)\cdot \tangent_p F(w), \quad\forall v, w \in \TBundle_p S
@@ -2101,12 +2101,12 @@
                 \end{equation*}
             \end{definition}
             \begin{definition}[Local isometry]
-                Local isometry is a map $F: S\to\Bar{S}$ such that every point $p\in S$ has some neighborhood $U\subseteq S$ such that $F: S\supseteq U\to F(U)\subseteq\Bar{S}$ is a isometry.
+                \emphDef{Local isometry} is a map $F: S\to\Bar{S}$ such that every point $p\in S$ has some neighborhood $U\subseteq S$ such that $F: S\supseteq U\to F(U)\subseteq\Bar{S}$ is a isometry.
             \end{definition}
             According to definition, (local) isometries preserve the length of tangent vectors, but does it also preserve the distance of two points at the surface?
 
             \begin{definition}[Distance on the surface]
-                The distance between $p, q\in S$ is 
+                The \emphDef{distance} between $p, q\in S$ is 
                 \begin{equation*}
                     \begin{aligned}
                         d(p, q) = \inf(c), \thinspace\thinspace\thinspace\text{with}\thinspace\thinspace\thinspace c(0) = p,\thinspace c(1) = q
