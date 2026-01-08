@@ -283,7 +283,7 @@
                 $T(t), N(t), B(t)$ are orthogonal to each other and have unit length; notice that $|v\times w| = (v,v)(w,w) - (v,w)^2$.
             \end{remark}
             \begin{theorem}[Frenet-Serret equations]
-                If $c: I\to\R^3$ is a unit-speed curve with F-N frame $T, N, B$, then
+                If $c: I\to\R^3$ is a unit-speed curve with Frenet-Serret frame $T, N, B$, then
                 \begin{equation}
                     \difFrac{}{t} \Vector{T \\ N \\ B} =
                     \Matrix{
@@ -666,7 +666,7 @@
         \begin{definition}[Curve on surface]
             A smooth parametrized curve $c: I\to\R^3$ is called a \emphDef{smooth curve on the surface $S$} if $c(t)\in S$ for all $t\in I$.
         \end{definition}
-        Equivalently, we could have defined a smooth curve on the surface as a map $c: I\to S$ for which the composition $c_\Phi = \Phi^{-1} \circ c: I_\Phi \to \R^3$ is smooth for every coordinate chart $\Phi$ on $S$, where $I_\Phi = c^{-1}(\Phi(D))$ is the part of $I$ that is mapped into the chart $\Phi(D)$.
+        Equivalently, we could have defined a smooth curve on the surface as a map $c: I\to S$ for which the composition $c_\Phi = \Phi^{-1} \circ c: I_\Phi \to \R^2$ is smooth for every coordinate chart $\Phi$ on $S$, where $I_\Phi = c^{-1}(\Phi(D))$ is the part of $I$ that is mapped into the chart $\Phi(D)$.
 
         Naturally, we expect that the velocity vector $\dot{c}(t)$ of a curve on the surface $S$ is always tangent to the surface.
         This motivates the following definition.
@@ -1583,7 +1583,7 @@
             \end{remark}
             
             \begin{definition}[Principle curvatures]
-                The maximum and minimum of the normal curvature $\kappa_p(u)$ as $u\in \TBundle_p S,\thinspace \norm{u} = 1$ are called \emphDef{principle curvatures} of $p$, denoted by $\kappa_1$ and $\kappa_2$, the associated directions $u_1$ and $u_2$ are called the \emphDef{principle directions}. Equivalently, by threom of linear algebra, $\kappa_1(p)$ and $\kappa_2(p)$ are eigenvalues of $\mathcal{S}_p$ with eigenvectors $u_1$ and $u_2$. That is
+                The maximum and minimum of the normal curvature $\kappa_p(u)$ as $u\in \TBundle_p S,\thinspace \norm{u} = 1$ are called \emphDef{principle curvatures} of $p$, denoted by $\kappa_1$ and $\kappa_2$, the associated directions $u_1$ and $u_2$ are called the \emphDef{principle directions}. Equivalently, by theorem of linear algebra, $\kappa_1(p)$ and $\kappa_2(p)$ are eigenvalues of $\mathcal{S}_p$ with eigenvectors $u_1$ and $u_2$. That is
                 \begin{equation*}
                     \begin{aligned}
                         \mathcal{S}_pu_1 = \kappa_1(p)u_1, \quad \mathcal{S}_pu_2 = \kappa_2(p)u_2
@@ -2704,7 +2704,7 @@
             \end{remark}
 
             \begin{theorem}[Hopf-Rinow, metrically complete]
-                Let $S$ be a connected surface (every two points can be connected by smooth curves). Assume that every geodesic exists for all times, then for every $q\in S$, there exists a geodesic $c$ form $p$ to $q$ such that 
+                Let $S$ be a connected surface (every two points can be connected by smooth curves). Assume that every geodesic exists for all times, then for every $q\in S$, there exists a geodesic $c$ from $p$ to $q$ such that 
                 \begin{equation*}
                     \begin{aligned}
                         d(p, q) = L(c)
@@ -2999,7 +2999,7 @@
                 \end{equation*}
             \end{theorem}
             \begin{lemma}
-                Assume $\omega_i^j$ satisfy the Gauss-Godozzi equation, then for $p_0\in\R^3$ and frame $f_1,f_2,f_3$ that are orthonormal basis of $\R^2$, there exists a unique smooth $\psi:\R^2\supseteq D\to\R^3$ and smooth function $e_1, e_2, e_3: \R^2\supseteq D\to\R^3$ forming an orthonormal basis of $\R^3$ for each $p\in D$ such that
+                Assume $\omega_i^j$ satisfy the Gauss-Godozzi equation, then for $p_0\in\R^3$ and frame $f_1,f_2,f_3$ that are orthonormal basis of $\R^2$, there exists a unique smooth $\psi:\R^2\supseteq D\to\R^3$ and smooth functions $e_1, e_2, e_3: \R^2\supseteq D\to\R^3$ forming an orthonormal basis of $\R^3$ for each $p\in D$ such that
                 \begin{equation*}
                     \begin{aligned}
                         &T_{(x,y)}\psi(v) = \theta_{(x,y)}^1(v) e_1(x,y) + \theta_{(x,y)}^2(v) e_2(x,y) \\
