@@ -78,7 +78,7 @@
             We will often introduce a certain property of the curve using a parameterization, and then show that this property does not depend on the choice of parameterization.
             For example, the length of a curve is a property that should be independent of how we parameterize it -- all riders should better agree on the length of the track, regardless of their speed.
             \begin{definition}[Length of a curve]
-                The length of a parameterized curve $c: I \to \R^n$ is defined as
+                The \emphDef{length} of a parameterized curve $c: I \to \R^n$ is defined as
                 \begin{equation}
                         L(c) \defeq \int_a^b \norm{\dot{c}(t)}\dif t
                 \end{equation}
@@ -151,7 +151,7 @@
             This is called a \emphDef{moving or Frenet--Serret frame} along the curve.
 
             \begin{definition}[Curvature]
-                The curvature of a unit-speed curve $c: I\to\R^n$ is defined as $\kappa(t) = \norm{\ddot{c}(t)}$.
+                The \emphDef{curvature} of a unit-speed curve $c: I\to\R^n$ is defined as $\kappa(t) = \norm{\ddot{c}(t)}$.
             \end{definition}
             What is the curvature of a general regular curve $c: I\to\R^n$?
             The natural definition is to first reparameterize $c$ to a unit-speed curve $\Tilde{c}$ by a suitable reparameterization $\varphi$ and then define the curvature of $c$ as the curvature of $\Tilde{c}$.
@@ -235,7 +235,7 @@
 
             \begin{definition}[Winding number]
                 Let $c: [a, b]\to\R^2$ be a loop and $P_0$ be a point that does not lie on the curve.
-                The winding number $W(c, P_0)$ is the number of times the curve goes counter-clockwise around $P_0$.
+                The \emphDef{winding number} $W(c, P_0)$ is the number of times the curve goes counter-clockwise around $P_0$.
             \end{definition}
 
             From geometric considerations, it is clear that the winding number is an integer that satisfies the following properties:
@@ -277,13 +277,13 @@
             \end{itemize}
 
             \begin{definition}[Frenet-Serret frame]
-                Let $c$ be a unit-speed curve in $\R^3$, $T(t) = \dot{c}(t)$ be the tangent field, curvature $\kappa(t) = |\ddot{c}(t)|$. Assume $\kappa(t)>0$, then $N(t) = \cfrac{\ddot{c}(t)}{|\ddot{c}(t)|}$, and $B(t) = T(t)\times N(t)$ is the binormal field. Here $\set{T,N,B}$ is called the Frenet-Serret frame.
+                Let $c$ be a unit-speed curve in $\R^3$, $T(t) = \dot{c}(t)$ be the tangent field, curvature $\kappa(t) = |\ddot{c}(t)|$. Assume $\kappa(t)>0$, then $N(t) = \cfrac{\ddot{c}(t)}{|\ddot{c}(t)|}$, and $B(t) = T(t)\times N(t)$ is the binormal field. Here $\set{T,N,B}$ is called the \emphDef{Frenet-Serret frame}.
             \end{definition}
             \begin{remark}
                 $T(t), N(t), B(t)$ are orthogonal to each other and have unit length; notice that $|v\times w| = (v,v)(w,w) - (v,w)^2$.
             \end{remark}
             \begin{theorem}[Frenet-Serret equations]
-                If $c: I\to\R^3$ is a unit-speed curve with F-N frame $T, N, B$, then
+                If $c: I\to\R^3$ is a unit-speed curve with Frenet-Serret frame $T, N, B$, then
                 \begin{equation}
                     \difFrac{}{t} \Vector{T \\ N \\ B} =
                     \Matrix{
@@ -480,7 +480,7 @@
             Once we have this property, we can define the derivative of $f$ at $p$ in the direction $v$ by comparing the values of $f$ at $p$ and at $p + \varepsilon v$ as $\varepsilon\to 0$.
             This is leads us to the following definition.
             \begin{definition}[Open set in $\R^2$]
-                A subset $D\subseteq\R^2$ is called open if for every point $p\in D$, there exists some $\varepsilon > 0$ such that the open ball
+                A subset $D\subseteq\R^2$ is called \emphDef{open} if for every point $p\in D$, there exists some $\varepsilon > 0$ such that the open ball
                 \begin{equation*}
                     B_\varepsilon(p) = \set{ x\in\R^2 \given |x - p| < \varepsilon }
                 \end{equation*}
@@ -666,7 +666,7 @@
         \begin{definition}[Curve on surface]
             A smooth parametrized curve $c: I\to\R^3$ is called a \emphDef{smooth curve on the surface $S$} if $c(t)\in S$ for all $t\in I$.
         \end{definition}
-        Equivalently, we could have defined a smooth curve on the surface as a map $c: I\to S$ for which the composition $c_\Phi = \Phi^{-1} \circ c: I_\Phi \to \R^3$ is smooth for every coordinate chart $\Phi$ on $S$, where $I_\Phi = c^{-1}(\Phi(D))$ is the part of $I$ that is mapped into the chart $\Phi(D)$.
+        Equivalently, we could have defined a smooth curve on the surface as a map $c: I\to S$ for which the composition $c_\Phi = \Phi^{-1} \circ c: I_\Phi \to \R^2$ is smooth for every coordinate chart $\Phi$ on $S$, where $I_\Phi = c^{-1}(\Phi(D))$ is the part of $I$ that is mapped into the chart $\Phi(D)$.
 
         Naturally, we expect that the velocity vector $\dot{c}(t)$ of a curve on the surface $S$ is always tangent to the surface.
         This motivates the following definition.
@@ -748,7 +748,7 @@
 
 
         \begin{definition}[Vector fields on surface]
-        A vector field on surface $S$ is a smooth map $X: S\to\R^3$ such that
+        A \emphDef{vector field on surface $S$} is a smooth map $X: S\to\R^3$ such that
             \begin{equation*}
                 \begin{aligned}
                     X(p)\thinspace\in\thinspace \TBundle_p S\thinspace\subseteq\thinspace\R^3
@@ -757,7 +757,7 @@
         \end{definition}
 
 		\begin{definition}[$\tangent_p f$]
-			Given a smooth function $f: S\to\R$ and a tangent vector $X\in \TBundle_p S$, the directional derivative of $f$ in $X$-direction
+			Given a smooth function $f: S\to\R$ and a tangent vector $X\in \TBundle_p S$, the \emphDef{directional derivative of $f$ in $X$-direction}
 			\begin{equation*}
 				\begin{aligned}
 					\tangent_p f(X) := \difFracAt{}{t}{t=0} f\big(c(t)\big) \in\R
@@ -819,7 +819,7 @@
 		As a computational tool, differential forms measure the vector field of a surface, thus enabling integration on it, and you can see it as the dual space of the tangent space.
 	
 		\begin{definition}[1-form]
-			A 1-form is a family $\alpha_p: \TBundle_p S\to\R,\thinspace\thinspace p\in S$ of linear maps.
+			A \emphDef{1-form} is a family $\alpha_p: \TBundle_p S\to\R,\thinspace\thinspace p\in S$ of linear maps.
 		\end{definition}
 		Let $\alpha_p: \TBundle_p D\to\R,\thinspace\thinspace D\in\R^2$ be a linear map, then
 		\begin{equation*}
@@ -830,13 +830,13 @@
 		Hence, $\alpha_p(v)$ is determined by the two numbers $\alpha_1 = \alpha_p(\partial x)$ and $\alpha_2 = \alpha_p(\partial y)$, which means it's defined by its actions on tangent values, and $\alpha_1$, $\alpha_2$ are called the components of $\alpha$.
 
         \begin{definition}[1-form $(dx)_p$]
-            1-form $(dx)_p: \TBundle_p D\to\R$ on $D$ defined by
+            \emphDef{1-form $(dx)_p: \TBundle_p D\to\R$ on $D$} defined by
             \begin{equation*}
                 \begin{aligned}
                     (dx)_p(\partial x)_p = 1, \quad (dx)_p(\partial y)_p = 0
                 \end{aligned}
             \end{equation*}
-            and similarly for $(dy)_p$, which means $(\partial x)_p$ and $(\partial y)_p$ are a basis of $\TBundle_p D$, $(dx)_p$ and $(dy)_p$ are the dual basis. Moreover, every diff 1-form $\alpha$ on $D\subseteq\R^2$ open is of the form
+            and similarly for $(dy)_p$, which means $(\partial x)_p$ and $(\partial y)_p$ are a basis of $\TBundle_p D$, $(dx)_p$ and $(dy)_p$ are the \emphDef{dual basis}. Moreover, every diff 1-form $\alpha$ on $D\subseteq\R^2$ open is of the form
             \begin{equation*}
                 \begin{aligned}
                     \alpha_p = \alpha_1(p)(dx)_p + \alpha_2(p)(dy)_p
@@ -892,7 +892,7 @@
         \end{proposition}
         
         \begin{definition}[1-form $\alpha^{\phi}$ on $D$]
-            $\alpha$ is 1-form on $S$, $\alpha_p: \TBundle_p S\to\R$ for all $p\in S$, and $\phi: \R^2\supseteq D\to S$ a chart. For all $(x,y)\in D$, $T_{(x,y)}\phi: \R^2\to T_{\phi(x, y)}S$. Define 1-form $\alpha^{\phi}$ on $D$ by
+            $\alpha$ is 1-form on $S$, $\alpha_p: \TBundle_p S\to\R$ for all $p\in S$, and $\phi: \R^2\supseteq D\to S$ a chart. For all $(x,y)\in D$, $T_{(x,y)}\phi: \R^2\to T_{\phi(x, y)}S$. Define \emphDef{1-form $\alpha^{\phi}$ on $D$} by
             \begin{equation*}
                 \begin{aligned}
                     \alpha_{(x,y)}^{\phi} = \big(T_{(x,y)}\phi\big)^*\big(\alpha_{\phi(x,y)}\big), \quad \alpha_{(x,y)}^{\phi}(v) = \alpha_{\phi(x,y)}\big( T_{(x,y)}\phi(v) \big)
@@ -916,7 +916,7 @@
                     \int_{c}\alpha = \int_{a}^{b}\alpha_{c(t)}\big(\dot{c}(t)\big) \dif t
                 \end{aligned}
             \end{equation*}
-            is the integration of $\alpha$ along $c$.
+            is the \emphDef{integration} of $\alpha$ along $c$.
         \end{definition}
     
         \begin{theorem}[Fundamental theorem of calculus]
@@ -952,7 +952,7 @@
         \newpage
 	\section{Exterior differential and Integration of 2-forms}\label{Sec:Exterior differential and Integration of 2-forms}
 		\begin{definition}[Exterior differential]
-			If $\alpha$ is a 1-form on $S$, then the exterior differential in the $S$ is defined as
+			If $\alpha$ is a 1-form on $S$, then the \emphDef{exterior differential} in the $S$ is defined as
 			\begin{equation*}
 				\begin{aligned}
 					(d\alpha)_p(\partial x, \partial y) &= \tangent_p\big( \alpha(\partial y)\big)(\partial x) - \tangent_p\big( \alpha(\partial x)\big)(\partial y) \\
@@ -971,7 +971,7 @@
 			1-form is called closed if $d\alpha=0$, and is called exact if there exists $f: S\to\R$ such that $df = \alpha$. Actually, every exact form is also closed, but not every closed form is exact.
 		\end{remark}
 		\begin{definition}[Integration of 2-forms]
-			The integral of the 2-form $\beta$ over the rectangle $R$ is 
+			\emphDef{The integral of the 2-form $\beta$ over the rectangle $R$} is 
 			\begin{equation*}
 				\begin{aligned}
 					\int_{R}\beta = \int_{a}^{b}\int_{c}^{d}\beta_{R(x,y)}\bigg( \cfrac{\partial R(x,y)}{\partial x}, \cfrac{\partial R(x,y)}{\partial y} \bigg) dydx
@@ -1058,7 +1058,7 @@
 		Recall for curves, we had a moving frame (Cartan) at every point of curve (T, N, B), which was adapted the curve (T = $\dot{c}$). The change of this frame, expanded in terms of the frame, told us the curvature and the torsion of the  curve. For the surface, the idea is to do something similar to get the curvature of a surface.
 		
 		\begin{definition}[Moving frame]
-			A moving frame on an open subset $U\subseteq\R^3$ consists of vector fields $e_1, e_2, e_3: U\to\R^3$ such that for each point $x\in U$, the values $e_1(x), e_2(x), e_3(x)$ are an orthonormal basis of $\R^3$.
+			A \emphDef{moving frame} on an open subset $U\subseteq\R^3$ consists of vector fields $e_1, e_2, e_3: U\to\R^3$ such that for each point $x\in U$, the values $e_1(x), e_2(x), e_3(x)$ are an orthonormal basis of $\R^3$.
 		\end{definition}
 	
 		\begin{definition}[Change of frame]
@@ -1147,7 +1147,7 @@
 		The frame $e_1, e_2, e_3$ is not the most basic object, we want to replace the moving frame field $e_i$ with its dual 1-form $\theta_i$.
 	
 		\begin{definition}[Dual frame]
-			The dual frame are 1-forms $\theta_1, \theta_2, \theta_3$ on $\R^3$ such that $(\theta_i)_x(e_j(x)) = \delta_{ij}$.
+			The \emphDef{dual frame} are 1-forms $\theta_1, \theta_2, \theta_3$ on $\R^3$ such that $(\theta_i)_x(e_j(x)) = \delta_{ij}$.
 		\end{definition}
 	
 		\begin{definition}[The duals $\theta_i$ of $e_i$ in terms of the duals $dx_j$ of $f_j$]
@@ -1251,7 +1251,7 @@
 		Recall that if $S$ is a surface that is oriented, then there exists a normal field $n: S\to\R^3$, which vanishes nowhere, so we can define a map from $p\in S$ to the normal vector $n(p)$ at this point, which is called Gauss map.
 		
 		\begin{definition}[Gauss map]
-			If $n(p)$ has unit norm for $\forall p\in S$, then we call $n: S\to S^2\subseteq\R^3$ the gauss map of $S$. Moreover, for the surface $\phi: D\to S$, gauss map $n$ can be written as
+			If $n(p)$ has unit norm for $\forall p\in S$, then we call $n: S\to S^2\subseteq\R^3$ the \emphDef{gauss map} of $S$. Moreover, for the surface $\phi: D\to S$, gauss map $n$ can be written as
 			\begin{equation*}
 				\begin{aligned}
 					n(u, v) := \cfrac{\frac{\partial\phi}{\partial u}\times\frac{\partial\phi}{\partial v}}{\norm{\frac{\partial\phi}{\partial u}\times\frac{\partial\phi}{\partial v}}}
@@ -1318,7 +1318,7 @@
             
 
 		\begin{definition}[Shape operator]\label{Definition: Shape operator}
-			The shape operator (Weingarten map)
+			The \emphDef{shape operator (Weingarten map)}
 			\begin{equation*}
 				\begin{aligned}
 					\mathcal{S}_p = -\tangent_p n = -\nabla n_p: \TBundle_p S\to \TBundle_p S
@@ -1553,14 +1553,14 @@
                 \end{aligned}
             \end{equation*}
             The disadvantage of this way is depending on the frame and is complicated, as you need to handle two vectors at the same time. 
-            \begin{definition}
+            \begin{definition}[Normal curvature]
                 Another way is let $u\in \TBundle_p S$ be a unit vector ($\norm{u}=1$), then define
                 \begin{equation*}
                     \begin{aligned}
                         \kappa_p(u) = II_p(u, u) = u\cdot\mathcal{S}_pu
                     \end{aligned}
                 \end{equation*}
-                which is called the normal curvature in the $u$-direction.    
+                which is called the \emphDef{normal curvature} in the $u$-direction.    
             \end{definition}
             
             \begin{example}
@@ -1583,7 +1583,7 @@
             \end{remark}
             
             \begin{definition}[Principle curvatures]
-                The maximum and minimum of the normal curvature $\kappa_p(u)$ as $u\in \TBundle_p S,\thinspace \norm{u} = 1$ are called principle curvatures of $p$, denoted by $\kappa_1$ and $\kappa_2$, the associated directions $u_1$ and $u_2$ are called the principle directions. Equivalently, by threom of linear algebra, $\kappa_1(p)$ and $\kappa_2(p)$ are eigenvalues of $\mathcal{S}_p$ with eigenvectors $u_1$ and $u_2$. That is
+                The maximum and minimum of the normal curvature $\kappa_p(u)$ as $u\in \TBundle_p S,\thinspace \norm{u} = 1$ are called \emphDef{principle curvatures} of $p$, denoted by $\kappa_1$ and $\kappa_2$, the associated directions $u_1$ and $u_2$ are called the \emphDef{principle directions}. Equivalently, by theorem of linear algebra, $\kappa_1(p)$ and $\kappa_2(p)$ are eigenvalues of $\mathcal{S}_p$ with eigenvectors $u_1$ and $u_2$. That is
                 \begin{equation*}
                     \begin{aligned}
                         \mathcal{S}_pu_1 = \kappa_1(p)u_1, \quad \mathcal{S}_pu_2 = \kappa_2(p)u_2
@@ -1785,10 +1785,10 @@
             \begin{definition}
                 A point $p\in S$ is called
                 \begin{itemize}[itemsep=-0.2mm]
-                    \item umbilic (novel): if $\kappa_1(p) = \kappa_2(p)$, i.e. $\kappa_p(u)$ is independent of $u$, ex every point on the sphere.
-                    \item elliptic: if $\kappa_1(p)$ and $\kappa_2(p)$ have the same sign ($\kappa_1\neq\kappa_2$)
-                    \item hyperbolic: if $\kappa_1(p)$ and $\kappa_2(p)$ have the opposite sign, which is saddle-like.
-                    \item parabolic: if $\kappa_1(p) = 0$ or $\kappa_2(p) = 0$, ex cylinder.
+                    \item \emphDef{umbilic (novel)}: if $\kappa_1(p) = \kappa_2(p)$, i.e. $\kappa_p(u)$ is independent of $u$, ex every point on the sphere.
+                    \item \emphDef{elliptic}: if $\kappa_1(p)$ and $\kappa_2(p)$ have the same sign ($\kappa_1\neq\kappa_2$)
+                    \item \emphDef{hyperbolic}: if $\kappa_1(p)$ and $\kappa_2(p)$ have the opposite sign, which is saddle-like.
+                    \item \emphDef{parabolic}: if $\kappa_1(p) = 0$ or $\kappa_2(p) = 0$, ex cylinder.
                 \end{itemize}
             \end{definition}
             \begin{figure}[H]
@@ -1797,10 +1797,10 @@
                 \caption{[a] If $\kappa_1$ and $\kappa_2$ have the same sign then the surface locally resembles a hill, and a slice parallel to the tangent plane yields an ellipse (or misses the surface entirely). [b] If $\kappa_1$ and $\kappa_2$ have opposite sign then the surface locally resembles a saddle. A parallel slice above the tangent plane yields both branches of a hyperbola.}
             \end{figure}
             \begin{definition}[Darboux frame]
-                A frame $e_1, e_2, e_3$ adapted to $S$ is called the Darboux frame if $e_1(p)$ and $e_2(p)$ are the principle directions at $p$.
+                A frame $e_1, e_2, e_3$ adapted to $S$ is called the \emphDef{Darboux frame} if $e_1(p)$ and $e_2(p)$ are the principle directions at $p$.
             \end{definition}
             \begin{definition}[Line of curvature]
-                A unit-speed curve $c$ is called a line of curvature if $\dot{c}$ is always a principal direction, e.g. $\dot{c}(t) = u_1(c(t))$.
+                A unit-speed curve $c$ is called \emphDef{a line of curvature} if $\dot{c}$ is always a principal direction, e.g. $\dot{c}(t) = u_1(c(t))$.
             \end{definition}
             \begin{theorem}[do Carmo 3.4.4, O'Neill, 6.2.5]
                 Away from umbilic points, a Darboux frame frame always exists.
@@ -1886,7 +1886,7 @@
             The preceding subsection found the geometrical meaning of the eigenvalues and eigenvectors of the shape operator. Now we examine the determinant and trace of $S$, i.e. extract numbers from a matrix, independent of the basis. That is, apply a 2$\times$2 matrix to the shape operator.
 
             \begin{definition}[Gaussian and mean curvature]
-                $\kappa(p) = \text{det}\mathcal{S}_p = \kappa_1(p)\cdot\kappa_2(p)$ is called the Gaussian curvature. And $H(p) = \frac{1}{2}\text{tr}\mathcal{S}_p = \frac{1}{2}\big(\kappa_1(p)+\kappa_2(p)\big)$ is called the mean curvature.
+                $\kappa(p) = \text{det}\mathcal{S}_p = \kappa_1(p)\cdot\kappa_2(p)$ is called the \emphDef{Gaussian curvature}. And $H(p) = \frac{1}{2}\text{tr}\mathcal{S}_p = \frac{1}{2}\big(\kappa_1(p)+\kappa_2(p)\big)$ is called the \emphDef{mean curvature}.
             \end{definition}
             
             \begin{example}
@@ -1998,9 +1998,9 @@
 
             Next we want to see how do frame properties transform as we change our surface. Suppose $F: S(\subseteq\R^3) \to \Bar{S}(\subseteq\R^3)$, and we want to use $F$ to compare objects living on $\Bar{S}$ with the objects on $S$.
             \begin{definition}[Pushforward and Pullback]
-                pushforward: objects on $S \to$ objects on $\Bar{S}$.
+                \emphDef{pushforward}: objects on $S \to$ objects on $\Bar{S}$.
                 
-                pullback: objects living on $\Bar{S}$ induce something living on $S$.
+                \emphDef{pullback}: objects living on $\Bar{S}$ induce something living on $S$.
             \end{definition}
 
             \begin{example}[Pushforward of curves]
@@ -2087,7 +2087,7 @@
             \end{proof}
 
             \begin{definition}[Isometry of surfaces]
-                An isometry of surfaces $S$ and $\Bar{S}$ is a bijective map $F: S\to\Bar{S}$ that preserves the inner product of tangent vectors:
+                An \emphDef{isometry} of surfaces $S$ and $\Bar{S}$ is a bijective map $F: S\to\Bar{S}$ that preserves the inner product of tangent vectors:
                 \begin{equation*}
                     \begin{aligned}
                         v\cdot w = \tangent_p F(v)\cdot \tangent_p F(w), \quad\forall v, w \in \TBundle_p S
@@ -2101,12 +2101,12 @@
                 \end{equation*}
             \end{definition}
             \begin{definition}[Local isometry]
-                Local isometry is a map $F: S\to\Bar{S}$ such that every point $p\in S$ has some neighborhood $U\subseteq S$ such that $F: S\supseteq U\to F(U)\subseteq\Bar{S}$ is a isometry.
+                \emphDef{Local isometry} is a map $F: S\to\Bar{S}$ such that every point $p\in S$ has some neighborhood $U\subseteq S$ such that $F: S\supseteq U\to F(U)\subseteq\Bar{S}$ is a isometry.
             \end{definition}
             According to definition, (local) isometries preserve the length of tangent vectors, but does it also preserve the distance of two points at the surface?
 
             \begin{definition}[Distance on the surface]
-                The distance between $p, q\in S$ is 
+                The \emphDef{distance} between $p, q\in S$ is 
                 \begin{equation*}
                     \begin{aligned}
                         d(p, q) = \inf(c), \thinspace\thinspace\thinspace\text{with}\thinspace\thinspace\thinspace c(0) = p,\thinspace c(1) = q
@@ -2395,7 +2395,7 @@
             \end{figure}
 
             \begin{definition}[Geodesic on the surface]
-                A curve $c$ with constant speed in $S$ is called a geodesic if any of the following equiv properties hold:
+                A curve $c$ with constant speed in $S$ is called a \emphDef{geodesic} if any of the following equiv properties hold:
                 \begin{enumerate}
                     \item $\kappa_g(t) = 0$ ("intrinsically straight")
                     \item $\ddot{c}(t)$ is completely in the normal direction
@@ -2437,13 +2437,13 @@
             \end{equation*}
 
             \begin{definition}[For the tangent part, covariant derivative]
-                Let $e_1, e_2, e_3$ be a frame and $X(t) = f_1(t)e_1\big(c(t)\big) + f_2(t)e_2\big(c(t)\big)$ be a vector field along the curve $c$, then covariant derivative of $X$ is the vector field along $c$ defined by
+                Let $e_1, e_2, e_3$ be a frame and $X(t) = f_1(t)e_1\big(c(t)\big) + f_2(t)e_2\big(c(t)\big)$ be a vector field along the curve $c$, then \emphDef{covariant derivative} of $X$ is the vector field along $c$ defined by
                 \begin{equation*}
                     \begin{aligned}
                         \cfrac{\nabla}{dt}X(t) = \bigg( \dot{f}_1 + f_2\omega_2^1\big(\dot{c}\big) \bigg)e_1\big(c(t)\big) + \bigg( \dot{f}_2 + f_1\omega_1^2\big(\dot{c}\big) \bigg)e_2\big(c(t)\big) 
                     \end{aligned}
                 \end{equation*}
-                Note that $\cfrac{\nabla}{dt}$ depends only on $\omega_1^2$, is the "intrinsic derivative of $X$".
+                Note that $\cfrac{\nabla}{dt}$ depends only on $\omega_1^2$, is the "\emphDef{intrinsic derivative} of $X$".
             \end{definition}
             \begin{figure}[H]
                 \centering
@@ -2626,7 +2626,7 @@
             \end{equation*}
             which means we need to say what are variations of a curve.
             \begin{definition}[Varieties of a curve]
-                If $c: [0, 1]\to S$ is a curve from $p=c(0)$ to $q=c(1)$, then a smooth varieties of $c$ is a family of curves $c_\epsilon$, depending on some particular $\epsilon\in[0,1]$ such that $\hat{c}:[0,1]\times[0,1]\to S$ is smooth, written as $\hat{c}(t,\epsilon) = c_\epsilon(t)$, and $c_\epsilon$ is just $c$, i.e. $\hat{c}(t, 0) = c(t)$. If $c_\epsilon(0) = p$ and $c_\epsilon(1) = q$, the $c_\epsilon$ is said to be variation with fixed endpoints.
+                If $c: [0, 1]\to S$ is a curve from $p=c(0)$ to $q=c(1)$, then a \emphDef{smooth varieties} of $c$ is a family of curves $c_\epsilon$, depending on some particular $\epsilon\in[0,1]$ such that $\hat{c}:[0,1]\times[0,1]\to S$ is smooth, written as $\hat{c}(t,\epsilon) = c_\epsilon(t)$, and $c_\epsilon$ is just $c$, i.e. $\hat{c}(t, 0) = c(t)$. If $c_\epsilon(0) = p$ and $c_\epsilon(1) = q$, the $c_\epsilon$ is said to be variation with fixed endpoints.
             \end{definition}
             \vspace{-0.35cm}
             \begin{marginfigure}
@@ -2704,7 +2704,7 @@
             \end{remark}
 
             \begin{theorem}[Hopf-Rinow, metrically complete]
-                Let $S$ be a connected surface (every two points can be connected by smooth curves). Assume that every geodesic exists for all times, then for every $q\in S$, there exists a geodesic $c$ form $p$ to $q$ such that 
+                Let $S$ be a connected surface (every two points can be connected by smooth curves). Assume that every geodesic exists for all times, then for every $q\in S$, there exists a geodesic $c$ from $p$ to $q$ such that 
                 \begin{equation*}
                     \begin{aligned}
                         d(p, q) = L(c)
@@ -2721,7 +2721,7 @@
             Similar to the uniqueness and existence theorem for parallel transport, we can show that there is a unique geodesic starting at a given point in a given direction.
 
             \begin{definition}[Exponential map]
-                For $p\in S$, the exponential map
+                For $p\in S$, the \emphDef{exponential map}
                 \begin{equation*}
                     \begin{aligned}
                         \text{exp}_p: \TBundle_p S\supseteq V_p \to S
@@ -2769,7 +2769,7 @@
                             \phi_p(r,\varphi) = \text{exp}_p\big(r\cos\varphi f_1 + r\sin\varphi f_2\big)
                         \end{aligned}
                     \end{equation*}
-                    which is well-defined if $r$ is small enough, and is called the geodesic polar mapping at $p$.
+                    which is well-defined if $r$ is small enough, and is called the \emphDef{geodesic polar mapping} at $p$.
                     \item Pushforward of tangent space:
                     \begin{equation*}
                         \begin{aligned}
@@ -2999,7 +2999,7 @@
                 \end{equation*}
             \end{theorem}
             \begin{lemma}
-                Assume $\omega_i^j$ satisfy the Gauss-Godozzi equation, then for $p_0\in\R^3$ and frame $f_1,f_2,f_3$ that are orthonormal basis of $\R^2$, there exists a unique smooth $\psi:\R^2\supseteq D\to\R^3$ and smooth function $e_1, e_2, e_3: \R^2\supseteq D\to\R^3$ forming an orthonormal basis of $\R^3$ for each $p\in D$ such that
+                Assume $\omega_i^j$ satisfy the Gauss-Godozzi equation, then for $p_0\in\R^3$ and frame $f_1,f_2,f_3$ that are orthonormal basis of $\R^2$, there exists a unique smooth $\psi:\R^2\supseteq D\to\R^3$ and smooth functions $e_1, e_2, e_3: \R^2\supseteq D\to\R^3$ forming an orthonormal basis of $\R^3$ for each $p\in D$ such that
                 \begin{equation*}
                     \begin{aligned}
                         &T_{(x,y)}\psi(v) = \theta_{(x,y)}^1(v) e_1(x,y) + \theta_{(x,y)}^2(v) e_2(x,y) \\
@@ -3235,7 +3235,7 @@
             \end{equation*}
             However, integration needs an orientation, and with the wrong orientations, we may get a negative area, which means we need to incorporate the normal in the def of $dA$.
             \begin{definition}[Area element and Total area]
-                Let $S$ be a surface, oriented by a unit speed field $n$. The area element is the 2-form $dA$ on $S$ defined by
+                Let $S$ be a surface, oriented by a unit speed field $n$. The \emphDef{area element} is the 2-form $dA$ on $S$ defined by
                 \begin{equation*}
                     \begin{aligned}
                         (dA)_p(u_1, u_2) = n_p\cdot (u_1\times u_2)
@@ -3391,7 +3391,7 @@
             \end{theorem}
             
             \begin{definition}[Euler characteristic]
-                The Euler characteristic of a triangulation is
+                The \emphDef{Euler characteristic} of a triangulation is
                 \begin{equation*}
                     \begin{aligned}
                         \mathcal{X} = \#\text{points/vertices} - \#\text{edges} + \#\text{faces}
