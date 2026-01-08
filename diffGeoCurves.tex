@@ -2395,7 +2395,7 @@
             \end{figure}
 
             \begin{definition}[Geodesic on the surface]
-                A curve $c$ with constant speed in $S$ is called a geodesic if any of the following equiv properties hold:
+                A curve $c$ with constant speed in $S$ is called a \emphDef{geodesic} if any of the following equiv properties hold:
                 \begin{enumerate}
                     \item $\kappa_g(t) = 0$ ("intrinsically straight")
                     \item $\ddot{c}(t)$ is completely in the normal direction
@@ -2437,13 +2437,13 @@
             \end{equation*}
 
             \begin{definition}[For the tangent part, covariant derivative]
-                Let $e_1, e_2, e_3$ be a frame and $X(t) = f_1(t)e_1\big(c(t)\big) + f_2(t)e_2\big(c(t)\big)$ be a vector field along the curve $c$, then covariant derivative of $X$ is the vector field along $c$ defined by
+                Let $e_1, e_2, e_3$ be a frame and $X(t) = f_1(t)e_1\big(c(t)\big) + f_2(t)e_2\big(c(t)\big)$ be a vector field along the curve $c$, then \emphDef{covariant derivative} of $X$ is the vector field along $c$ defined by
                 \begin{equation*}
                     \begin{aligned}
                         \cfrac{\nabla}{dt}X(t) = \bigg( \dot{f}_1 + f_2\omega_2^1\big(\dot{c}\big) \bigg)e_1\big(c(t)\big) + \bigg( \dot{f}_2 + f_1\omega_1^2\big(\dot{c}\big) \bigg)e_2\big(c(t)\big) 
                     \end{aligned}
                 \end{equation*}
-                Note that $\cfrac{\nabla}{dt}$ depends only on $\omega_1^2$, is the "intrinsic derivative of $X$".
+                Note that $\cfrac{\nabla}{dt}$ depends only on $\omega_1^2$, is the "\emphDef{intrinsic derivative} of $X$".
             \end{definition}
             \begin{figure}[H]
                 \centering
@@ -2626,7 +2626,7 @@
             \end{equation*}
             which means we need to say what are variations of a curve.
             \begin{definition}[Varieties of a curve]
-                If $c: [0, 1]\to S$ is a curve from $p=c(0)$ to $q=c(1)$, then a smooth varieties of $c$ is a family of curves $c_\epsilon$, depending on some particular $\epsilon\in[0,1]$ such that $\hat{c}:[0,1]\times[0,1]\to S$ is smooth, written as $\hat{c}(t,\epsilon) = c_\epsilon(t)$, and $c_\epsilon$ is just $c$, i.e. $\hat{c}(t, 0) = c(t)$. If $c_\epsilon(0) = p$ and $c_\epsilon(1) = q$, the $c_\epsilon$ is said to be variation with fixed endpoints.
+                If $c: [0, 1]\to S$ is a curve from $p=c(0)$ to $q=c(1)$, then a \emphDef{smooth varieties} of $c$ is a family of curves $c_\epsilon$, depending on some particular $\epsilon\in[0,1]$ such that $\hat{c}:[0,1]\times[0,1]\to S$ is smooth, written as $\hat{c}(t,\epsilon) = c_\epsilon(t)$, and $c_\epsilon$ is just $c$, i.e. $\hat{c}(t, 0) = c(t)$. If $c_\epsilon(0) = p$ and $c_\epsilon(1) = q$, the $c_\epsilon$ is said to be variation with fixed endpoints.
             \end{definition}
             \vspace{-0.35cm}
             \begin{marginfigure}
@@ -2721,7 +2721,7 @@
             Similar to the uniqueness and existence theorem for parallel transport, we can show that there is a unique geodesic starting at a given point in a given direction.
 
             \begin{definition}[Exponential map]
-                For $p\in S$, the exponential map
+                For $p\in S$, the \emphDef{exponential map}
                 \begin{equation*}
                     \begin{aligned}
                         \text{exp}_p: \TBundle_p S\supseteq V_p \to S
@@ -2769,7 +2769,7 @@
                             \phi_p(r,\varphi) = \text{exp}_p\big(r\cos\varphi f_1 + r\sin\varphi f_2\big)
                         \end{aligned}
                     \end{equation*}
-                    which is well-defined if $r$ is small enough, and is called the geodesic polar mapping at $p$.
+                    which is well-defined if $r$ is small enough, and is called the \emphDef{geodesic polar mapping} at $p$.
                     \item Pushforward of tangent space:
                     \begin{equation*}
                         \begin{aligned}
@@ -3235,7 +3235,7 @@
             \end{equation*}
             However, integration needs an orientation, and with the wrong orientations, we may get a negative area, which means we need to incorporate the normal in the def of $dA$.
             \begin{definition}[Area element and Total area]
-                Let $S$ be a surface, oriented by a unit speed field $n$. The area element is the 2-form $dA$ on $S$ defined by
+                Let $S$ be a surface, oriented by a unit speed field $n$. The \emphDef{area element} is the 2-form $dA$ on $S$ defined by
                 \begin{equation*}
                     \begin{aligned}
                         (dA)_p(u_1, u_2) = n_p\cdot (u_1\times u_2)
@@ -3391,7 +3391,7 @@
             \end{theorem}
             
             \begin{definition}[Euler characteristic]
-                The Euler characteristic of a triangulation is
+                The \emphDef{Euler characteristic} of a triangulation is
                 \begin{equation*}
                     \begin{aligned}
                         \mathcal{X} = \#\text{points/vertices} - \#\text{edges} + \#\text{faces}
