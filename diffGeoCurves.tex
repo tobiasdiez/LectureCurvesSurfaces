@@ -1886,7 +1886,7 @@
             The preceding subsection found the geometrical meaning of the eigenvalues and eigenvectors of the shape operator. Now we examine the determinant and trace of $S$, i.e. extract numbers from a matrix, independent of the basis. That is, apply a 2$\times$2 matrix to the shape operator.
 
             \begin{definition}[Gaussian and mean curvature]
-                $\kappa(t) = \text{det}\mathcal{S}_p = \kappa_1(p)\cdot\kappa_2(p)$ is called the \emphDef{Gaussian curvature}. And $H(p) = \frac{1}{2}\text{tr}\mathcal{S}_p = \frac{1}{2}\big(\kappa_1(p)+\kappa_2(p)\big)$ is called the \emphDef{mean curvature}.
+                $\kappa(p) = \text{det}\mathcal{S}_p = \kappa_1(p)\cdot\kappa_2(p)$ is called the \emphDef{Gaussian curvature}. And $H(p) = \frac{1}{2}\text{tr}\mathcal{S}_p = \frac{1}{2}\big(\kappa_1(p)+\kappa_2(p)\big)$ is called the \emphDef{mean curvature}.
             \end{definition}
             
             \begin{example}
@@ -1908,7 +1908,7 @@
                 In particular, $\kappa_1, \kappa_2 = H \pm \sqrt{H^2-\kappa}$.
             \end{proposition}
             \begin{proposition}
-                Let $e_1, e_2, e_3$ be a moving frame adapted to $S\in\R^3$ with dual frame $\theta^j$ and connection forms $\omega_i^j$, then
+                Let $e_1, e_2, e_3$ be a moving frame adapted to $S\subseteq\R^3$ with dual frame $\theta^j$ and connection forms $\omega_i^j$, then
                 \begin{equation}\label{Equation: domega12}
                     \begin{aligned}
                         d\omega_2^1 = \kappa\thinspace\theta^1\wedge\theta^2
@@ -2916,7 +2916,7 @@
                         \end{array} = \psi^*II
                     \end{aligned}
                 \end{equation*}
-                where $g$ and is the families of symmetric metrics, parameterized by points $(x, y)\in D$.
+                where $g$ and $l$ are the families of symmetric metrics, parameterized by points $(x, y)\in D$.
             \end{definition}
             
             Given two matrices $g$ and $l$ (parameterized by $D$), can we construct $\psi: D\to\R^2$ with first and second form $I$ and $II$ on $\psi(D) = S$ such that $\psi^*I = g$ and $\psi^*II = l$?
